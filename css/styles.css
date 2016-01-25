@@ -1,0 +1,44 @@
+body{
+	padding:0px;
+	margin: 0px;
+}
+#finder{
+	position: fixed;
+	top: 0;
+	left: 0px;
+	background: blue;
+	width: 200px;
+	height: 100%;
+}
+
+#timeline{
+	height: 100%;
+	width: 100%;
+	margin-left: 200px;
+	background: red;
+}
+.box{
+	background: orange;
+	width: 20px;
+	height: 20px;
+}
+ul{
+	-webkit-user-select: none;
+	cursor: pointer;
+}
+ul li{
+	-webkit-user-select: none;
+	cursor: pointer;
+}
+.piste{
+	background: yellow;
+	border-bottom: 1px solid;
+	height: 25%;
+	width: 100%;
+}
+.piste .box{
+	height:100%;
+	display: inline-block;
+	box-sizing:border-box;
+	border-right:1px solid;
+}

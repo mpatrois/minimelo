@@ -1,0 +1,167 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+  </head>
+  <body>
+    <div id="finder">
+      <ul id="list-files">
+        
+      </ul>
+    </div>
+    <div id="timeline">
+      <div class="piste"></div>
+      <div class="piste"></div>
+      <div class="piste"></div>
+      <div class="piste"></div>
+    </div>
+  </body>
+
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script>
+    var ressources=[
+        "audio/kick0.wav",
+        "audio/kick2.wav",
+        "audio/kick3.wav",
+        "audio/kick4.wav",
+        "audio/kick5.wav",
+        "audio/hardkick.wav"
+    ];
+    for (var i = 0; i < ressources.length; i++) {
+      // console.log(ressources[i]);
+      $('#list-files').append('<li class="file-path">'+ressources[i]+'</li>')
+    };
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    $('.file-path').click(function(event){
+        var url=$(this).html();
+        request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        request.responseType = 'arraybuffer';
+        var instance=this;
+
+        request.onload = function() {
+          // console.log(request.response);
+          audioCtx.decodeAudioData(request.response, function(buffer) 
+          {
+            var source;
+            source=audioCtx.createBufferSource();
+            source.buffer=buffer;
+            source.connect(audioCtx.destination);
+            source.start();
+          },function(e){"Error with decoding audio data" + e.err});
+        }
+        request.send();
+        //console.log($('body').append($('<div class="box"></div>')));
+        // $(this).clone().appendTo($(this)).draggable();
+        // $(this).clone().appendTo($(this).parent()).draggable();
+        // $(this).draggable();
+
+        // $(this).draggable({
+        //   appendTo: "#timeline",
+        //   stop: function( event, ui ) {
+        //   }
+        // });
+    });
+    
+    function Timeline(){
+      this.songs=[];
+    }
+    $('li').draggable(
+      {
+        helper: "clone",
+        stop: function( event, ui ) {
+        //   var url=event.toElement.innerHTML;
+        // request = new XMLHttpRequest();
+        // request.open('GET', url, true);
+        // request.responseType = 'arraybuffer';
+
+        // request.onload = function() {
+        //   audioCtx.decodeAudioData(request.response, function(buffer) 
+        //   {
+        //     var song=new Song();
+        //     song.loadSongBuffer(buffer);
+        //     song.play();
+        //     song.viewBox=$('<div class="box">');
+        //     $('#timeline').append(song.viewBox);
+        //   },function(e){"Error with decoding audio data" + e.err});
+        // }
+        // request.send();
+        }
+      }
+    );
+
+    $('.piste').droppable({
+        drop: function( event, ui ) {
+          console.log(ui.draggable.html());
+          var song=new Song();
+          song.loadSongFromUrl(ui.draggable.html());
+          //song.play();
+          song.viewBox=$('<div class="box">');
+          $(this).append(song.viewBox);
+        }
+      }
+    );
+
+    // $( "#timeline" ).droppable({
+    //   drop: function( event, ui ) {
+        
+    //     var url=event.toElement.innerHTML;
+    //     request = new XMLHttpRequest();
+    //     request.open('GET', url, true);
+    //     request.responseType = 'arraybuffer';
+
+    //     request.onload = function() {
+    //       // console.log(request.response);
+    //       audioCtx.decodeAudioData(request.response, function(buffer) 
+    //       {
+    //         var songTmp=new Song();
+    //         songTmp.loadSongBuffer(buffer);
+    //         songTmp.play();
+    //       },function(e){"Error with decoding audio data" + e.err});
+    //     }
+    //     request.send();
+    //   }
+    // });
+
+
+function Song(){
+  this.buffer=null;
+  this.viewBox=null;
+};
+var source;
+Song.prototype={
+  play:function()
+  {
+    this.source=audioCtx.createBufferSource();
+    this.source.buffer=this.buffer;
+    this.source.connect(audioCtx.destination);
+    this.source.start();
+    source=this.source;
+  },
+  loadSongFromUrl:function(url){
+        request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        request.responseType = 'arraybuffer';
+        var self=this;
+
+        request.onload = function() {
+          
+          audioCtx.decodeAudioData(request.response, function(buffer) 
+          {
+            self.buffer=buffer;
+            self.play();
+            console.log(timeline.offsetWidth/this.source.buffer.duration);
+            self.viewBox.css('width',timeline.offsetWidth*this.source.buffer.duration/10);
+            //self.play();
+          },function(e){"Error with decoding audio data" + e.err});
+        }
+        request.send();
+  },
+  setBox:function(box){
+    this.box=box;
+  }
+}
+
+  </script>
+</html>
