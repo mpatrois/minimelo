@@ -15,7 +15,7 @@ body{
 	height: 100%;
 	width: 100%;
 	margin-left: 200px;
-	background: red;
+	/*background: red;*/
 }
 .box{
 	background: orange;
@@ -31,10 +31,11 @@ ul li{
 	cursor: pointer;
 }
 .piste{
-	background: yellow;
+	/*background: yellow;*/
 	border-bottom: 1px solid;
 	height: 25%;
 	width: 100%;
+	position: relative;
 }
 .piste .box{
 	height:100%;
