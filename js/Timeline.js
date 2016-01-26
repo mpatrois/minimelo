@@ -1,3 +1,0 @@
-function Timeline(){
-      this.songs=[];
-    }
