@@ -6,3 +6,14 @@ var ressources=[
     "audio/kick5.wav",
     "audio/hardkick.wav"
 ];
+
+var colors=[
+	"red",
+	"yellow",
+	"orange",
+	"green",
+	"violet",
+	"pink",
+	"grey",
+	"blue"
+]
