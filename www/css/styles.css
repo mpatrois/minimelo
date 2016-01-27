@@ -35,19 +35,19 @@ width: 50px;
 height: 55px;
 display:inline-block;}
 
-.round_btn.trash_btn{background-position-y: -250px; }
-.round_btn.play_btn{     background-position-y: 0; }
-.round_btn.pause_btn{    background-position-y: -50px; }
-.round_btn.stop_btn{     background-position-y: -100px; }
-.round_btn.begin_btn{    background-position-y: -350px; }
-.round_btn.end_btn{      background-position-y: -400px; }
+.round_btn.trash_btn{background-position:0 -250px; }
+.round_btn.play_btn{     background-position:0 0; }
+.round_btn.pause_btn{    background-position:0 -50px; }
+.round_btn.stop_btn{     background-position:0 -100px; }
+.round_btn.begin_btn{    background-position:0 -350px; }
+.round_btn.end_btn{      background-position:0 -400px; }
 
-.round_btn.trash_btn:active{    background-position-y: -800px; }
-.round_btn.play_btn:active{     background-position-y: -550px; }
-.round_btn.pause_btn:active{    background-position-y: -600px; }
-.round_btn.stop_btn:active{     background-position-y: -650px; }
-.round_btn.begin_btn:active{    background-position-y: -900px; }
-.round_btn.end_btn:active{      background-position-y: -950px; }
+.round_btn.trash_btn:active{    background-position:0 -800px; }
+.round_btn.play_btn:active{     background-position:0 -550px; }
+.round_btn.pause_btn:active{    background-position:0 -600px; }
+.round_btn.stop_btn:active{     background-position:0 -650px; }
+.round_btn.begin_btn:active{    background-position:0 -900px; }
+.round_btn.end_btn:active{      background-position:0 -950px; }
 
 .round_btn{
     display: inline-block;
@@ -63,15 +63,15 @@ display:inline-block;}
 
 .instrument.active{transform:scale(1.3);}
 
-.chant{background-position-y: 0px;}
-.harpe{background-position-y: -60px;}
-.maracas{background-position-y: -123px;}
-.piano{background-position-y: -183px;}
-.symbale{background-position-y: -245px;}
-.tambour{background-position-y: -311px;}
-.guitare{background-position-y: -372px;}
-.trompette{background-position-y: -434px;}
-.plus_instru{background-position-y: -492px;}
+.chant{background-position:0 0px;}
+.harpe{background-position:0 -60px;}
+.maracas{background-position:0 -123px;}
+.piano{background-position:0 -183px;}
+.symbale{background-position:0 -245px;}
+.tambour{background-position:0 -311px;}
+.guitare{background-position:0 -372px;}
+.trompette{background-position:0 -434px;}
+.plus_instru{background-position:0 -492px;}
 
 .instrument{
     background-image:url("../img/buttons_left.png");
@@ -80,24 +80,21 @@ display:inline-block;}
     height: 55px;
     display:inline-block;
 }
-.instrument[type="chant"]{background-position-y: 0px;}
-.instrument[type="harpe"]{background-position-y: -60px;}
-.instrument[type="maracas"]{background-position-y: -123px;}
-.instrument[type="piano"]{background-position-y: -183px;}
-.instrument[type="symbale"]{background-position-y: -245px;}
-.instrument[type="tambour"]{background-position-y: -311px;}
-.instrument[type="guitare"]{background-position-y: -372px;}
-.instrument[type="trompette"]{background-position-y: -434px;}
-.instrument[type="plus_instru"]{background-position-y: -492px;}
+.instrument[type="chant"]{background-position:0 0px;}
+.instrument[type="harpe"]{background-position:0 -60px;}
+.instrument[type="maracas"]{background-position:0 -123px;}
+.instrument[type="piano"]{background-position:0 -183px;}
+.instrument[type="symbale"]{background-position:0 -245px;}
+.instrument[type="tambour"]{background-position:0 -311px;}
+.instrument[type="guitare"]{background-position:0 -372px;}
+.instrument[type="trompette"]{background-position:0 -434px;}
+.instrument[type="plus_instru"]{background-position:0 -492px;}
 
 /*------------------------------------------------------------------------------*/
 
 
 /* Portrait layout (default) */
 .app {
-    /*background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
-      /* offset vertical: half of image height and text area height */
-                                   /* offset horizontal: half of text area width */
     width:100%;
     height:auto;
 }
@@ -190,7 +187,6 @@ footer img{margin-left:10px;
 
 #timeline{
 	width: 100%;
-    height:300px;
     overflow: hidden;
     overflow-x: auto;
     overflow-y: hidden;
@@ -209,23 +205,17 @@ ul li{
 	cursor: pointer;
 }
 .piste{
-	border-bottom: 1px solid;
-	height: 57px;
 	width: 1000px;
 	position: relative;
 }
 .piste .box{
-	height:100%;
+	height:60px;
+    width: 60px;
 	display: inline-block;
+    vertical-align: top;
 	box-sizing:border-box;
 	border:1px solid;
-	width: 60px;
 	text-align: center;
-}
-
-
-#files-list{
-	z-index: 20;
 }
 
 #debug {
@@ -233,6 +223,3 @@ ul li{
 	color: #33FF33;
 }
 
-.files img{
-	max-width: 40px;
-}

@@ -8,7 +8,7 @@ define(function(require) {
 	function Timeline(){
 		this.songs    = [];
 		this.tempo    = 90;
-		this.noteTime = (60)/this.tempo/2;
+		this.noteTime = (60)/this.tempo/4;
 		this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 	}
 
@@ -41,7 +41,7 @@ define(function(require) {
 		});
   	};
 
-	Timeline.prototype.loadSong = function loadSong(id, urlSong) {
+	Timeline.prototype.loadSong = function loadSong(idSong, urlSong,buttonSong) {
 		var self=this;
 
 		$.ajax({
@@ -51,7 +51,12 @@ define(function(require) {
 		  self.audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
 				var song = new Song();
 				song.buffer = buffer;
-				self.songs[id] = song;
+				self.songs[idSong] = song;
+				buttonSong.mousedown(function(){
+					song.play(self.audioCtx);
+					$("#buttons-songs .button").removeClass("active");
+                	$(this).addClass("active");
+				});
 			},function(e){"Error with decoding audio data" + e.err;});	
 		});
 	};
