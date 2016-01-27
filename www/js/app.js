@@ -15,6 +15,10 @@ $(document).ready(function() {
 
       function runApp(){
 
+        $(".round_btn.trash_btn").click(function(){
+            $('.box').empty();
+        });
+
         $(".plus_instru").click(function() {
             $(".overlay").toggleClass('active');
         });
@@ -44,47 +48,50 @@ $(document).ready(function() {
             $(this).css('width',60*30);
         });
 
-        $('#played').click(function() {
+        $('.files').mousedown(function(event){
+            var idSong = $(this).attr("data-song-id");
+            timeline.songs[idSong].play(timeline.audioCtx);    
+        });
+
+        $('#play').click(function() {
             timeline.play();
         });
 
         $('.files').mousedown(function(event){
 
-
-            var url=$(this).attr('data-song-url');
-            var request = new XMLHttpRequest();
-            request.open('GET', url, true);
+            var url              = $(this).attr('data-song-url');
+            var request          = new XMLHttpRequest();
             request.responseType = 'arraybuffer';
+            request.open('GET', url, true);
 
             request.onload = function() {
-            //alert('test request');
 
                 timeline.audioCtx.decodeAudioData(request.response, function(buffer) {
-                        var source = timeline.audioCtx.createBufferSource();
+                        var source    = timeline.audioCtx.createBufferSource();
                         source.buffer = buffer;
                         source.connect(timeline.audioCtx.destination);
                         source.start();
-                    },function(e) {"Error with decoding audio data" + e.err});
-        }
-        request.send();
-    });
-
-    // $('#files-list .files').draggable(
-    // {
-    //   helper: "clone"
-    // });
-
-        $('.box').click(function(){
+                },function(e) {"Error with decoding audio data" + e.err});
+            }
+            request.send();
+        });
+        $('.box').off().on('click', function(e){
+            e.preventDefault();
             var button=$(".files.button.active")[0];
-            if(button!=null){
+                  
+            if($(this).find('.instrument')[0]==null && button!=null){
                 var clone=$("<div class='instrument'></div>");
                 clone.attr('type',$(button).attr('type'));
                 clone.attr('data-song-id',$(button).attr('data-song-id'));
                 $(this).append(clone);
+            }else{
+                $(this).empty();
             }
+
         });
 
     }
+
     runApp();
 
     });

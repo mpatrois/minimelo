@@ -47,8 +47,7 @@
            <div class="row">
             <div class="col-xs-12">
               <div id="timeline">
-                <div id="piste-1" class="piste">
-                </div>
+                <div id="piste-1" class="piste"></div>
                 <div id="piste-2" class="piste"></div>
                 <div id="piste-3" class="piste"></div>
                 <div id="piste-4" class="piste"></div>
@@ -56,34 +55,38 @@
 
             </div>
           </div>
+          
+        </div>
 
           <div class="row">
             <footer class="col-xs-12">
-              <div class="time col-xs-4">
+              <div class="col-xs-3">
                   <div class="plus_instru button"></div>
+                  <div class="clear round_btn trash_btn"></div>
               </div>
 
-              <div class="col-xs-4">
+              <div class="col-xs-6">
 
-                <img id="begin" src="img/btn_start.png"/>
-                <img id="play" src="img/btn_play.png"/>
-                <img id="stop" src="img/btn_stop.png"/>
-                <img id="end" src="img/btn_end.png"/>
+                <div class="round_btn begin_btn" id="begin"></div>
+                <div class="round_btn play_btn" id="play"></div>
+                <div class="round_btn pause_btn" id="pause"></div>
+                <div class="round_btn stop_btn" id="stop"></div>
+                <div class="round_btn end_btn" id="end"></div>
 
               </div>
 
-              <div class="col-xs-4">
+              <div class="col-xs-3">
                 <img src="img/btn_zoom.png"/>
                 <img src="img/btn_unzoom.png"/>
               </div>
 
             </footer>
           </div>
-        </div>
+
+        
       </div>
     </div>
   </div>
-  <button id="played">Play</button>
 
   <script type="text/lib/javascript" src="cordova.js"></script>
   <script src="js/lib/jquery.js"></script>

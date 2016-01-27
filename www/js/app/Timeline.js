@@ -6,51 +6,57 @@ define(function(require) {
   var ressources = require('app/ressources');
 
   function Timeline(){
-    this.songs=[];
-    this.tempo=90;
-    this.noteTime=(60)/this.tempo/2;
+    this.songs    =[];
+    this.tempo    =90;
+    this.noteTime =(60)/this.tempo/2;
     this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
 
-  Timeline.prototype={
+  Timeline.prototype.play = function play() {
 
-    play:function(){
+    var self=this;
 
-      var self=this;
+    $('#timeline .piste').each(function(){
 
-      $('#timeline .piste').each(function(){
+      var step=0;
 
-        var step=0;
-        
-        $(this).find('.box').each(function(){
+      $(this).find('.box').each(function(){
 
-          var idSong=$(this).find('.instrument').attr('data-song-id');
-          if(idSong!=null){
-            self.songs[idSong].playWithTime(step*self.noteTime, self.audioCtx);
-          }
-          step++;
+        var box=$(this);
+        var idSong=$(this).find('.instrument').attr('data-song-id');
+        if(idSong!=null){
+          self.songs[idSong].playWithTime(step*self.noteTime, self.audioCtx);
+          setTimeout(function(){
+            box.find(".instrument").toggleClass("active");
+            setTimeout(function(){
+              box.find(".instrument").removeClass("active");
+            },100);
 
-        });
+          },step*self.noteTime*1000)
+        }
+        step++;
 
       });
-    },
-    loadSong:function(id,urlSong){
-      var self=this;
 
-      $.ajax({
-        url: urlSong,
-        xhrFields : {responseType : 'arraybuffer'},
-      }).
-      done(function(arrayBuffer){
-        self.audioCtx.decodeAudioData(arrayBuffer, function(buffer) 
-        {
-          var song = new Song();
-          song.buffer = buffer;
-          self.songs[id] = song;
-        },function(e){"Error with decoding audio data" + e.err});
-      });
-    }
-  }
+    });
+  };
+
+  Timeline.prototype.loadSong = function loadSong(id, urlSong) {
+    var self=this;
+
+    $.ajax({
+      url: urlSong,
+      xhrFields : {responseType : 'arraybuffer'},
+    }).
+    done(function(arrayBuffer){
+      self.audioCtx.decodeAudioData(arrayBuffer, function(buffer) 
+      {
+        var song = new Song();
+        song.buffer = buffer;
+        self.songs[id] = song;
+      },function(e){"Error with decoding audio data" + e.err});
+    });
+  };
 
   return Timeline;
 });
