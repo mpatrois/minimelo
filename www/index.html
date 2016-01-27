@@ -1,24 +1,4 @@
 <!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
-  -->
   <html>
   <head>
     <meta charset="utf-8" />
@@ -30,9 +10,9 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     
-    <title>Hello World</title>
+    <title>Mini Mélo</title>
   </head>
-  <body onload="runApp()">
+  <body>
 
     <div class="app">
       <div class="row">
@@ -103,168 +83,12 @@
       </div>
     </div>
   </div>
-  <button onclick="timeline.play()">Play</button>
+  <button id="played">Play</button>
 
-  <script type="text/javascript" src="cordova.js"></script>
-  <script type="text/javascript">
-  var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  </script>
-  <script src="js/jquery.js"></script>
-  
-  <script type="text/javascript" src="js/Utils.js"></script>
-  <script src="js/ressources.js"></script>
-  <script src="js/Resources.js"></script>
-  <script src="js/Timeline.js"></script>
-  <script src="js/Song.js"></script>
-  <script src="js/Timeline.js"></script>
-  
+  <script type="text/lib/javascript" src="cordova.js"></script>
+  <script src="js/lib/jquery.js"></script>
+  <script src="js/lib/requirejs.js"></script>
 
-  <script type="text/javascript">
-            //  app.initialize();
-            
-            var timeline=new Timeline();
-
-            document.addEventListener('deviceready',runApp, false);
-
-            function runApp(){
-
-              $(".plus_instru").click(function() {
-                $(".overlay").toggleClass('active');
-              });
-
-              for (var i = 0; i < ressources.length; i++) {
-                
-                var divSong=$('<div class="files button instrument"></div>');
-                divSong.attr('type',ressources[i].type);
-                divSong.attr('data-song-url',ressources[i].url);
-                divSong.attr('data-song-id',i);
-
-                $('#files-list').append(divSong);
-
-                timeline.loadSong(i,ressources[i].url);
-
-
-
-              };
-
-              $(".files.button").click(function(){
-                  $(".files.button").removeClass("active");
-                  $(this).addClass("active");
-              })
-
-
-              $('.piste').each(function(){
-                for (var i = 0; i < 30; i++) {
-                  $(this).append('<div class="box"></div>');
-                };
-                $(this).css('width',60*30);
-              });
-
-              
-
-              $('.files').mousedown(function(event){
-               
-                var url=$(this).attr('data-song-url');
-                console.log(url);
-                request = new XMLHttpRequest();
-                request.open('GET', url, true);
-                request.responseType = 'arraybuffer';
-
-                request.onload = function() {
-                    //alert('test request');
-
-                    audioCtx.decodeAudioData(request.response, function(buffer)
-                    {
-                    var source;
-                    source=audioCtx.createBufferSource();
-                    source.buffer=buffer;
-                    source.connect(audioCtx.destination);
-                    source.start();
-                  },function(e){"Error with decoding audio data" + e.err});
-                  }
-                  request.send();
-                });
-
-              // $('#files-list .files').draggable(
-              // {
-              //   helper: "clone"
-              // });
-              
-              $('.box').click(function(){
-                  var button=$(".files.button.active")[0];
-                  // console.log(button);
-                  if(button!=null){
-                    var clone=$("<div class='instrument'></div>");
-                    clone.attr('type',$(button).attr('type'));
-                    clone.attr('data-song-id',$(button).attr('data-song-id'));
-                    $(this).append(clone);
-                  }
-              });
-              // $('.box').droppable({
-              //   drop: function( event, ui )
-              //   {
-              //     console.log(ui.draggable.context);
-              //     var box=$(this);
-              //     //box.empty();
-
-              //     var songDropped=$(ui.draggable.context);
-                  
-              //     box.append(songDropped.clone());
-                  
-              //     //box.attr('data-song-ref',songDropped.attr('data-song-id'));
-
-              //     //box.css('background',songDropped.css('background'));
-
-
-              //     timeline.songs[songDropped.attr('data-song-id')].play();
-
-              //   }
-              // });
-
-                  // allSources=[];
-
-                  // function playSound(buffer, time) {
-                  //   var source = audioCtx.createBufferSource();
-                  //   source.buffer = buffer;
-                  //   source.connect(audioCtx.destination);
-                  //   source.start(time);
-                  //   return source;
-                  // }
-
-
-
-                  // $('#play').click(function(event){
-                  //   console.log('test');
-
-                  //   for(var x in allSources)
-                  //   {
-                  //     allSources[x].stop();
-                  //   }
-                  //   allSources=[];
-
-                  //   for(var x in timeline.songs)
-                  //   {
-
-                  //     for (var x in timeline.songs) {
-
-                  //       var song=timeline.songs[x];
-                  //       console.log(song.getDebut());
-
-                  //       allSources.push(playSound(song.buffer,audioCtx.currentTime+song.getDebut()));
-                  //     };
-
-                  //   }
-
-                  // })
-                    // $("#timeline").css('width',$("#timeline").parent().width());
-                    // $("#timeline").css('height', $("#timeline").parent().height());
-
-                  }
-
-                  </script>
-                  <script type="text/javascript">
-                  
-                  
-                  </script>
-                </body>
-                </html>
+  <script type="text/javascript" src="js/app.js"></script>  
+  </body>
+</html>
