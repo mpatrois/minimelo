@@ -1,6 +1,9 @@
 #timeline{
 	background: red;
-    height: 200px;
+	height: 230px;
+	width: 850px;
+    overflow: hidden;
+    overflow-x: auto;
 }
 .box{
 	background: #eee;
@@ -18,8 +21,8 @@ ul li{
 .piste{
 	background: yellow;
 	border-bottom: 1px solid;
-	height: 25%;
-	width: 100%;
+	height: 57px;
+	width: 1000px;
 	position: relative;
 }
 .piste .box{
@@ -28,6 +31,7 @@ ul li{
 	box-sizing:border-box;
 	border:1px solid;
 	width: 60px;
+	text-align: center;
 }
 
 #files-list{

@@ -31,10 +31,10 @@ Timeline.prototype={
   		
   		
   		$('#timeline .piste').each(function(){
-  			console.log(this);
+  			// console.log(this);
   			var step=0;
   			$(this).find('.box').each(function(){
-  			var idSong=$(this).attr('data-song-ref');
+  			var idSong=$(this).find('.files').attr('data-song-id');
   			
   			
   			if(idSong!=null){
@@ -48,7 +48,7 @@ Timeline.prototype={
   		
   	},
   	loadSong:function(id,urlSong){
-  		console.log(urlSong);
+  		// console.log(urlSong);
   		var self=this;
 
   		$.ajax({

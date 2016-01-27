@@ -11,12 +11,39 @@ body {
     background-color:#FFF;
 }
 
+.overlay{background-image: url("../img/pattern.png");
+    background-repeat: repeat;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    opacity:0;
+    z-index:-1;}
+
 @font-face {
     font-family: "Orange";
     src: url(../fonts/orange_juice.ttf);
 }
 
 aside{width:20%;}
+
+.button{background-image:url("../img/buttons_left.png");
+background-size: cover;
+width: 50px;
+height: 55px;
+display:inline-block;}
+
+.chant{background-position-y: 0px;}
+.harpe{background-position-y: -60px;}
+.maracas{background-position-y: -123px;}
+.piano{background-position-y: -183px;}
+.symbale{background-position-y: -245px;}
+.tambour{background-position-y: -311px;}
+.guitare{background-position-y: -372px;}
+.trompette{background-position-y: -434px;}
+.plus_instru{background-position-y: -492px;}
+
 
 
 
@@ -27,6 +54,12 @@ aside{width:20%;}
                                    /* offset horizontal: half of text area width */
     width:100%;
     height:auto;
+}
+
+.active{
+    opacity:1;
+    transition: 0.6s ease all;
+    z-index: 1;
 }
 
 .app .row{margin:0;}
@@ -41,7 +74,7 @@ header img{max-width:100%;}
 .buttons_left div{padding-left:1px;
                 margin-left:20px;
                 padding-right:1px;
-                margin-top:10px;}
+                margin-top:10px; }
 
 header{width:100%;
        height:auto;
@@ -55,7 +88,6 @@ header{width:100%;
     }
 }
 
-canvas{border:1px solid black;}
 
 
 footer .time {font-family:"Orange";}
