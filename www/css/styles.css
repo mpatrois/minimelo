@@ -57,4 +57,8 @@ ul li{
 	box-sizing:border-box;
 	border-right:1px solid;
 }
-*/
+
+#debug {
+	background-color: black;
+	color: #33FF33;
+}
