@@ -15,10 +15,18 @@ Timeline.prototype={
       var step=0;
       
       $(this).find('.box').each(function(){
-      
+        
+        var box=$(this);
         var idSong=$(this).find('.instrument').attr('data-song-id');
         if(idSong!=null){
           timeline.songs[idSong].playWithTime(step*self.noteTime);
+          setTimeout(function(){
+              box.find(".instrument").toggleClass("active");
+              setTimeout(function(){
+                 box.find(".instrument").removeClass("active");
+               },100);
+
+          },step*self.noteTime*1000)
         }
         step++;
 
@@ -43,4 +51,3 @@ Timeline.prototype={
     });
   }
 }
-// Remyce37

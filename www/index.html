@@ -67,8 +67,7 @@
            <div class="row">
             <div class="col-xs-12">
               <div id="timeline">
-                <div id="piste-1" class="piste">
-                </div>
+                <div id="piste-1" class="piste"></div>
                 <div id="piste-2" class="piste"></div>
                 <div id="piste-3" class="piste"></div>
                 <div id="piste-4" class="piste"></div>
@@ -76,30 +75,35 @@
 
             </div>
           </div>
+          
+        </div>
 
           <div class="row">
             <footer class="col-xs-12">
-              <div class="time col-xs-4">
+              <div class="col-xs-3">
                   <div class="plus_instru button"></div>
+                  <div class="clear round_btn trash_btn"></div>
               </div>
 
-              <div class="col-xs-4">
+              <div class="col-xs-6">
 
-                <img id="begin" src="img/btn_start.png"/>
-                <img id="play" onclick="timeline.play()" src="img/btn_play.png"/>
-                <img id="stop" src="img/btn_stop.png"/>
-                <img id="end" src="img/btn_end.png"/>
+                <div class="round_btn begin_btn" id="begin"></div>
+                <div class="round_btn play_btn" onclick="timeline.play()" id="play"></div>
+                <div class="round_btn pause_btn" id="pause"></div>
+                <div class="round_btn stop_btn" id="stop"></div>
+                <div class="round_btn end_btn" id="end"></div>
 
               </div>
 
-              <div class="col-xs-4">
+              <div class="col-xs-3">
                 <img src="img/btn_zoom.png"/>
                 <img src="img/btn_unzoom.png"/>
               </div>
 
             </footer>
           </div>
-        </div>
+
+        
       </div>
     </div>
   </div>
@@ -123,9 +127,13 @@
             
             var timeline=new Timeline();
 
-            document.addEventListener('deviceready',runApp, false);
+            // document.addEventListener('deviceready',runApp, false);
 
             function runApp(){
+
+              $(".round_btn.trash_btn").click(function(){
+                  $('.box').empty();
+              })
 
               $(".plus_instru").click(function() {
                 $(".overlay").toggleClass('active');
@@ -152,36 +160,39 @@
               })
 
 
-              $('.piste').each(function(){
+              // $('.piste').each(function(){
+              //   alert(this.id);
+              //   $(this).css('width',63*30);
+              //   for (var i = 0; i < 30; i++) {
+              //     $(this).append('<div class="box">'+i+'</div>');
+              //   };
+
+                
+              // });
+              var listPiste=document.getElementsByClassName('piste');
+              console.log(listPiste.length);
+              for (var x = 0; x < listPiste.length; x++) {
+                // listPiste[i]
+                // console.log(listPiste[x]);
+                $(listPiste[x]).css('width',60*30);
                 for (var i = 0; i < 30; i++) {
-                  $(this).append('<div class="box"></div>');
+                  $(listPiste[x]).append('<div class="box"></div>');
                 };
-                $(this).css('width',60*30);
-              });
+              };
+
+              // $('.piste').each(function(){
+              //   $(this).css('width',$('.box').width()+30*30);
+              //   //console.log();
+              // });
+              
 
               
 
               $('.files').mousedown(function(event){
-               
-                var url=$(this).attr('data-song-url');
-                console.log(url);
-                request = new XMLHttpRequest();
-                request.open('GET', url, true);
-                request.responseType = 'arraybuffer';
-
-                request.onload = function() {
-                    //alert('test request');
-
-                    audioCtx.decodeAudioData(request.response, function(buffer)
-                    {
-                    var source;
-                    source=audioCtx.createBufferSource();
-                    source.buffer=buffer;
-                    source.connect(audioCtx.destination);
-                    source.start();
-                  },function(e){"Error with decoding audio data" + e.err});
-                  }
-                  request.send();
+                
+                var idSong = $(this).attr("data-song-id");
+                timeline.songs[idSong].play();
+                
                 });
 
               // $('#files-list .files').draggable(
@@ -189,9 +200,10 @@
               //   helper: "clone"
               // });
               
-              $('.box').click(function(){
+              //$('.box').mousedown(function(){
+                $('.box').off().on('click', function(e){
+                  e.preventDefault();
                   var button=$(".files.button.active")[0];
-
                   if($(this).find('.instrument')[0]==null){
                     if(button!=null)
                     {
