@@ -86,7 +86,7 @@
               <div class="col-xs-4">
 
                 <img id="begin" src="img/btn_start.png"/>
-                <img id="play" src="img/btn_play.png"/>
+                <img id="play" onclick="timeline.play()" src="img/btn_play.png"/>
                 <img id="stop" src="img/btn_stop.png"/>
                 <img id="end" src="img/btn_end.png"/>
 
@@ -103,7 +103,6 @@
       </div>
     </div>
   </div>
-  <button onclick="timeline.play()">Play</button>
 
   <script type="text/javascript" src="cordova.js"></script>
   <script type="text/javascript">
@@ -192,13 +191,21 @@
               
               $('.box').click(function(){
                   var button=$(".files.button.active")[0];
-                  // console.log(button);
-                  if(button!=null){
-                    var clone=$("<div class='instrument'></div>");
-                    clone.attr('type',$(button).attr('type'));
-                    clone.attr('data-song-id',$(button).attr('data-song-id'));
-                    $(this).append(clone);
+
+                  if($(this).find('.instrument')[0]==null){
+                    if(button!=null)
+                    {
+                      var clone=$("<div class='instrument'></div>");
+                      clone.attr('type',$(button).attr('type'));
+                      clone.attr('data-song-id',$(button).attr('data-song-id'));
+                      $(this).append(clone);
+                    }
+                  }else{
+                    $(this).empty();
                   }
+
+                  // $(this).empty();
+                  
               });
               // $('.box').droppable({
               //   drop: function( event, ui )

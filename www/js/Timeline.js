@@ -1,7 +1,7 @@
 function Timeline(){
   this.songs=[];
   this.tempo=90;
-  this.noteTime=(60)/this.tempo/2;
+  this.noteTime=(60)/this.tempo/4;
 }
 
 Timeline.prototype={

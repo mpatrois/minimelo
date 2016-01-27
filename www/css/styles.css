@@ -36,6 +36,7 @@ display:inline-block;}
 
 .button.active{
     transform:scale(1.2);
+    background-color:green; 
 }
 
 .chant{background-position-y: 0px;}
