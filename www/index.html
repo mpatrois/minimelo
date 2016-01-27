@@ -32,54 +32,11 @@
         
         <title>Hello World</title>
     </head>
-    <body>
-      <!-- <div id="finder">
-        <ul id="list-files">
-
-        </ul>
-        <button id="play">Play</button>
-      </div>
-      
-        <canvas id="timeline" width="800" height="300"></canvas> -->
+    <body onload="runApp()">
 
         <div class="app">
             <div class="row">
                 <div class="col-xs-1 buttons_left" id="files-list">
-                    <!-- <div id="btn_red" class="col-xs-12 files">
-                        <img src="img/btn_default.png"/>
-                    </div>
-
-                    <div id="btn_orange" class="col-xs-12 files">
-                        <img src="img/btn_default.png"/>
-                    </div>
-
-                    <div id="btn_yellow" class="col-xs-12 files">
-                        <img src="img/btn_default.png"/>
-                    </div>
-
-                    <div id="btn_lightgreen" class="col-xs-12 files">
-                        <img src="img/btn_default.png"/>
-                    </div>
-
-                    <div id="btn_darkblue" class="col-xs-12 files">
-                        <img src="img/btn_default.png"/>
-                    </div>
-
-                    <div id="btn_green" class="col-xs-12 files">
-                        <img src="img/btn_default.png"/>
-                    </div>
-
-                    <div id="btn_purple" class="col-xs-12 files">
-                        <img src="img/btn_default.png"/>
-                    </div>
-
-                    <div id="btn_grey" class="col-xs-12 files">
-                        <img src="img/btn_default.png"/>
-                    </div>
-
-                    <div id="btn_plus" class="col-xs-12 files">
-                        <img src="img/btn_default.png"/>
-                    </div> -->
                 </div>
             
                 <div class="col-xs-11">
@@ -100,7 +57,14 @@
 
                         <div class="row">
                             <div class="col-xs-12">
-                                <canvas id="timeline"></canvas>
+                                <div id="timeline">
+                                    <div id="piste-1" class="piste">
+                                    </div>
+                                    <div id="piste-2" class="piste"></div>
+                                    <div id="piste-3" class="piste"></div>
+                                    <div id="piste-4" class="piste"></div>
+                                </div>
+
                             </div>
                         </div>
 
@@ -130,8 +94,12 @@
                 </div>
             </div>
         </div>
+        <button onclick="timeline.play()">Play</button>
 
         <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript">
+          var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        </script>
         <script src="js/jquery.js"></script>
         <script src="js/jquery-ui.min.js"></script>
         <script src="js/jquery.ui.touch-punch.min.js"></script>
@@ -141,24 +109,43 @@
         <script src="js/Resources.js"></script>
         <script src="js/Timeline.js"></script>
         <script src="js/Song.js"></script>
+        <script src="js/Timeline.js"></script>
+        
 
         <script type="text/javascript">
             //  app.initialize();
+            
+            var timeline=new Timeline();
 
-            // var timeline=new Timeline();
             document.addEventListener('deviceready',runApp, false);
+
             function runApp(){
 
-              var timeline=new Timeline();
+              
 
               for (var i = 0; i < ressources.length; i++) {
 
-                var file='<div class="col-xs-12 files"><img src="img/btn_default.png" data-url="'+ressources[i]+'" style="background:'+colors[i]+'"/></div>';
+                var file='<div class="col-xs-12 files"><img src="img/btn_default.png" data-song-id="'+i+'"" data-url="'+ressources[i]+'" style="background:'+colors[i]+'"/></div>';
 
                 $('#files-list').append(file);
 
+                timeline.loadSong(i,ressources[i]);
+
+
+
               };
-              var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+
+
+
+              $('.piste').each(function(){
+                for (var i = 0; i < 8; i++) {
+                  $(this).append('<div class="box"></div>');
+                };
+                
+              });
+
+              
 
               $('.files').mousedown(function(event){
                
@@ -170,9 +157,11 @@
 
                   request.onload = function() {
                     //alert('test request');
+
                     audioCtx.decodeAudioData(request.response, function(buffer)
                     {
                     //alert('decode request');
+
                       var source;
                       source=audioCtx.createBufferSource();
                       source.buffer=buffer;
@@ -188,10 +177,18 @@
                       helper: "clone"
                     });
 
-                  $('#timeline').droppable({
+                  $('.box').droppable({
                       drop: function( event, ui )
                       {
-                        timeline.addSong(ui.draggable.context);
+                        var box=$(this);
+                        var songDropped=$(ui.draggable.context).find('img');
+         
+                        box.attr('data-song-ref',songDropped.attr('data-song-id'));
+
+                        box.css('background',songDropped.css('background'));
+
+                        timeline.songs[songDropped.attr('data-song-id')].play();
+                        // timeline.addSong(ui.draggable.context);
                         // if(ui.draggable.context.localName=="li"){
                         //   var song=new Song();
                         //   song.loadSongFromUrl(ui.draggable.html());
@@ -243,8 +240,8 @@
                   //   }
 
                   // })
-                    $("#timeline").css('width',$("#timeline").parent().width());
-                    $("#timeline").css('height', $("#timeline").parent().height());
+                    // $("#timeline").css('width',$("#timeline").parent().width());
+                    // $("#timeline").css('height', $("#timeline").parent().height());
 
                   }
 

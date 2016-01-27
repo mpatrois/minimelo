@@ -1,10 +1,9 @@
 var ressources=[
-    "audio/kick0.wav",
-    "audio/kick2.wav",
-    "audio/kick3.wav",
-    "audio/kick4.wav",
-    "audio/kick5.wav",
-    "audio/hardkick.wav"
+    "audio/kicks/kick0.wav",
+    "audio/hats/hat1.wav",
+    "audio/snares/snare1.wav",
+    "audio/pianos/piano1.wav",
+    
 ];
 
 var colors=[
