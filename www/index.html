@@ -134,8 +134,8 @@
 
               for (var i = 0; i < ressources.length; i++) {
                 
-                var divSong=$('<div class="files button"></div>');
-                divSong.attr(ressources[i].type);
+                var divSong=$('<div class="files button instrument"></div>');
+                divSong.attr('type',ressources[i].type);
                 divSong.attr('data-song-url',ressources[i].url);
                 divSong.attr('data-song-id',i);
 
@@ -194,12 +194,9 @@
                   var button=$(".files.button.active")[0];
                   // console.log(button);
                   if(button!=null){
-                    var clone=$(button).clone();
-                    clone.removeClass('active');
-                    clone.removeClass('file');
-
-                    clone.removeClass('active');
-                    clone.removeClass('files');
+                    var clone=$("<div class='instrument'></div>");
+                    clone.attr('type',$(button).attr('type'));
+                    clone.attr('data-song-id',$(button).attr('data-song-id'));
                     $(this).append(clone);
                   }
               });
