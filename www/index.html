@@ -38,8 +38,8 @@
       <div class="row">
         <div class="overlay"></div>
         <div class="col-xs-1 buttons_left" id="files-list">
-          <!-- <div class="chant button"></div> -->
-          <!-- <div class="harpe button"></div>
+         <!--  <div class="chant button"></div>
+          <div class="harpe button"></div>
           <div class="maracas button"></div>
           <div class="piano button"></div>
           <div class="symbale button"></div>
@@ -135,7 +135,7 @@
               for (var i = 0; i < ressources.length; i++) {
                 
                 var divSong=$('<div class="files button"></div>');
-                divSong.addClass(ressources[i].type);
+                divSong.attr(ressources[i].type);
                 divSong.attr('data-song-url',ressources[i].url);
                 divSong.attr('data-song-id',i);
 
@@ -194,10 +194,13 @@
                   var button=$(".files.button.active")[0];
                   // console.log(button);
                   if(button!=null){
-                    var clone=$('<div class"button"></div>');
-                    
+                    var clone=$(button).clone();
                     clone.removeClass('active');
-                    $(this).append(cl);
+                    clone.removeClass('file');
+
+                    clone.removeClass('active');
+                    clone.removeClass('files');
+                    $(this).append(clone);
                   }
               });
               // $('.box').droppable({

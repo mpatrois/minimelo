@@ -16,7 +16,7 @@ Timeline.prototype={
       
       $(this).find('.box').each(function(){
       
-        var idSong=$(this).find('.files').attr('data-song-id');
+        var idSong=$(this).find('.button').attr('data-song-id');
         if(idSong!=null){
           timeline.songs[idSong].playWithTime(step*self.noteTime);
         }
