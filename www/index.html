@@ -80,9 +80,7 @@
           <div class="row">
             <footer class="col-xs-12">
               <div class="time col-xs-4">
-                <div class="buttons_left">
                   <div class="plus_instru button"></div>
-                </div>
               </div>
 
               <div class="col-xs-4">
@@ -112,8 +110,6 @@
   var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   </script>
   <script src="js/jquery.js"></script>
-  <script src="js/jquery-ui.min.js"></script>
-  <script src="js/jquery.ui.touch-punch.min.js"></script>
   
   <script type="text/javascript" src="js/Utils.js"></script>
   <script src="js/ressources.js"></script>
@@ -137,14 +133,12 @@
               });
 
               for (var i = 0; i < ressources.length; i++) {
-
-                //var file='<div class="files"><img src="img/btn_default.png" data-song-id="'+i+'"" data-url="'+ressources[i]+'" style="background:'+colors[i]+'"/></div>';
                 
                 var divSong=$('<div class="files button"></div>');
                 divSong.addClass(ressources[i].type);
                 divSong.attr('data-song-url',ressources[i].url);
                 divSong.attr('data-song-id',i);
-                // console.log(divSong);
+
                 $('#files-list').append(divSong);
 
                 timeline.loadSong(i,ressources[i].url);
@@ -153,9 +147,12 @@
 
               };
 
+              $(".files.button").click(function(){
+                  $(".files.button").removeClass("active");
+                  $(this).addClass("active");
+              })
 
-              
-              // console.log(widthTimeline);
+
               $('.piste').each(function(){
                 for (var i = 0; i < 30; i++) {
                   $(this).append('<div class="box"></div>');
@@ -178,8 +175,6 @@
 
                     audioCtx.decodeAudioData(request.response, function(buffer)
                     {
-                    //alert('decode request');
-
                     var source;
                     source=audioCtx.createBufferSource();
                     source.buffer=buffer;
@@ -190,31 +185,41 @@
                   request.send();
                 });
 
-              $('#files-list .files').draggable(
-              {
-                helper: "clone"
+              // $('#files-list .files').draggable(
+              // {
+              //   helper: "clone"
+              // });
+              
+              $('.box').click(function(){
+                  var button=$(".files.button.active")[0];
+                  // console.log(button);
+                  if(button!=null){
+                    var clone=$('<div class"button"></div>');
+                    
+                    clone.removeClass('active');
+                    $(this).append(cl);
+                  }
               });
+              // $('.box').droppable({
+              //   drop: function( event, ui )
+              //   {
+              //     console.log(ui.draggable.context);
+              //     var box=$(this);
+              //     //box.empty();
 
-              $('.box').droppable({
-                drop: function( event, ui )
-                {
-                  console.log(ui.draggable.context);
-                  var box=$(this);
-                  //box.empty();
-
-                  var songDropped=$(ui.draggable.context);
+              //     var songDropped=$(ui.draggable.context);
                   
-                  box.append(songDropped.clone());
+              //     box.append(songDropped.clone());
                   
-                  //box.attr('data-song-ref',songDropped.attr('data-song-id'));
+              //     //box.attr('data-song-ref',songDropped.attr('data-song-id'));
 
-                  //box.css('background',songDropped.css('background'));
+              //     //box.css('background',songDropped.css('background'));
 
 
-                  timeline.songs[songDropped.attr('data-song-id')].play();
+              //     timeline.songs[songDropped.attr('data-song-id')].play();
 
-                }
-              });
+              //   }
+              // });
 
                   // allSources=[];
 
