@@ -1,6 +1,8 @@
-body{
+/*body{
 	padding:0px;
 	margin: 0px;
+	width: 100%;
+	height: 100%;
 }
 #finder{
 	position: fixed;
@@ -11,14 +13,23 @@ body{
 	height: 100%;
 }
 
-#list-files li{
+#finder{
+	list-style-type: none;
+}
+#finder li{
 	padding: 20px;
 }
+
+#finder li:hover{
+	background: yellow;
+}
+
 #timeline{
 	height: 100%;
 	width: 100%;
 	margin-left: 200px;
-	background: red;
+	/*background: red;*/
+	border:1px solid;
 }
 .box{
 	background: orange;
@@ -46,3 +57,4 @@ ul li{
 	box-sizing:border-box;
 	border-right:1px solid;
 }
+*/
