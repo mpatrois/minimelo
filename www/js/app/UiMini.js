@@ -2,13 +2,12 @@ define(function( require ) {
 
   'use strict';
 
-  $.fn.hello = function() {
-    	alert('hello !');
-  };
+  // $.fn.save = function() {
+  //   	alert('a garder !');
+  // };
 
   function UiMini(timeline){
     this.timeline=timeline;
-    this.nbBox=120;
   }
 
   UiMini.prototype.initButtonsSongs = function () {
@@ -80,28 +79,28 @@ define(function( require ) {
 
 	 $('.piste').each(function(){
 
-        for (var i = 0; i < sefl.nbBox; i++) {
+        for (var i = 0; i < sefl.timeline.getNbSteps(); i++) {
             $(this).append('<div class="box"></div>');
         };
 
-        $(this).css('width',$('.box').outerWidth()*sefl.nbBox);
+        $(this).css('width',$('.box').outerWidth()*sefl.timeline.getNbSteps());
     });
 
-	$('.box').off().on('click', function(e){
-	    e.preventDefault();
-	    var button=$("#buttons-songs .button.active")[0];
+  	$('.box').off().on('click', function(e){
+  	    e.preventDefault();
+  	    var button=$("#buttons-songs .button.active")[0];
 
-	    if($(this).find('.instrument')[0] == null && button != null) {
-	        var clone=$("<div class='instrument'></div>");
-	        clone.attr('type',$(button).attr('type'));
-	        clone.attr('data-song-id',$(button).attr('data-song-id'));
-	        $(this).append(clone);
-	    } 
-	    else 
-	    {
-	        $(this).empty();
-	    }
-	});
+  	    if($(this).find('.instrument')[0] == null && button != null) {
+  	        var clone=$("<div class='instrument'></div>");
+  	        clone.attr('type',$(button).attr('type'));
+  	        clone.attr('data-song-id',$(button).attr('data-song-id'));
+  	        $(this).append(clone);
+  	    } 
+  	    else 
+  	    {
+  	        $(this).empty();
+  	    }
+  	});
 
   };
 

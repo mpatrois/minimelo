@@ -15,3 +15,10 @@ Mini Mélo is an educational app for recognizing and playing with sounds. You ca
 Then run : 
 
 	cordova/phonegap run android
+
+##How to use scss and gulp
+	install gulp in your minimelo/www directory by running
+	$ npm install gulp
+	
+	then run 
+	$ gulp
