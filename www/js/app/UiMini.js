@@ -91,8 +91,12 @@ define(function( require ) {
 
 	 $('.piste').each(function(){
 
+	 	var step=0;
         for (var i = 0; i < sefl.timeline.getNbSteps(); i++) {
-            $(this).append('<td class="box"></td>');
+            var box=$('<td class="box"></td>');
+            box.attr('step',step);
+            $(this).append(box);
+            step++;
         };
 
         $(this).css('width',$('.box').outerWidth()*sefl.timeline.getNbSteps());
@@ -103,10 +107,12 @@ define(function( require ) {
   	    var button=$("#buttons-songs .button.active")[0];
 
   	    if($(this).find('.instrument')[0] == null && button != null) {
-  	        var clone=$("<div class='instrument'></div>");
-  	        clone.attr('type',$(button).attr('type'));
-  	        clone.attr('data-song-id',$(button).attr('data-song-id'));
-  	        $(this).append(clone);
+  	        var instrument=$("<div class='instrument'></div>");
+  	        instrument.attr('type',$(button).attr('type'));
+  	        instrument.attr('data-song-id',$(button).attr('data-song-id'));
+  	        instrument.attr('step',$(this).attr('step'));
+
+  	        $(this).append(instrument);
   	    } 
   	    else 
   	    {

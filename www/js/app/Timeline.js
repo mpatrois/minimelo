@@ -14,77 +14,71 @@ define(function(require) {
 		this.bars        = 20;
 		this.stepByBars  = 4;
 		this.audioCtx    = new (window.AudioContext || window.webkitAudioContext)();
+
+		this.nbSongPlayed=0;
 	}
 
-  	Timeline.prototype.play = function play() {
+  	Timeline.prototype.play = function () {
 
 		var self=this;
 
 		var pistes=document.getElementById('timeline').rows;
 		
 		var getNbSteps=pistes[0].cells.length;
+
+		self.nbSongPlayed=0;
+      	self.songsInPlay=[];
 		
-		for (var step = 0; step < getNbSteps; step++) {
-			for (var y = 0; y < pistes.length; y++) {
-				
-				var box=pistes[y].cells[step];
+		$('.box .instrument').each(function(){
+			
 
-				var instrument=box.querySelector('.instrument');
+			var instrument=this;
 
-				if(instrument!=null){
-			  			
-			  		  var idSong=instrument.getAttribute('data-song-id');
-					  var sourcePlaying=this.songs[idSong].playWithTime(step*this.getNoteTime(), this.audioCtx);
+			var idSong=instrument.getAttribute('data-song-id');
+			var step=instrument.getAttribute('step');
 
-					  var idTimeOutActive;
-					  var idTimeOutInactive;
+			var sourcePlaying=self.songs[idSong].playWithTime(step*self.getNoteTime(), self.audioCtx);
 
-					  idTimeOutActive = setTimeout(function(instrument){
+			var idTimeOutActive;
+			var idTimeOutInactive;
 
-							instrument.classList.add('active');
-							
-							idTimeOutInactive=setTimeout(function(){
-						  		
-						  		instrument.classList.remove('active');
-							
-							},100);
+			idTimeOutActive = setTimeout(function(instrument){
 
-					  }, step*this.getNoteTime()*1000,instrument)
+				instrument.classList.add('active');
 
-					  var index=self.songsInPlay.length;
-					  
-					  self.songsInPlay.push({index:index,
-					  			source:sourcePlaying,
-					  		 	timeOutActive:idTimeOutActive,
-					  		 	timeOutInactive:idTimeOutInactive});
+				idTimeOutInactive = setTimeout(function(){
+						
+						instrument.classList.remove('active');
 
-					  
-					  sourcePlaying.index=index;
-					  console.log(index,'def');
+				},100);
 
-					  sourcePlaying.onended=function(){
+			}, step*self.getNoteTime()*1000,instrument);
 
-					  	if(delete self.songsInPlay[this.index]){
-					  		console.log(self.songsInPlay);
-					  		self.songsInPlay.length--;
+			var index=self.songsInPlay.length;
 
-					  	}
+			self.songsInPlay.push({ index           : index,
+								    source          : sourcePlaying,
+					 				timeOutActive   : idTimeOutActive,
+					 				timeOutInactive : idTimeOutInactive});
 
-					  	if(self.songsInPlay.length==0){
-					  		$('#play_stop').removeClass('stop_btn');
-      						$('#play_stop').addClass('play_btn');
-					  	};
-					  }
+			sourcePlaying.onended=function(){
+
+				self.nbSongPlayed++;
+
+				if(self.nbSongPlayed==self.songsInPlay.length){
+					$('#play_stop').removeClass('stop_btn');
+					$('#play_stop').addClass('play_btn');
 
 				}
+			}
 
-			};
-		};
+		})
 
   	};
 
   	Timeline.prototype.stop = function () {
 
+  		console.log(this.songsInPlay);
 		for (var i = 0; i < this.songsInPlay.length; i++) {
 			this.songsInPlay[i].source.stop();
 			clearTimeout(this.songsInPlay[i].timeOutActive);
