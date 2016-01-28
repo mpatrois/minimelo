@@ -11,19 +11,19 @@
 .square_btn.piano_btn  { background-position-y: -150px; }
 .square_btn.cimbals_btn{ background-position-y: -200px; }
 .square_btn.drum_btn   { background-position-y: -250px; }
-.square_btn.guitare_btn{ background-position-y: -300px; }
+.square_btn.guitar_btn{ background-position-y: -300px; }
 .square_btn.trumpet_btn{ background-position-y: -350px; }
 .square_btn.plus_btn   { background-position-y: -400px; }
 
-.square_btn.micro_btn:hover  { background-position-y: -450px; }
-.square_btn.harp_btn:hover   { background-position-y: -500px; }
-.square_btn.maracas_btn:hover{ background-position-y: -550px; }
-.square_btn.piano_btn:hover  { background-position-y: -600px; }
-.square_btn.cimbals_btn:hover{ background-position-y: -650px; }
-.square_btn.drum_btn:hover   { background-position-y: -700px; }
-.square_btn.guitare_btn:hover{ background-position-y: -750px; }
-.square_btn.trumpet_btn:hover{ background-position-y: -800px; }
-.square_btn.plus_btn:hover   { background-position-y: -850px; }
+.square_btn.micro_btn:active  { background-position-y: -450px; }
+.square_btn.harp_btn:active   { background-position-y: -500px; }
+.square_btn.maracas_btn:active{ background-position-y: -550px; }
+.square_btn.piano_btn:active  { background-position-y: -600px; }
+.square_btn.cimbals_btn:active{ background-position-y: -650px; }
+.square_btn.drum_btn:active   { background-position-y: -700px; }
+.square_btn.guitare_btn:active{ background-position-y: -750px; }
+.square_btn.trumpet_btn:active{ background-position-y: -800px; }
+.square_btn.plus_btn:active   { background-position-y: -850px; }
 
 /*
 VM236:2 477

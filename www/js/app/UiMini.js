@@ -44,7 +44,6 @@ define(function( require ) {
       $("#buttons-songs-modal").append(buttonsClone);
 
       buttonsClone.click(function(event){
-        // console.log($(this).attr('type'));
         var type=$(this).attr('type');
         var tabType=ressources[type];
         $("#choose-song").empty();
@@ -60,7 +59,9 @@ define(function( require ) {
       $("#choose-song .button.active").removeClass('active');
       $(this).addClass('active');
 
-      var idSong=$(this).attr("data-song-id");
+
+      var UrlSong=$(this).attr('data-song-url', self.url);
+      console.log(UrlSong);
       self.timeline.songs[0].play(self.timeline.audioCtx);
 
     });
