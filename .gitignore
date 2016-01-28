@@ -4,5 +4,7 @@ platforms/browser
 
 plugins/
 
+www/node_modules
+
 *~
 **~

@@ -6,10 +6,11 @@ define(function(require) {
 	var ressources = require('app/ressources');
 
 	function Timeline(){
-		this.songs    = [];
-		this.tempo    = 90;
-		this.noteTime = (60)/this.tempo/4;
-		this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+		this.songs       = [];
+		this.tempo       = 90;
+		this.bars        = 20;
+		this.stepByBars  = 4;
+		this.audioCtx    = new (window.AudioContext || window.webkitAudioContext)();
 	}
 
   	Timeline.prototype.play = function play() {
@@ -25,14 +26,14 @@ define(function(require) {
 			var box    = $(this);
 			var idSong = $(this).find('.instrument').attr('data-song-id');
 			if(idSong != null){
-			  self.songs[idSong].playWithTime(step*self.noteTime, self.audioCtx);
+			  self.songs[idSong].playWithTime(step*self.getNoteTime(), self.audioCtx);
 			  setTimeout(function(){
 					box.find(".instrument").toggleClass("active");
 					setTimeout(function(){
 				  	box.find(".instrument").removeClass("active");
 				},100);
 
-			  }, step*self.noteTime*1000)
+			  }, step*self.getNoteTime()*1000)
 			}
 			step++;
 
@@ -59,6 +60,14 @@ define(function(require) {
 				});
 			},function(e){"Error with decoding audio data" + e.err;});	
 		});
+	};
+
+	Timeline.prototype.getNbSteps = function () {
+		return this.bars * this.stepByBars;
+	};
+
+	Timeline.prototype.getNoteTime = function () {
+		return (60)/this.tempo/4;
 	};
 
   	return Timeline;

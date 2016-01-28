@@ -1,0 +1,198 @@
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:14px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    width:100%;
+    background-color:#FFF;
+}
+
+@font-face {
+    font-family: "Orange";
+    src: url(../fonts/orange_juice.ttf);
+}
+/*General style elements*/
+aside{width:20%;}
+
+
+ul{
+	-webkit-user-select: none;
+	cursor: pointer;
+	li{
+		-webkit-user-select: none;
+		cursor: pointer;
+	}
+}
+
+
+.instrument{
+    background-image:url("../img/buttons_left.png");
+    background-size: cover;
+    width: 50px;
+    height: 55px;
+    display:inline-block;
+
+    &[type="chant"]{background-position:0 0px;}
+	&[type="harpe"]{background-position:0 -60px;}
+	&[type="maracas"]{background-position:0 -123px;}
+	&[type="piano"]{background-position:0 -183px;}
+	&[type="symbale"]{background-position:0 -245px;}
+	&[type="tambour"]{background-position:0 -311px;}
+	&[type="guitare"]{background-position:0 -372px;}
+	&[type="trompette"]{background-position:0 -434px;}
+	&[type="plus_instru"]{background-position:0 -492px;}
+
+}
+
+/* Portrait layout (default) */
+.app {
+    width:100%;
+    height:auto;
+    .row{
+    	margin:0;
+    }
+}
+
+header{
+	width:100%;
+	height:auto;
+	text-align: center;
+	margin: 50px 0;
+	img
+	{
+		max-width:100%;
+	}
+}
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    .app {
+    
+    }
+}
+
+#buttons-songs{
+
+	.button{
+		background-size: cover;
+		width: 50px;
+		height: 55px;
+		margin: 0 auto;
+		display: block;
+		margin-top:10px; 
+	}
+
+	.button.active{
+	    transform:scale(1.2);
+	}
+}
+
+#timeline{
+	
+	width: 100%;
+    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    .piste {
+		.box{
+			height:60px;
+		    width: 60px;
+			display: inline-block;
+		    vertical-align: top;
+			box-sizing:border-box;
+			border:1px solid;
+			text-align: center;
+
+			.instrument.active{
+				transform:scale(1.3);
+			}
+		}
+		.box:nth-child(4n+1) {
+		  border-left: 2px solid black;
+		}
+		.box:nth-child(4n) {
+		  border-right: 2px solid black;
+		}
+	}
+}
+
+#deck-buttons{
+	margin-top:50px;
+	
+	div:nth-of-type(3) {
+		text-align:right;
+	}
+	
+	div:nth-of-type(1){
+		p{
+			font-family:"Orange";
+		}
+	}
+	
+	img{
+		margin-left:10px;
+        width:40px;
+        height:40px;
+    }
+
+    .round_btn{
+	    display: inline-block;
+	    background: url('../img/round_button_sprite.png') no-repeat;
+	    background-size: cover;
+	    width: 50px;
+	    height: 50px;
+
+	    &.trash_btn{
+	    	background-position:0 -250px;
+	    	:active{ background-position:0 -800px; }
+	    }
+		
+		&.play_btn{ 
+			background-position:0 0;
+			:active{ background-position:0 -550px; }
+		}
+		
+		&.pause_btn{ 
+			background-position:0 -50px; 
+			:active{ background-position:0 -600px; }
+		}
+
+		&.stop_btn{
+			background-position:0 -100px;
+			:active{ background-position:0 -650px; }
+		}
+
+		&.begin_btn{
+			background-position:0 -350px;
+			:active{ background-position:0 -900px; }
+		}
+
+		&.end_btn{ 
+			background-position:0 -400px;
+			:active{ background-position:0 -950px; }
+		}
+
+	}
+}
+
+.app{
+	h1{
+	    font-size:48px;
+	    display:inline-block;
+	    overflow:visible;
+	    font-family:"Orange";
+	    margin:0;
+	}
+}
+
+#debug {
+	background-color: black;
+	color: #33FF33;
+}
+
+
