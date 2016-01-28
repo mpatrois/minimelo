@@ -12,8 +12,6 @@ define(function( require ) {
 
   UiMini.prototype.initButtonsSongs = function () {
 	
-	var sefl=this;
-
 	for (var idSong = 0; idSong < ressources.length; idSong++) {
 
         var buttonSong=$('<div class="button instrument"></div>');
@@ -22,7 +20,7 @@ define(function( require ) {
         
         $('#buttons-songs').append(buttonSong);
 
-        this.timeline.loadSong(idSong,ressources[idSong].url,buttonSong);
+        this.timeline.loadSong(idSong, ressources[idSong].url);
 
     };
 
@@ -41,7 +39,6 @@ define(function( require ) {
       $("#buttons-songs-modal .button.active").removeClass('active');
       $(this).addClass('active');
       var idSong=$(this).attr("data-song-id");
-      console.log(self);
       self.timeline.songs[idSong].play(self.timeline.audioCtx);
 
     })
@@ -59,8 +56,8 @@ define(function( require ) {
 	
 	var self=this;
 
-	$(".round_btn.trash_btn").click(function(){
-            $('.box').empty();
+    $(".round_btn.trash_btn").click(function(){
+        $('.box').empty();
     });
 
     $('#play').click(function() {
