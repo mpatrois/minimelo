@@ -15,7 +15,12 @@ $(document).ready(function() {
         var timeline = new Timeline();
         var uiMini   = new UiMini(timeline);
 
+        function onDeviceReady() {
+            debug(navigator.device.capture);
+        }
+
         function runApp(){
+            document.addEventListener("deviceready", onDeviceReady, false);
 
             uiMini.initUiMini();
             
