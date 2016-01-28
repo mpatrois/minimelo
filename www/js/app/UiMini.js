@@ -1,98 +1,92 @@
 define(function( require ) {
 
-  'use strict';
+    'use strict';
 
-  // $.fn.save = function() {
-  //   	alert('a garder !');
-  // };
-
-  function UiMini(timeline){
-    this.timeline=timeline;
-  }
-
-  UiMini.prototype.initButtonsSongs = function () {
-	
-	var sefl=this;
- // console.log(ressources);
-  var idSong = 0;
-
-  for(var classe in ressources)
-  {
-
-    var tabInstru = ressources[classe][0];
-    
-    var buttonSong=$('<div class="button instrument"></div>');
-        buttonSong.attr('type',classe);
-        buttonSong.attr('data-song-id',idSong);
-        
-        $('#buttons-songs').append(buttonSong);
-
-        this.timeline.loadSong(idSong,tabInstru.url,buttonSong);
-        idSong++;
+    function UiMini(timeline){
+        this.timeline=timeline;
     }
 
+    UiMini.prototype.initButtonsSongs = function () {
 
-};
+        var idSong = 0;
 
-  UiMini.prototype.initButtonsModal = function () {
+        for(var classe in ressources)
+        {
 
-    var self=this;
+            var tabInstru = ressources[classe][0];
 
-    $("#buttons-songs .button").each(function(){
-      var buttonsClone=$(this).clone();
+            var buttonSong=$('<div class="button instrument"></div>');
+            buttonSong.attr('type',classe);
+            buttonSong.attr('data-song-id',idSong);
 
-      $("#buttons-songs-modal").append(buttonsClone);
+            $('#buttons-songs').append(buttonSong);
 
-      buttonsClone.click(function(event){
-        var type=$(this).attr('type');
-        var tabType=ressources[type];
-        $("#choose-song").empty();
-        for (var i = 0; i < tabType.length; i++) {
-          console.log(tabType[i]);
-          var cloneWithUrl=buttonsClone.clone();
-          cloneWithUrl.attr('data-song-url',tabType[i].url);
-          $("#choose-song").append(cloneWithUrl);
-        };
+            this.timeline.loadSong(idSong, tabInstru.url, buttonSong);
+            idSong++;
+        }
 
+    };
 
-    $("#choose-song .button").click(function(){
-      $("#choose-song .button.active").removeClass('active');
-      $(this).addClass('active');
+UiMini.prototype.initButtonsModal = function () {
+ 
+        var self=this;
+ 
+        $("#buttons-songs .button").each(function(){
+            var buttonsClone=$(this).clone();
+ 
+            $("#buttons-songs-modal").append(buttonsClone);
+ 
+            buttonsClone.click(function(event){
+                // console.log($(this).attr('type'));
+                var type=$(this).attr('type');
+                var tabType=ressources[type];
+                $("#choose-song").empty();
+ 
+                for (var i = 0; i < tabType.length; i++) {
+                    console.log(tabType[i]);
+                    var cloneWithUrl=buttonsClone.clone();
+                    cloneWithUrl.attr('data-song-url',tabType[i].url);
+                    cloneWithUrl.removeAttr('data-song-id');
+                    $("#choose-song").append(cloneWithUrl);
+                };
+ 
+ 
+                $("#choose-song .button").click(function(){
+                    $("#choose-song .button.active").removeClass('active');
+                    $(this).addClass('active');
+                    var urlSong = $(this).attr('data-song-url');
+                    var song = new Song(0, urlSong);
+                    song.play();
+ 
+                });
+ 
+            });
+ 
+        });
+ 
+        // $("#buttons-songs-modal .button").click(function(){
+        //  $("#buttons-songs-modal .button.active").removeClass('active');
+        //  $(this).addClass('active');
+        //  var idSong=$(this).attr("data-song-id");
+        //  self.timeline.songs[idSong].play(self.timeline.audioCtx);
+ 
+        // });
+ 
+    };
 
+UiMini.prototype.initUiMini = function (){
+   this.initButtonsSongs();
+   this.initButtonsModal();
+   this.initDeckButtons();
+   this.initPistes();
+}
 
-      var UrlSong=$(this).attr('data-song-url', self.url);
-      console.log(UrlSong);
-      self.timeline.songs[0].play(self.timeline.audioCtx);
-
-    });
-
-      });
-
-    });
-
-    $("#buttons-songs-modal .button").click(function(){
-      $("#buttons-songs-modal .button.active").removeClass('active');
-      $(this).addClass('active');
-      var idSong=$(this).attr("data-song-id");
-      self.timeline.songs[idSong].play(self.timeline.audioCtx);
-
-    });
-
-  };
-
-  UiMini.prototype.initUiMini = function (){
-  	this.initButtonsSongs();
-    this.initButtonsModal();
-    this.initDeckButtons();
-    this.initPistes();
-  }
-
-  UiMini.prototype.initDeckButtons = function () {
+UiMini.prototype.initDeckButtons = function () {
 	
 	var self=this;
 
-	$(".round_btn.trash_btn").click(function(){
-            $('.box').empty();
+    $(".round_btn.trash_btn").click(function(){
+        $('.box').empty();
     });
 
     $('#play').click(function() {
@@ -103,39 +97,39 @@ define(function( require ) {
         $(".overlay").toggleClass('active');
     });
 
-  };
+};
 
-  UiMini.prototype.initPistes = function () {
+UiMini.prototype.initPistes = function () {
 	
 	var sefl=this;
 
-	 $('.piste').each(function(){
+  $('.piste').each(function(){
 
-        for (var i = 0; i < sefl.timeline.getNbSteps(); i++) {
-            $(this).append('<div class="box"></div>');
-        };
+    for (var i = 0; i < sefl.timeline.getNbSteps(); i++) {
+        $(this).append('<div class="box"></div>');
+    };
 
-        $(this).css('width',$('.box').outerWidth()*sefl.timeline.getNbSteps());
-    });
+    $(this).css('width',$('.box').outerWidth()*sefl.timeline.getNbSteps());
+});
 
-  	$('.box').off().on('click', function(e){
-  	    e.preventDefault();
-  	    var button=$("#buttons-songs .button.active")[0];
+  $('.box').off().on('click', function(e){
+   e.preventDefault();
+   var button=$("#buttons-songs .button.active")[0];
 
-  	    if($(this).find('.instrument')[0] == null && button != null) {
-  	        var clone=$("<div class='instrument'></div>");
-  	        clone.attr('type',$(button).attr('type'));
-  	        clone.attr('data-song-id',$(button).attr('data-song-id'));
-  	        $(this).append(clone);
-  	    } 
-  	    else 
-  	    {
-  	        $(this).empty();
-  	    }
-  	});
+   if($(this).find('.instrument')[0] == null && button != null) {
+       var clone=$("<div class='instrument'></div>");
+       clone.attr('type',$(button).attr('type'));
+       clone.attr('data-song-id',$(button).attr('data-song-id'));
+       $(this).append(clone);
+   } 
+   else 
+   {
+       $(this).empty();
+   }
+});
 
-  };
+};
 
-  return UiMini;
+return UiMini;
 
 });

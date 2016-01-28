@@ -1,31 +1,57 @@
 define(function( require ) {
 
-  'use strict';
+    'use strict';
 
-  function Song(){
-    this.buffer    = null;
-    this.source    = null;
-    this.startTime = 0;
-    this.stopTime  = 0;
-  }
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-  Song.prototype.playWithTime = function playWithTime( time, audioCtx ) {
-    this.source        = audioCtx.createBufferSource();
-    this.source.buffer = this.buffer;
-    this.source.connect(audioCtx.destination);
-    this.source.start(audioCtx.currentTime+time);
-  };
+    function Song( id, url ){
+        this.id        = id
+        this.buffer    = null;
+        this.source    = null;
+        this.startTime = 0;
+        this.stopTime  = 0;
+        this.load( url );
+    }
 
-  Song.prototype.play = function play( audioCtx )
-  {
-    this.playWithTime(0, audioCtx);
-  };
+    Song.prototype.load = function ( url ) {
+        var self = this;
 
-  Song.prototype.getDuration = function getDuration(){
-    return this.source.buffer.duration;
-  };
+        $.ajax({
+            url: url,
+            xhrFields : {responseType : 'arraybuffer'},
+        }).done(function(arrayBuffer){
 
-  return Song;
+            audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
+                self.buffer = buffer;
+
+                $("[data-song-id=" + self.id + "]").mousedown(function(){
+                    self.play();
+                    $("#buttons-songs .button").removeClass("active");
+                    $(this).addClass("active");
+                });
+
+          }, function(e) {"Error with decoding audio data" + e.err;} );  
+        });
+
+    }
+
+    Song.prototype.playWithTime = function ( time ) {
+        this.source        = audioCtx.createBufferSource();
+        this.source.buffer = this.buffer;
+        this.source.connect(audioCtx.destination);
+        this.source.start(audioCtx.currentTime+time);
+    };
+
+    Song.prototype.play = function ()
+    {
+        this.playWithTime(0);
+    };
+
+    Song.prototype.getDuration = function (){
+        return this.source.buffer.duration;
+    };
+
+    return Song;
 
 });
 

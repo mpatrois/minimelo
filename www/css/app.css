@@ -135,39 +135,91 @@ header {
     height: 40px; }
   #deck-buttons .round_btn {
     display: inline-block;
-    background: url("../img/round_button_sprite.png") no-repeat;
+    width: 100px;
+    height: 100px;
+    background-image: url("../img/buttons_sprite.png");
     background-size: cover;
-    width: 50px;
-    height: 50px; }
-    #deck-buttons .round_btn.validate_btn {
+    background-position: 0 67%;
+    transform: scale(0.5); }
+    #deck-buttons .round_btn:hover {
+      background-position: 0 101%; }
+      #deck-buttons .round_btn:hover:after {
+        top: 6px;
+        left: -7px; }
+    #deck-buttons .round_btn:after {
+      content: "";
+      background-image: url("../img/circle_icon_sprite.png");
+      background-position: 0 67%;
+      position: relative;
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-color: transparent; }
+    #deck-buttons .round_btn.trash_btn:after {
+      background-position-y: 0; }
+    #deck-buttons .round_btn.validate_btn:after {
+      background-position-y: -100px; }
+    #deck-buttons .round_btn.scissors_btn:after {
+      background-position-y: -200px; }
+    #deck-buttons .round_btn.unzoom_btn:after {
       background-position-y: -300px; }
-      #deck-buttons .round_btn.validate_btn:active {
-        background-position-y: -850px; }
-    #deck-buttons .round_btn.trash_btn {
-      background-position: 0 -250px; }
-      #deck-buttons .round_btn.trash_btn:active {
-        background-position: 0 -800px; }
-    #deck-buttons .round_btn.play_btn {
-      background-position: 0 0; }
-      #deck-buttons .round_btn.play_btn:active {
-        background-position: 0 -550px; }
-    #deck-buttons .round_btn.pause_btn {
-      background-position: 0 -50px; }
-      #deck-buttons .round_btn.pause_btn:active {
-        background-position: 0 -600px; }
-    #deck-buttons .round_btn.stop_btn {
-      background-position: 0 -100px; }
-      #deck-buttons .round_btn.stop_btn:active {
-        background-position: 0 -650px; }
-    #deck-buttons .round_btn.begin_btn {
-      background-position: 0 -350px; }
-      #deck-buttons .round_btn.begin_btn:active {
-        background-position: 0 -900px; }
-    #deck-buttons .round_btn.end_btn {
-      background-position: 0 -400px; }
-      #deck-buttons .round_btn.end_btn:active {
-        background-position: 0 -950px; }
+    #deck-buttons .round_btn.zoom_btn:after {
+      background-position-y: -400px; }
+    #deck-buttons .round_btn.play_btn:after {
+      background-position-y: -500px; }
+    #deck-buttons .round_btn.pause_btn:after {
+      background-position-y: -600px; }
+    #deck-buttons .round_btn.stop_btn:after {
+      background-position-y: -700px; }
+    #deck-buttons .round_btn.begin_btn:after {
+      background-position-y: -800px; }
+    #deck-buttons .round_btn.end_btn:after {
+      background-position-y: -900px; }
+    #deck-buttons .round_btn.sound_btn:after {
+      background-position-y: -1000px; }
+    #deck-buttons .round_btn.close_btn:after {
+      background-position-y: -1100px; }
+    #deck-buttons .round_btn.plus_btn:after {
+      background-position-y: -1200px; }
 
+/*
+	    &.validate_btn{ 
+	    	background-position-y: -300px;
+	    	&:after{ background-position-y: -100px;  }
+	    }
+
+	    &.trash_btn{
+	    	background-position:0 -250px;
+	    	&:active{ background-position:0 -800px; }
+	    }
+		
+		&.play_btn{ 
+			background-position:0 0;
+			&:active{ background-position:0 -550px; }
+		}
+		
+		&.pause_btn{ 
+			background-position:0 -50px; 
+			&:active{ background-position:0 -600px; }
+		}
+
+		&.stop_btn{
+			background-position:0 -100px;
+			&:active{ background-position:0 -650px; }
+		}
+
+		&.begin_btn{
+			background-position:0 -350px;
+			&:active{ background-position:0 -900px; }
+		}
+
+		&.end_btn{ 
+			background-position:0 -400px;
+			&:active{ background-position:0 -950px; }
+		}
+*/
 .app h1 {
   font-size: 48px;
   display: inline-block;

@@ -175,16 +175,57 @@ header{
         height:40px;
     }
 
+
     .round_btn{
 	    display: inline-block;
-	    background: url('../img/round_button_sprite.png') no-repeat;
+	    width: 100px;
+	    height: 100px;
+	   	background-image: url("../img/buttons_sprite.png");
 	    background-size: cover;
-	    width: 50px;
-	    height: 50px;
+		background-position: 0 67%;
+		transform: scale(0.5);
+	    
+	    &:hover{
+			background-position: 0 101%;
+			&:after{
+				top:6px;
+				left:-7px;
+			}
+	    }
 
+	    &:after{
+			content:"";
+		    background-image: url("../img/circle_icon_sprite.png");
+			background-position:0 67%;
+			position: relative;
+			display: inline-block;
+			width:100px;
+			height: 100px;
+			background-repeat: no-repeat;
+			background-size: 100%;
+			background-color: transparent;	
+		}
+
+	    &.trash_btn:after{    background-position-y: 0; }
+		&.validate_btn:after{ background-position-y: -100px; }
+		&.scissors_btn:after{ background-position-y: -200px; }
+		&.unzoom_btn:after{   background-position-y: -300px; }
+		&.zoom_btn:after{     background-position-y: -400px; }
+		&.play_btn:after{     background-position-y: -500px; }
+		&.pause_btn:after{    background-position-y: -600px; }
+		&.stop_btn:after{     background-position-y: -700px; }
+		&.begin_btn:after{    background-position-y: -800px; }
+		&.end_btn:after{      background-position-y: -900px; }
+		&.sound_btn:after{    background-position-y: -1000px; }
+		&.close_btn:after{    background-position-y: -1100px; }
+		&.plus_btn:after{     background-position-y: -1200px; }
+
+	}
+}
+/*
 	    &.validate_btn{ 
 	    	background-position-y: -300px;
-	    	&:active{ background-position-y: -850px; }
+	    	&:after{ background-position-y: -100px;  }
 	    }
 
 	    &.trash_btn{
@@ -216,9 +257,10 @@ header{
 			background-position:0 -400px;
 			&:active{ background-position:0 -950px; }
 		}
+*/
 
-	}
-}
+
+
 
 .app{
 	h1{
