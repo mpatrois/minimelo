@@ -8,7 +8,7 @@ define(function( require ) {
 
   function UiMini(timeline){
     this.timeline=timeline;
-    this.nbBox=30;
+    this.nbBox=120;
   }
 
   UiMini.prototype.initButtonsSongs = function () {
@@ -29,22 +29,43 @@ define(function( require ) {
 
   };
 
+  UiMini.prototype.initButtonsModal = function () {
+
+    var self=this;
+
+    $("#buttons-songs .button").each(function(){
+      var buttonsClone=$(this).clone();
+      $("#buttons-songs-modal").append(buttonsClone);
+    });
+
+    $("#buttons-songs-modal .button").click(function(){
+      $("#buttons-songs-modal .button.active").removeClass('active');
+      $(this).addClass('active');
+      var idSong=$(this).attr("data-song-id");
+      console.log(self);
+      self.timeline.songs[idSong].play(self.timeline.audioCtx);
+
+    })
+
+  };
+
   UiMini.prototype.initUiMini = function (){
   	this.initButtonsSongs();
+    this.initButtonsModal();
     this.initDeckButtons();
     this.initPistes();
   }
 
   UiMini.prototype.initDeckButtons = function () {
 	
-	var sefl=this;
+	var self=this;
 
 	$(".round_btn.trash_btn").click(function(){
             $('.box').empty();
     });
 
     $('#play').click(function() {
-        sefl.timeline.play();
+        self.timeline.play();
     });
 
     $(".plus_instru").click(function() {

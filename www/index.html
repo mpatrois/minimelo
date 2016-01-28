@@ -6,9 +6,10 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    
     
     <title>Mini Mélo</title>
   </head>
@@ -16,16 +17,7 @@
 
     <div class="app">
       <div class="row">
-        <div class="overlay"></div>
         <div class="col-xs-1 buttons_left" id="buttons-songs">
-         <!--  <div class="chant button"></div>
-          <div class="harpe button"></div>
-          <div class="maracas button"></div>
-          <div class="piano button"></div>
-          <div class="symbale button"></div>
-          <div class="tambour button"></div>
-          <div class="guitare button"></div>
-          <div class="trompette button"></div> -->
         </div>
         
         <div class="col-xs-11">
@@ -61,7 +53,10 @@
           <div class="row">
             <footer class="col-xs-12">
               <div class="col-xs-3">
-                  <div class="plus_instru button"></div>
+                <!-- Small modal -->
+                  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Small modal</button> -->
+                  <!--<div class="plus_instru button"></div>-->
+                  <div class="plus_instru button" data-toggle="modal" data-target="#myModal"></div>
                   <div class="clear round_btn trash_btn"></div>
               </div>
 
@@ -83,15 +78,34 @@
             </footer>
           </div>
 
+          
+
+<!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="row">
+                  <div class="col-xs-1 buttons_left" id="buttons-songs-modal">
+                  </div>
+                  <div class="col-xs-10">
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         
       </div>
     </div>
   </div>
 
-  <script type="text/lib/javascript" src="cordova.js"></script>
-  <script src="js/lib/jquery.js"></script>
-  <script src="js/lib/requirejs.js"></script>
+  <!-- // <script type="text/lib/javascript" src="cordova.js"></script> -->
 
+  <script src="js/lib/jquery.js"></script>
+  <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+  <script src="js/lib/requirejs.js"></script>
   <script type="text/javascript" src="js/app.js"></script>  
   </body>
 </html>

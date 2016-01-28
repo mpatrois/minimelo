@@ -92,6 +92,9 @@ display:inline-block;}
 
 /*------------------------------------------------------------------------------*/
 
+/*MODAL*/
+.modal-header{border-bottom:none;}
+/*-------------------*/
 
 /* Portrait layout (default) */
 .app {
