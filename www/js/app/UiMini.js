@@ -17,6 +17,7 @@ define(function( require ) {
 	for (var idSong = 0; idSong < ressources.length; idSong++) {
 
         var buttonSong=$('<div class="button instrument"></div>');
+        // var buttonSong=$('<td class="button instrument"></td>');
         buttonSong.attr('type',ressources[idSong].type);
         buttonSong.attr('data-song-id',idSong);
         
@@ -63,8 +64,19 @@ define(function( require ) {
             $('.box').empty();
     });
 
-    $('#play').click(function() {
-        self.timeline.play();
+    $('#play_stop').click(function() {
+        if($(this).hasClass('play_btn'))
+        {
+          $(this).removeClass('play_btn');
+          $(this).addClass('stop_btn');
+          self.timeline.play();
+        }
+        else{
+          $(this).removeClass('stop_btn');
+          $(this).addClass('play_btn');
+          self.timeline.stop();
+        }
+        
     });
 
     $(".plus_instru").click(function() {
@@ -80,7 +92,7 @@ define(function( require ) {
 	 $('.piste').each(function(){
 
         for (var i = 0; i < sefl.timeline.getNbSteps(); i++) {
-            $(this).append('<div class="box"></div>');
+            $(this).append('<td class="box"></td>');
         };
 
         $(this).css('width',$('.box').outerWidth()*sefl.timeline.getNbSteps());

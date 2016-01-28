@@ -9,19 +9,26 @@ define(function( require ) {
     this.stopTime  = 0;
   }
 
-  Song.prototype.playWithTime = function playWithTime( time, audioCtx ) {
+  Song.prototype.playWithTime = function ( time, audioCtx ) {
     this.source        = audioCtx.createBufferSource();
     this.source.buffer = this.buffer;
     this.source.connect(audioCtx.destination);
     this.source.start(audioCtx.currentTime+time);
+    return this.source;
   };
 
-  Song.prototype.play = function play( audioCtx )
+  Song.prototype.play = function ( audioCtx )
   {
     this.playWithTime(0, audioCtx);
   };
 
-  Song.prototype.getDuration = function getDuration(){
+  // Song.prototype.stop = function ()
+  // {
+  //   if(this.source!=null && this.playing)
+  //     this.source.stop();
+  // };
+
+  Song.prototype.getDuration = function (){
     return this.source.buffer.duration;
   };
 

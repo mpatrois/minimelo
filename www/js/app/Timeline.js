@@ -7,6 +7,9 @@ define(function(require) {
 
 	function Timeline(){
 		this.songs       = [];
+
+		this.songsInPlay = [];
+
 		this.tempo       = 90;
 		this.bars        = 20;
 		this.stepByBars  = 4;
@@ -17,29 +20,77 @@ define(function(require) {
 
 		var self=this;
 
-		$('#timeline .piste').each(function(){
+		var pistes=document.getElementById('timeline').rows;
+		
+		var getNbSteps=pistes[0].cells.length;
+		
+		for (var step = 0; step < getNbSteps; step++) {
+			for (var y = 0; y < pistes.length; y++) {
+				
+				var box=pistes[y].cells[step];
 
-		  var step=0;
+				var instrument=box.querySelector('.instrument');
 
-		  $(this).find('.box').each(function(){
+				if(instrument!=null){
+			  			
+			  		  var idSong=instrument.getAttribute('data-song-id');
+					  var sourcePlaying=this.songs[idSong].playWithTime(step*this.getNoteTime(), this.audioCtx);
 
-			var box    = $(this);
-			var idSong = $(this).find('.instrument').attr('data-song-id');
-			if(idSong != null){
-			  self.songs[idSong].playWithTime(step*self.getNoteTime(), self.audioCtx);
-			  setTimeout(function(){
-					box.find(".instrument").toggleClass("active");
-					setTimeout(function(){
-				  	box.find(".instrument").removeClass("active");
-				},100);
+					  var idTimeOutActive;
+					  var idTimeOutInactive;
 
-			  }, step*self.getNoteTime()*1000)
-			}
-			step++;
+					  idTimeOutActive = setTimeout(function(instrument){
 
-			});
+							instrument.classList.add('active');
+							
+							idTimeOutInactive=setTimeout(function(){
+						  		
+						  		instrument.classList.remove('active');
+							
+							},100);
 
-		});
+					  }, step*this.getNoteTime()*1000,instrument)
+
+					  var index=self.songsInPlay.length;
+					  
+					  self.songsInPlay.push({index:index,
+					  			source:sourcePlaying,
+					  		 	timeOutActive:idTimeOutActive,
+					  		 	timeOutInactive:idTimeOutInactive});
+
+					  
+					  sourcePlaying.index=index;
+					  console.log(index,'def');
+
+					  sourcePlaying.onended=function(){
+
+					  	if(delete self.songsInPlay[this.index]){
+					  		console.log(self.songsInPlay);
+					  		self.songsInPlay.length--;
+
+					  	}
+
+					  	if(self.songsInPlay.length==0){
+					  		$('#play_stop').removeClass('stop_btn');
+      						$('#play_stop').addClass('play_btn');
+					  	};
+					  }
+
+				}
+
+			};
+		};
+
+  	};
+
+  	Timeline.prototype.stop = function () {
+
+		for (var i = 0; i < this.songsInPlay.length; i++) {
+			this.songsInPlay[i].source.stop();
+			clearTimeout(this.songsInPlay[i].timeOutActive);
+			clearTimeout(this.songsInPlay[i].timeOutInactive);
+		};
+		this.songsInPlay=[];
   	};
 
 	Timeline.prototype.loadSong = function loadSong(idSong, urlSong,buttonSong) {
