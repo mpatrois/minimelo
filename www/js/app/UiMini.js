@@ -13,20 +13,26 @@ define(function( require ) {
   UiMini.prototype.initButtonsSongs = function () {
 	
 	var sefl=this;
+ // console.log(ressources);
+  var idSong = 0;
 
-	for (var idSong = 0; idSong < ressources.length; idSong++) {
+  for(var classe in ressources)
+  {
 
-        var buttonSong=$('<div class="button instrument"></div>');
-        buttonSong.attr('type',ressources[idSong].type);
+    var tabInstru = ressources[classe][0];
+    
+    var buttonSong=$('<div class="button instrument"></div>');
+        buttonSong.attr('type',classe);
         buttonSong.attr('data-song-id',idSong);
         
         $('#buttons-songs').append(buttonSong);
 
-        this.timeline.loadSong(idSong,ressources[idSong].url,buttonSong);
+        this.timeline.loadSong(idSong,tabInstru.url,buttonSong);
+        idSong++;
+    }
 
-    };
 
-  };
+};
 
   UiMini.prototype.initButtonsModal = function () {
 
@@ -34,17 +40,42 @@ define(function( require ) {
 
     $("#buttons-songs .button").each(function(){
       var buttonsClone=$(this).clone();
+
       $("#buttons-songs-modal").append(buttonsClone);
+
+      buttonsClone.click(function(event){
+        // console.log($(this).attr('type'));
+        var type=$(this).attr('type');
+        var tabType=ressources[type];
+        $("#choose-song").empty();
+        for (var i = 0; i < tabType.length; i++) {
+          console.log(tabType[i]);
+          var cloneWithUrl=buttonsClone.clone();
+          cloneWithUrl.attr('data-song-url',tabType[i].url);
+          $("#choose-song").append(cloneWithUrl);
+        };
+
+
+    $("#choose-song .button").click(function(){
+      $("#choose-song .button.active").removeClass('active');
+      $(this).addClass('active');
+
+      var idSong=$(this).attr("data-song-id");
+      self.timeline.songs[0].play(self.timeline.audioCtx);
+
+    });
+
+      });
+
     });
 
     $("#buttons-songs-modal .button").click(function(){
       $("#buttons-songs-modal .button.active").removeClass('active');
       $(this).addClass('active');
       var idSong=$(this).attr("data-song-id");
-      console.log(self);
       self.timeline.songs[idSong].play(self.timeline.audioCtx);
 
-    })
+    });
 
   };
 

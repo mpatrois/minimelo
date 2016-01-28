@@ -34,21 +34,21 @@ ul {
   width: 50px;
   height: 55px;
   display: inline-block; }
-  .instrument[type="chant"] {
+  .instrument[type="voice"] {
     background-position: 0 0px; }
-  .instrument[type="harpe"] {
+  .instrument[type="flute"] {
     background-position: 0 -60px; }
-  .instrument[type="maracas"] {
+  .instrument[type="violin"] {
     background-position: 0 -123px; }
   .instrument[type="piano"] {
     background-position: 0 -183px; }
-  .instrument[type="symbale"] {
+  .instrument[type="cymbal"] {
     background-position: 0 -245px; }
-  .instrument[type="tambour"] {
+  .instrument[type="drum"] {
     background-position: 0 -311px; }
-  .instrument[type="guitare"] {
+  .instrument[type="guitar"] {
     background-position: 0 -372px; }
-  .instrument[type="trompette"] {
+  .instrument[type="trumpet"] {
     background-position: 0 -434px; }
   .instrument[type="plus_instru"] {
     background-position: 0 -492px; }
@@ -79,6 +79,16 @@ header {
 
 #buttons-songs .button.active {
   transform: scale(1.2); }
+
+#buttons-songs-modal .button.active {
+  transform: scale(1.2); }
+
+#choose-song {
+  margin-left: 30px; }
+  #choose-song div {
+    margin-right: 10px; }
+  #choose-song .button.active {
+    transform: scale(1.2); }
 
 #timeline {
   width: 100%;
@@ -116,6 +126,10 @@ header {
     background-size: cover;
     width: 50px;
     height: 50px; }
+    #deck-buttons .round_btn.validate_btn {
+      background-position-y: -300px; }
+      #deck-buttons .round_btn.validate_btn:active {
+        background-position-y: -850px; }
     #deck-buttons .round_btn.trash_btn {
       background-position: 0 -250px; }
       #deck-buttons .round_btn.trash_btn:active {
