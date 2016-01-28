@@ -36,14 +36,14 @@ ul{
     height: 55px;
     display:inline-block;
 
-    &[type="chant"]{background-position:0 0px;}
-	&[type="harpe"]{background-position:0 -60px;}
-	&[type="maracas"]{background-position:0 -123px;}
+    &[type="voice"]{background-position:0 0px;}
+	&[type="flute"]{background-position:0 -60px;}
+	&[type="violin"]{background-position:0 -123px;}
 	&[type="piano"]{background-position:0 -183px;}
-	&[type="symbale"]{background-position:0 -245px;}
-	&[type="tambour"]{background-position:0 -311px;}
-	&[type="guitare"]{background-position:0 -372px;}
-	&[type="trompette"]{background-position:0 -434px;}
+	&[type="cymbal"]{background-position:0 -245px;}
+	&[type="drum"]{background-position:0 -311px;}
+	&[type="guitar"]{background-position:0 -372px;}
+	&[type="trumpet"]{background-position:0 -434px;}
 	&[type="plus_instru"]{background-position:0 -492px;}
 
 }
@@ -85,6 +85,24 @@ header{
 		display: block;
 		margin-top:10px; 
 	}
+
+	.button.active{
+	    transform:scale(1.2);
+	}
+}
+
+#buttons-songs-modal{
+
+	.button.active{
+	    transform:scale(1.2);
+	}
+
+}
+
+#choose-song{
+	margin-left:30px;
+
+	div{margin-right:10px;}
 
 	.button.active{
 	    transform:scale(1.2);
@@ -146,6 +164,11 @@ header{
 	    background-size: cover;
 	    width: 50px;
 	    height: 50px;
+
+	    &.validate_btn{ 
+	    	background-position-y: -300px;
+	    	&:active{ background-position-y: -850px; }
+	    }
 
 	    &.trash_btn{
 	    	background-position:0 -250px;

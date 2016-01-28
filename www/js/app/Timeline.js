@@ -42,7 +42,7 @@ define(function(require) {
 		});
   	};
 
-	Timeline.prototype.loadSong = function (idSong, urlSong,buttonSong) {
+	Timeline.prototype.loadSong = function (idSong, urlSong) {
 
 		var song = new Song(idSong, urlSong);
 		this.songs[idSong] = song;
