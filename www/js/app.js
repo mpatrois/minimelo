@@ -6,7 +6,9 @@ requirejs.config({
     }
 });
 
-$(document).ready(function() {
+
+
+// $(document).ready(function() {
 
     require(['app/Timeline', 'app/Utils','app/UiMini'], function(Timeline, Utils, UiMini) {
 
@@ -15,19 +17,21 @@ $(document).ready(function() {
         var timeline = new Timeline();
         var uiMini   = new UiMini(timeline);
 
-        function onDeviceReady() {
-            debug(navigator.device.capture);
-        }
+        var application = {
 
-        function runApp(){
-            document.addEventListener("deviceready", onDeviceReady, false);
+            init : function () {
+                document.addEventListener("deviceready", this.onDeviceReady, false);
 
-            uiMini.initUiMini();
-            
-        }
+                uiMini.initUiMini();
+            },
 
-        runApp();
+            onDeviceReady : function () {
+            }
+        };
+
+
+        application.init();
 
     });
 
-});
+// });*/

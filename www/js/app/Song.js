@@ -2,7 +2,7 @@ define(function( require ) {
 
     'use strict';
 
-    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    // var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     function Song( id, url ){
         this.id        = id
