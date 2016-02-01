@@ -9,7 +9,7 @@ requirejs.config({
 
 // $(document).ready(function() {
 
-    require(['app/Resources', 'app/UiMini'], function(resources, UiMini) {
+    require(['app/ResourcesHandler', 'app/UiMini'], function(resources, UiMini) {
 
         'use strict';
 
@@ -19,11 +19,10 @@ requirejs.config({
 
             init : function () {
                 document.addEventListener("deviceready", this.onDeviceReady, false);
-
             },
 
             onDeviceReady : function () {
-                //resources.loadFiles();
+                // resources.loadFiles();
                 uiMini.initUiMini();
             }
         };
@@ -31,6 +30,8 @@ requirejs.config({
 
         application.init();
 
+        // application.onDeviceReady();
     });
 
-// });*/
+
+// });

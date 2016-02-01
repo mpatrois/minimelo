@@ -4,7 +4,6 @@ define(function( require ) {
 
 	var Song       = require('app/Song');
 	var Timeline   = require('app/Timeline');
-	var ressources = require('app/ressources');
 
 	function UiMini(){
 		this.timeline = new Timeline();
@@ -16,6 +15,7 @@ define(function( require ) {
 
 		for(var classe in ressources)
 		{
+
 			var tabInstru = ressources[classe][0];
 
 			var buttonSong=$('<div class="button instrument"></div>');
@@ -67,7 +67,6 @@ define(function( require ) {
 		})
 
 	};
-
 
 	UiMini.prototype.initUiMini = function (){
 		this.initButtonsSongs();
