@@ -7,14 +7,8 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.phonegap.helloworld"
-        },
-        "cordova-plugin-media-capture": {
-            "PACKAGE_NAME": "com.phonegap.helloworld"
-        },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.phonegap.helloworld"
+            "PACKAGE_NAME": "com.phonegap.minimelo"
         }
     },
     "dependent_plugins": {}

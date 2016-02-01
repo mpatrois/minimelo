@@ -191,7 +191,7 @@ define(function( require ) {
 			var button=$("#buttons-songs .button.active")[0];
 
 			if($(this).find('.instrument')[0] == null && button != null) {
-				var clone=$("<div class='instrument'></div>");
+				var clone=$("<div class='instrument button'></div>");
 				clone.attr('type',$(button).attr('type'));
 				clone.attr('data-song-id',$(button).attr('data-song-id'));
 				$(this).append(clone);
