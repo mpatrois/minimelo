@@ -93,6 +93,9 @@ header{
 
 #buttons-songs-modal{
 
+	border-right:1px solid #000;
+	padding-right:10px;
+
 	.button.active{
 	    transform:scale(1.2);
 	}
@@ -104,7 +107,7 @@ header{
 
 	div{margin-right:10px;}
 
-	.button.active{
+	div .button.active{
 	    transform:scale(1.2);
 	}
 }
@@ -150,6 +153,7 @@ header{
 
 	&.validate_btn{ 
 	    background-position-y: -300px;
+	    text-align:center;
 	    &:active{ background-position-y: -850px; }
 	    }
 	}

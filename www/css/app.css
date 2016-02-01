@@ -80,14 +80,17 @@ header {
 #buttons-songs .button.active {
   transform: scale(1.2); }
 
-#buttons-songs-modal .button.active {
-  transform: scale(1.2); }
+#buttons-songs-modal {
+  border-right: 1px solid #000;
+  padding-right: 10px; }
+  #buttons-songs-modal .button.active {
+    transform: scale(1.2); }
 
 #choose-song {
   margin-left: 30px; }
   #choose-song div {
     margin-right: 10px; }
-  #choose-song .button.active {
+  #choose-song div .button.active {
     transform: scale(1.2); }
 
 #timeline {
@@ -118,7 +121,8 @@ header {
   width: 50px;
   height: 50px; }
   #myModal .round_btn.validate_btn {
-    background-position-y: -300px; }
+    background-position-y: -300px;
+    text-align: center; }
     #myModal .round_btn.validate_btn:active {
       background-position-y: -850px; }
 

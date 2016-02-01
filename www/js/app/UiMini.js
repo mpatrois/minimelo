@@ -2,7 +2,8 @@ define(function( require ) {
 
 	'use strict';
 
-	var Song = require('app/Song');
+	require('app/Song');
+    var EventHandler  = require('app/EventHandler'); 
 
 	function UiMini(timeline){
 		this.timeline=timeline;
@@ -20,6 +21,7 @@ define(function( require ) {
 			var buttonSong=$('<div class="button instrument"></div>');
 			buttonSong.attr('type',classe);
 			buttonSong.attr('data-song-id',idSong);
+			buttonSong.attr('data-song-url', tabInstru.url);
 
 			$('#buttons-songs').append(buttonSong);
 
@@ -32,31 +34,45 @@ define(function( require ) {
 
 	UiMini.prototype.initButtonsModal = function () {
 
+        var eventHandler = new EventHandler();
+
 		var self=this;
 
 		$("#buttons-songs .button").each(function(){
+			
 			var buttonsClone=$(this).clone();
+			console.log(buttonsClone);
 
 			$("#buttons-songs-modal").append(buttonsClone);
 
-			buttonsClone.click(function(event){
-				// console.log($(this).attr('type'));
 				var type=$(this).attr('type');
 				var tabType=ressources[type];
-				$("#choose-song").empty();
+			// $(".plus_btn").click(function(){
+				// console.log($(this).attr('type'));
+				var typeLine = buttonsClone.attr("type");
+				var line=$("<div class='col-xs-12' type="+typeLine+"></div>");
+				var instruLine = $("#choose-song").append(line);
+				//console.log(instruLine);
 
 				for (var i = 0; i < tabType.length; i++) {
-					console.log(tabType[i]);
 					var cloneWithUrl=buttonsClone.clone();
 					cloneWithUrl.attr('data-song-url',tabType[i].url);
-					cloneWithUrl.removeAttr('data-song-id');
-					$("#choose-song").append(cloneWithUrl);
+					cloneWithUrl.removeAttr('data-song-id'); 
+					//$("#choose-song").append(cloneWithUrl);
+					var typeClone = cloneWithUrl.attr("type");
+
+					if(typeClone == typeLine)
+					line.append(cloneWithUrl);
+						
 				};
 
+			// });
 
-				$("#choose-song .button").click(function(){
-					$("#choose-song .button.active").removeClass('active');
-					$(this).addClass('active');
+		});
+
+
+				$("#choose-song div .button").click(function(){ 
+
 					var urlSong = $(this).attr('data-song-url');
 
 					$.ajax({
@@ -65,21 +81,76 @@ define(function( require ) {
 			        }).done(function(arrayBuffer){
 
 			            audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
-			                var source        = audioCtx.createBufferSource();
+			            var source = audioCtx.createBufferSource();
         					source.buffer = buffer;
         					source.connect(audioCtx.destination);
         					source.start();
 
 			          }, function(e) {"Error with decoding audio data" + e.err;} );  
+
 			        });
 
 				});
 
-			});
+                eventHandler.Active($("#buttons-songs-modal .button"));
+					
+					$("#choose-song div .button").click(function(){
 
-		})
+						$(this).parent().find('.button').removeClass('active');
+						$(this).addClass('active');
+						// $(this).parent()filter("[type='"+type+"']").addClass("active");
+						// $(this).removeClass("active");	
+					});
 
-	};
+				$(".validate_btn.button").click(function(){
+
+
+					$("#choose-song div .button.active").each(function(){
+
+					var typeModal = $(this).attr('type');
+					var urlModal = $(this).attr('data-song-url');
+
+					var buttonToReplace= $("#buttons-songs .button[type='"+typeModal+"']");
+					console.log(buttonToReplace);
+
+					var oldUrl = buttonToReplace.attr("data-song-url");
+
+
+					// $("#buttons-songs .button").each(function(){
+					// 	urlOldInstru = $("#buttons-songs .button").attr("data-song-url");
+					// });
+
+					if (urlModal != oldUrl){
+
+						$.ajax({
+				        	url: urlModal,
+				            xhrFields : {responseType : 'arraybuffer'}
+				        	}).done(function(arrayBuffer){
+
+				            audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
+				           		var idSong = buttonToReplace.attr("data-song-id");
+				            	self.timeline.songs[idSong].buffer=buffer;
+
+				          	}, function(e) {"Error with decoding audio data" + e.err;} );  
+				        });
+
+				        buttonToReplace.attr("data-song-url", urlModal);
+
+					 }
+
+					 // idSong = buttonToReplace.attr("data-song-id");
+					 // self.timeline.loadSong(idSong, urlModal, buttonToReplace);
+						
+					});
+
+				});
+
+		//});
+
+
+
+
+};
 
 
 	UiMini.prototype.initUiMini = function (){
@@ -100,11 +171,6 @@ define(function( require ) {
 		$('#play').click(function() {
 			self.timeline.play();
 		});
-
-		$(".plus_instru").click(function() {
-			$(".overlay").toggleClass('active');
-		});
-
 	};
 
 	UiMini.prototype.initPistes = function () {
