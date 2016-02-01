@@ -2,30 +2,32 @@ define(function( require ) {
 
   'use strict';
 
-  // $.fn.save = function() {
-  //   	alert('a garder !');
-  // };
-
   function UiMini(timeline){
     this.timeline=timeline;
   }
 
   UiMini.prototype.initButtonsSongs = function () {
-	
-	var sefl=this;
 
-	for (var idSong = 0; idSong < ressources.length; idSong++) {
+    var idSong = 0;
 
-        var buttonSong=$('<div class="button instrument"></div>');
-        // var buttonSong=$('<td class="button instrument"></td>');
-        buttonSong.attr('type',ressources[idSong].type);
-        buttonSong.attr('data-song-id',idSong);
-        
-        $('#buttons-songs').append(buttonSong);
 
-        this.timeline.loadSong(idSong,ressources[idSong].url,buttonSong);
+    for(var classe in ressources)
+    {
 
-    };
+      var urlSong = ressources[classe].songs[0].url;
+      var colorClass = ressources[classe].color;
+
+
+      var buttonSong=$('<div class="button instrument"></div>');
+      buttonSong.attr('type',classe);
+      buttonSong.attr('data-song-id',idSong);
+      buttonSong.css('background-color',colorClass);
+
+      $('#buttons-songs').append(buttonSong);
+
+      this.timeline.loadSong(idSong, urlSong, buttonSong);
+      idSong++;
+    } 
 
   };
 
@@ -54,6 +56,7 @@ define(function( require ) {
     this.initButtonsModal();
     this.initDeckButtons();
     this.initPistes();
+    this.initDragAndDrop();
   }
 
   UiMini.prototype.initDeckButtons = function () {
@@ -85,40 +88,145 @@ define(function( require ) {
 
   };
 
-  UiMini.prototype.initPistes = function () {
-	
-	var sefl=this;
+  UiMini.prototype.initDragAndDrop = function () {
+    $('.app').mousemove(function(event)
+    {
 
-	 $('.piste').each(function(){
+      if($('.piste .song.inDrag').length>0){
 
-	 	var step=0;
-        for (var i = 0; i < sefl.timeline.getNbSteps(); i++) {
-            var box=$('<td class="box"></td>');
-            box.attr('step',step);
-            $(this).append(box);
-            step++;
-        };
+        var scrollLeft=$( "#timeline" ).scrollLeft();
 
-        $(this).css('width',$('.box').outerWidth()*sefl.timeline.getNbSteps());
+        var positionX=event.clientX-$('#timeline').offset().left+scrollLeft;
+        var positionY=event.clientY-$('#timeline').offset().top;
+        // console.log(positionY);
+        
+        positionX-=$('.piste .song.inDrag').attr('posSourisX');
+        positionY-=$('.piste .song.inDrag').attr('posSourisY');
+        // positionY-=$('.piste .song.inDrag').parent().position().top;
+        // console.log($('.piste .song.inDrag').parent().offset().top);
+        // console.log($('.piste .song.inDrag').parent().position().top);
+        // console.log($('.piste .song.inDrag').parent().offset().top);
+        // console.log($('.piste .song.inDrag').parent().position().top);
+
+
+
+        if(positionX<0){
+          positionX=0;
+        }
+        if(positionX>$('.piste').width()-$('.piste .song.inDrag').width()){
+          positionX=$('.piste').width()-$('.piste .song.inDrag').width();
+        }
+
+        if(positionY<0){
+          positionY=0;
+        }
+        
+        $('.piste .song.inDrag').css('left',positionX);
+        $('.piste .song.inDrag').css('top',positionY);
+      
+      }
+
     });
 
-  	$('.box').off().on('click', function(e){
-  	    e.preventDefault();
-  	    var button=$("#buttons-songs .button.active")[0];
+    $('.app').mouseup(function(event){
 
-  	    if($(this).find('.instrument')[0] == null && button != null) {
-  	        var instrument=$("<div class='instrument'></div>");
-  	        instrument.attr('type',$(button).attr('type'));
-  	        instrument.attr('data-song-id',$(button).attr('data-song-id'));
-  	        instrument.attr('step',$(this).attr('step'));
+      if($('.piste .song.inDrag').length>0)
+      {
 
-  	        $(this).append(instrument);
-  	    } 
-  	    else 
-  	    {
-  	        $(this).empty();
-  	    }
-  	});
+        var song=$('.piste .song.inDrag');
+        var offset = song.offset();
+        var height = song.height();
+        var centerY = offset.top + height / 2;
+
+        $('.piste').each(function(){
+          if( centerY>$(this).offset().top && centerY < $(this).offset().top+$(this).height()){
+            $(this).append(song);
+          }
+        });
+
+        song.css('top',0);
+        song.removeClass('inDrag');
+      }
+
+
+    });
+  }
+  UiMini.prototype.initPistes = function () {
+	
+    var self=this;
+    $('.piste').css('width',3000);
+
+    $('.piste').off().mousedown('click', function(event){
+        event.preventDefault();
+
+        var xOnPiste=event.clientX-$(this).offset().left;
+
+        var songToLoad=$("#buttons-songs .button.active")[0];
+        var colorClass=$(songToLoad).css('background-color');
+
+        var divSong=$("<div class='song'></div>");
+        var idSong=$(songToLoad).attr('data-song-id');
+        var song=self.timeline.songs[idSong];
+
+        divSong.attr('type',$(songToLoad).attr('type'));
+        divSong.attr('data-song-id',idSong);
+        divSong.attr('step',$(this).attr('step'));
+
+        var widthSong=self.timeline.secondsToPxInTimeline(song.getDuration());
+        divSong.width(widthSong);
+        divSong.css('background-color',colorClass);
+        divSong.css('left',xOnPiste-widthSong/2);
+
+        
+        divSong.mousedown(function(event){
+          event.stopPropagation();
+          event.preventDefault();
+          $(this).addClass('inDrag');
+          
+          var top=$(this).parent().position().top;
+          $(this).css('top',top);
+          $('.piste:first-of-type').append($(this));
+          
+          var posSourisOnSongX=event.clientX-$('.piste .song.inDrag').offset().left;
+          var posSourisOnSongY=event.clientY-$('.piste .song.inDrag').offset().top;
+          $(this).attr('posSourisX',posSourisOnSongX);
+          $(this).attr('posSourisY',posSourisOnSongY);
+          
+        });
+
+
+        $(this).append(divSong);
+        
+        self.timeline.songs[idSong].play(self.timeline.audioCtx);
+
+      
+    });
+
+    // $('.app').mousemove(function(event){
+
+    //   if($('.piste .song.inDrag').length>0){
+
+    //     var position=event.clientX-$('#timeline').offset().left;
+        
+    //     position-=$('.piste .song.inDrag').attr('posSouris');
+    //     if(position<0){
+    //       position=0;
+    //     }
+    //     if(position>$('.piste').width()-$('.piste .song.inDrag').width()){
+    //       position=$('.piste').width()-$('.piste .song.inDrag').width();
+    //     }
+        
+    //     $('.piste .song.inDrag').css('left',position);
+      
+    //   }
+
+    // });
+
+    // $('.app').mouseup(function(event){
+
+    //   $('.piste .song.inDrag').removeClass('inDrag');
+
+    // });
 
   };
 

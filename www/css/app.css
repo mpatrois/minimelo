@@ -82,16 +82,27 @@ header {
 
 #timeline {
   width: 100%;
-  overflow: hidden;
   overflow-x: auto;
-  overflow-y: hidden;
-  table-layout: fixed; }
+  position: relative; }
   #timeline .piste {
-    /*display: block;*/ }
+    border: 1px solid black;
+    height: 60px;
+    position: relative;
+    z-index: 0; }
+    #timeline .piste .song {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      position: absolute;
+      height: 100%;
+      display: inline-block;
+      z-index: 1;
+      box-sizing: border-box; }
+      #timeline .piste .song.active {
+        transform: scale(1.01);
+        border: 1px solid green; }
     #timeline .piste .box {
       height: 60px;
       width: 60px;
-      /*display: inline-block;*/
       vertical-align: top;
       box-sizing: border-box;
       border: 1px solid;
@@ -102,6 +113,14 @@ header {
       border-left: 2px solid black; }
     #timeline .piste .box:nth-child(4n) {
       border-right: 2px solid black; }
+  #timeline #line {
+    top: 0px;
+    width: 1px;
+    background: green;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    display: inline-block; }
 
 #deck-buttons {
   margin-top: 50px; }
