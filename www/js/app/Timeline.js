@@ -3,7 +3,6 @@ define(function(require) {
 	'use strict';
 
 	var Song       = require('app/Song');
-	var ressources = require('app/ressources');
 
 	function Timeline(){
 		this.songs       = [];
@@ -42,10 +41,10 @@ define(function(require) {
 		});
   	};
 
-	Timeline.prototype.loadSong = function (idSong, urlSong) {
+	Timeline.prototype.loadSong = function ( urlSong) {
 
-		var song = new Song(idSong, urlSong);
-		this.songs[idSong] = song;
+		var song = new Song( urlSong);
+		this.songs[song.id] = song;
 
 	};
 

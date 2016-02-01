@@ -2,30 +2,29 @@ requirejs.config({
     baseUrl: 'lib',
     paths: {
         app: '../js/app',
-        lib: '../js/lib'
+        lib: '../js/lib',
+        impl:'../js/app/impl',
     }
 });
 
-
-
 // $(document).ready(function() {
 
-    require(['app/Timeline', 'app/Utils','app/UiMini'], function(Timeline, Utils, UiMini) {
+    require(['app/Resources', 'app/UiMini'], function(resources, UiMini) {
 
         'use strict';
 
-        var timeline = new Timeline();
-        var uiMini   = new UiMini(timeline);
+        var uiMini      = new UiMini();
 
         var application = {
 
             init : function () {
                 document.addEventListener("deviceready", this.onDeviceReady, false);
 
-                uiMini.initUiMini();
             },
 
             onDeviceReady : function () {
+                //resources.loadFiles();
+                uiMini.initUiMini();
             }
         };
 

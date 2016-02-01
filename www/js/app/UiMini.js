@@ -2,10 +2,12 @@ define(function( require ) {
 
 	'use strict';
 
-	var Song = require('app/Song');
+	var Song       = require('app/Song');
+	var Timeline   = require('app/Timeline');
+	var ressources = require('app/ressources');
 
-	function UiMini(timeline){
-		this.timeline=timeline;
+	function UiMini(){
+		this.timeline = new Timeline();
 	}
 
 	UiMini.prototype.initButtonsSongs = function () {
@@ -14,7 +16,6 @@ define(function( require ) {
 
 		for(var classe in ressources)
 		{
-
 			var tabInstru = ressources[classe][0];
 
 			var buttonSong=$('<div class="button instrument"></div>');
@@ -46,11 +47,9 @@ define(function( require ) {
 				$("#choose-song").empty();
 
 				for (var i = 0; i < tabType.length; i++) {
-					console.log(tabType[i]);
 					var cloneWithUrl=buttonsClone.clone();
 					cloneWithUrl.attr('data-song-url',tabType[i].url);
 					cloneWithUrl.removeAttr('data-song-id');
-					$("#choose-song").append(cloneWithUrl);
 				};
 
 
@@ -59,19 +58,7 @@ define(function( require ) {
 					$(this).addClass('active');
 					var urlSong = $(this).attr('data-song-url');
 
-					$.ajax({
-			            url: urlSong,
-			            xhrFields : {responseType : 'arraybuffer'}
-			        }).done(function(arrayBuffer){
-
-			            audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
-			                var source        = audioCtx.createBufferSource();
-        					source.buffer = buffer;
-        					source.connect(audioCtx.destination);
-        					source.start();
-
-			          }, function(e) {"Error with decoding audio data" + e.err;} );  
-			        });
+					var song = new Song(urlSong);
 
 				});
 
