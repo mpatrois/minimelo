@@ -39,6 +39,25 @@ ul{
 }
 
 
+/*.instrument{
+    background-image:url("../img/buttons_left.png");
+    background-size: cover;
+    width: 50px;
+    height: 55px;
+    display:inline-block;
+
+    &[type="voice"]{background-position:0 0px;}
+	&[type="flute"]{background-position:0 -60px;}
+	&[type="violin"]{background-position:0 -123px;}
+	&[type="piano"]{background-position:0 -183px;}
+	&[type="cymbal"]{background-position:0 -245px;}
+	&[type="drum"]{background-position:0 -311px;}
+	&[type="guitar"]{background-position:0 -372px;}
+	&[type="trumpet"]{background-position:0 -434px;}
+	&[type="plus_instru"]{background-position:0 -492px;}
+
+}*/
+
 /* Portrait layout (default) */
 .app {
     width:100%;
@@ -66,7 +85,8 @@ header{
     }
 }
 
-#buttons-songs{
+#buttons-songs, 
+#buttons-songs-modal{
 
 	.button{
     	background-image:url("../img/buttons_sprite.png");
@@ -97,21 +117,29 @@ header{
 	}
 }
 
-#buttons-songs-modal{
+/*#buttons-songs-modal{
 
 	.button.active{
 	    transform:scale(1.2);
 	}
 
-}
+}*/
 
 #choose-song{
 	margin-left:30px;
 
 	div{margin-right:10px;}
-
+	.button{
+		width: 55px;
+		height: 55px;
+    	background-image:url("../img/buttons_sprite.png");
+		background-size: cover;
+		&.active{
+			background-position:0 33%;
+		    /*transform:scale(1.2);*/
+		}
+	}
 	.button.active{
-	    transform:scale(1.2);
 	}
 }
 

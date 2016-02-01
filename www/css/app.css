@@ -28,6 +28,24 @@ ul {
     -webkit-user-select: none;
     cursor: pointer; }
 
+/*.instrument{
+    background-image:url("../img/buttons_left.png");
+    background-size: cover;
+    width: 50px;
+    height: 55px;
+    display:inline-block;
+
+    &[type="voice"]{background-position:0 0px;}
+	&[type="flute"]{background-position:0 -60px;}
+	&[type="violin"]{background-position:0 -123px;}
+	&[type="piano"]{background-position:0 -183px;}
+	&[type="cymbal"]{background-position:0 -245px;}
+	&[type="drum"]{background-position:0 -311px;}
+	&[type="guitar"]{background-position:0 -372px;}
+	&[type="trumpet"]{background-position:0 -434px;}
+	&[type="plus_instru"]{background-position:0 -492px;}
+
+}*/
 /* Portrait layout (default) */
 .app {
   width: 100%;
@@ -44,7 +62,8 @@ header {
     max-width: 100%; }
 
 /* Landscape layout (with min-width) */
-#buttons-songs .button {
+#buttons-songs .button,
+#buttons-songs-modal .button {
   background-image: url("../img/buttons_sprite.png");
   background-size: cover;
   width: 55px;
@@ -60,37 +79,57 @@ header {
   /* DARK  BLUE */
   /* CLEAR BLUE */
   /* PURPLE */ }
-  #buttons-songs .button:hover {
+  #buttons-songs .button:hover,
+  #buttons-songs-modal .button:hover {
     background-position: 0 33%; }
-  #buttons-songs .button:nth-child(1) {
+  #buttons-songs .button:nth-child(1),
+  #buttons-songs-modal .button:nth-child(1) {
     background-color: #eb3816; }
-  #buttons-songs .button:nth-child(2) {
+  #buttons-songs .button:nth-child(2),
+  #buttons-songs-modal .button:nth-child(2) {
     background-color: #ff7800; }
-  #buttons-songs .button:nth-child(3) {
+  #buttons-songs .button:nth-child(3),
+  #buttons-songs-modal .button:nth-child(3) {
     background-color: #ffe400; }
-  #buttons-songs .button:nth-child(4) {
+  #buttons-songs .button:nth-child(4),
+  #buttons-songs-modal .button:nth-child(4) {
     background-color: #aaf400; }
-  #buttons-songs .button:nth-child(5) {
+  #buttons-songs .button:nth-child(5),
+  #buttons-songs-modal .button:nth-child(5) {
     background-color: #00a134; }
-  #buttons-songs .button:nth-child(6) {
+  #buttons-songs .button:nth-child(6),
+  #buttons-songs-modal .button:nth-child(6) {
     background-color: #0085ff; }
-  #buttons-songs .button:nth-child(7) {
+  #buttons-songs .button:nth-child(7),
+  #buttons-songs-modal .button:nth-child(7) {
     background-color: #84d6ff; }
-  #buttons-songs .button:nth-child(8) {
+  #buttons-songs .button:nth-child(8),
+  #buttons-songs-modal .button:nth-child(8) {
     background-color: #9b0080; }
 
-#buttons-songs .button.active {
-  transform: scale(1.2); }
-
+#buttons-songs .button.active,
 #buttons-songs-modal .button.active {
   transform: scale(1.2); }
 
+/*#buttons-songs-modal{
+
+	.button.active{
+	    transform:scale(1.2);
+	}
+
+}*/
 #choose-song {
   margin-left: 30px; }
   #choose-song div {
     margin-right: 10px; }
-  #choose-song .button.active {
-    transform: scale(1.2); }
+  #choose-song .button {
+    width: 55px;
+    height: 55px;
+    background-image: url("../img/buttons_sprite.png");
+    background-size: cover; }
+    #choose-song .button.active {
+      background-position: 0 33%;
+      /*transform:scale(1.2);*/ }
 
 #timeline {
   width: 100%;
