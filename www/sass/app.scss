@@ -1,3 +1,13 @@
+$red : #eb3816;
+$orange : #ff7800;
+$yellow : #ffe400;
+$clear_green : #aaf400;
+$dark_green : #00a134;
+$dark_blue : #0085ff;
+$clear_blue : #84d6ff;
+$purple : #9b0080;
+$black : #000000;
+
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
@@ -29,7 +39,7 @@ ul{
 }
 
 
-.instrument{
+/*.instrument{
     background-image:url("../img/buttons_left.png");
     background-size: cover;
     width: 50px;
@@ -46,7 +56,7 @@ ul{
 	&[type="trumpet"]{background-position:0 -434px;}
 	&[type="plus_instru"]{background-position:0 -492px;}
 
-}
+}*/
 
 /* Portrait layout (default) */
 .app {
@@ -75,15 +85,31 @@ header{
     }
 }
 
-#buttons-songs{
+#buttons-songs, 
+#buttons-songs-modal{
 
 	.button{
+    	background-image:url("../img/buttons_sprite.png");
+
 		background-size: cover;
-		width: 50px;
+		width: 55px;
 		height: 55px;
 		margin: 0 auto;
 		display: block;
 		margin-top:10px; 
+
+		&:hover{
+			background-position:0 33%;
+		}
+
+		&:nth-child(1){ background-color: $red; }/* RED */
+		&:nth-child(2){ background-color: $orange; }/* ORANGE */
+		&:nth-child(3){ background-color: $yellow; }/* YELLOW */
+		&:nth-child(4){ background-color: $clear_green; }/* CLEAR GREEN */
+		&:nth-child(5){ background-color: $dark_green; }/* DARK  GREEN */
+		&:nth-child(6){ background-color: $dark_blue; }/* DARK  BLUE */
+		&:nth-child(7){ background-color: $clear_blue; }/* CLEAR BLUE */
+		&:nth-child(8){ background-color: $purple; }/* PURPLE */
 	}
 
 	.button.active{
@@ -91,7 +117,7 @@ header{
 	}
 }
 
-#buttons-songs-modal{
+/*#buttons-songs-modal{
 
 	border-right:1px solid #000;
 	padding-right:10px;
@@ -100,16 +126,24 @@ header{
 	    transform:scale(1.2);
 	}
 
-}
+}*/
 
 #choose-song{
 	margin-left:30px;
 
 	div{margin-right:10px;}
 
-	div .button.active{
-	    transform:scale(1.2);
+	.button{
+		width: 55px;
+		height: 55px;
+    	background-image:url("../img/buttons_sprite.png");
+		background-size: cover;
+		&.active{
+			background-position:0 33%;
+		    transform:scale(1.2);
+		}
 	}
+
 }
 
 #timeline{
@@ -129,6 +163,11 @@ header{
 			border:1px solid;
 			text-align: center;
 
+			.instrument{
+				background-color: rgba(0,0,0,0.5);
+				width: 100%;
+				height: 100%;
+			}
 			.instrument.active{
 				transform:scale(1.3);
 			}

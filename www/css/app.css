@@ -28,31 +28,24 @@ ul {
     -webkit-user-select: none;
     cursor: pointer; }
 
-.instrument {
-  background-image: url("../img/buttons_left.png");
-  background-size: cover;
-  width: 50px;
-  height: 55px;
-  display: inline-block; }
-  .instrument[type="voice"] {
-    background-position: 0 0px; }
-  .instrument[type="flute"] {
-    background-position: 0 -60px; }
-  .instrument[type="violin"] {
-    background-position: 0 -123px; }
-  .instrument[type="piano"] {
-    background-position: 0 -183px; }
-  .instrument[type="cymbal"] {
-    background-position: 0 -245px; }
-  .instrument[type="drum"] {
-    background-position: 0 -311px; }
-  .instrument[type="guitar"] {
-    background-position: 0 -372px; }
-  .instrument[type="trumpet"] {
-    background-position: 0 -434px; }
-  .instrument[type="plus_instru"] {
-    background-position: 0 -492px; }
+/*.instrument{
+    background-image:url("../img/buttons_left.png");
+    background-size: cover;
+    width: 50px;
+    height: 55px;
+    display:inline-block;
 
+    &[type="voice"]{background-position:0 0px;}
+	&[type="flute"]{background-position:0 -60px;}
+	&[type="violin"]{background-position:0 -123px;}
+	&[type="piano"]{background-position:0 -183px;}
+	&[type="cymbal"]{background-position:0 -245px;}
+	&[type="drum"]{background-position:0 -311px;}
+	&[type="guitar"]{background-position:0 -372px;}
+	&[type="trumpet"]{background-position:0 -434px;}
+	&[type="plus_instru"]{background-position:0 -492px;}
+
+}*/
 /* Portrait layout (default) */
 .app {
   width: 100%;
@@ -69,29 +62,77 @@ header {
     max-width: 100%; }
 
 /* Landscape layout (with min-width) */
-#buttons-songs .button {
+#buttons-songs .button,
+#buttons-songs-modal .button {
+  background-image: url("../img/buttons_sprite.png");
   background-size: cover;
-  width: 50px;
+  width: 55px;
   height: 55px;
   margin: 0 auto;
   display: block;
-  margin-top: 10px; }
+  margin-top: 10px;
+  /* RED */
+  /* ORANGE */
+  /* YELLOW */
+  /* CLEAR GREEN */
+  /* DARK  GREEN */
+  /* DARK  BLUE */
+  /* CLEAR BLUE */
+  /* PURPLE */ }
+  #buttons-songs .button:hover,
+  #buttons-songs-modal .button:hover {
+    background-position: 0 33%; }
+  #buttons-songs .button:nth-child(1),
+  #buttons-songs-modal .button:nth-child(1) {
+    background-color: #eb3816; }
+  #buttons-songs .button:nth-child(2),
+  #buttons-songs-modal .button:nth-child(2) {
+    background-color: #ff7800; }
+  #buttons-songs .button:nth-child(3),
+  #buttons-songs-modal .button:nth-child(3) {
+    background-color: #ffe400; }
+  #buttons-songs .button:nth-child(4),
+  #buttons-songs-modal .button:nth-child(4) {
+    background-color: #aaf400; }
+  #buttons-songs .button:nth-child(5),
+  #buttons-songs-modal .button:nth-child(5) {
+    background-color: #00a134; }
+  #buttons-songs .button:nth-child(6),
+  #buttons-songs-modal .button:nth-child(6) {
+    background-color: #0085ff; }
+  #buttons-songs .button:nth-child(7),
+  #buttons-songs-modal .button:nth-child(7) {
+    background-color: #84d6ff; }
+  #buttons-songs .button:nth-child(8),
+  #buttons-songs-modal .button:nth-child(8) {
+    background-color: #9b0080; }
 
-#buttons-songs .button.active {
+#buttons-songs .button.active,
+#buttons-songs-modal .button.active {
   transform: scale(1.2); }
 
-#buttons-songs-modal {
-  border-right: 1px solid #000;
-  padding-right: 10px; }
-  #buttons-songs-modal .button.active {
-    transform: scale(1.2); }
+/*#buttons-songs-modal{
 
+	border-right:1px solid #000;
+	padding-right:10px;
+
+	.button.active{
+	    transform:scale(1.2);
+	}
+
+}*/
 #choose-song {
   margin-left: 30px; }
   #choose-song div {
     margin-right: 10px; }
-  #choose-song div .button.active {
-    transform: scale(1.2); }
+  #choose-song .button {
+    width: 55px;
+    height: 55px;
+    background-image: url("../img/buttons_sprite.png");
+    background-size: cover; }
+    #choose-song .button.active {
+      background-position: 0 33%;
+      transform: scale(1.2); }
 
 #timeline {
   width: 100%;
@@ -106,6 +147,10 @@ header {
     box-sizing: border-box;
     border: 1px solid;
     text-align: center; }
+    #timeline .piste .box .instrument {
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%; }
     #timeline .piste .box .instrument.active {
       transform: scale(1.3); }
   #timeline .piste .box:nth-child(4n+1) {
