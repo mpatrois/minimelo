@@ -160,6 +160,11 @@ header{
 			border:1px solid;
 			text-align: center;
 
+			.instrument{
+				background-color: rgba(0,0,0,0.5);
+				width: 100%;
+				height: 100%;
+			}
 			.instrument.active{
 				transform:scale(1.3);
 			}

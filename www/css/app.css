@@ -144,6 +144,10 @@ header {
     box-sizing: border-box;
     border: 1px solid;
     text-align: center; }
+    #timeline .piste .box .instrument {
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%; }
     #timeline .piste .box .instrument.active {
       transform: scale(1.3); }
   #timeline .piste .box:nth-child(4n+1) {
