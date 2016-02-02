@@ -182,6 +182,43 @@ define(function( require ) {
 			      
 			      songDragged.css('left',positionX);
 			      songDragged.css('top',positionY);
+
+			      var height = songDragged.height();
+					var centerY = songDragged.position().top + height / 2;
+
+
+					var pisteOverlayed=null;
+					$('.piste').each(function(){
+
+						var topPist=$(this).position().top;
+						var bottomPiste=$(this).position().top+$(this).height();
+							
+						if( centerY >= topPist && centerY <= bottomPiste){
+					    	pisteOverlayed=$(this);
+					  	}
+
+					});
+
+					if(pisteOverlayed!=null){
+
+						var overSong=false;
+						songDragged.css('background-color',songDragged.attr('originalBgColor'));
+						pisteOverlayed.find('.song').not(songDragged).each(function()
+						{
+							var leftOtherSong=$(this).position().left;
+							var rigthOtherSong=leftOtherSong+$(this).width();
+							
+							if(! (rigthOtherSong<positionX || leftOtherSong>positionX+songDragged.width() ) ){
+							
+								overSong=true;
+							}
+						});
+
+						if(overSong){
+							songDragged.css('background-color',"red");	
+						}
+						songDragged.attr('overOtherSong',overSong);
+		      		}
 			  
 			    }
 
@@ -193,19 +230,38 @@ define(function( require ) {
 				if($('.piste .song.inDrag').length>0)
 				{
 
-				var song=$('.piste .song.inDrag');
-				var offset = song.offset();
-				var height = song.height();
-				var centerY = offset.top + height / 2;
+					var songDragged=$('.piste .song.inDrag');
+					
 
-				$('.piste').each(function(){
-				  if( centerY>$(this).offset().top && centerY < $(this).offset().top+$(this).height()){
-				    $(this).append(song);
-				  }
-				});
+					if(songDragged.attr('overOtherSong')=='false')
+					{
 
-				song.css('top',0);
-				song.removeClass('inDrag');
+						var offset = songDragged.offset();
+						var height = songDragged.height();
+						var centerY = offset.top + height / 2;
+
+						$('.piste').each(function(){
+						  if( centerY>$(this).offset().top && centerY < $(this).offset().top+$(this).height()){
+						    $(this).append(songDragged);
+						  }
+						});
+
+						
+						songDragged.removeClass('inDrag');
+					}
+					else{
+						var leftOriginal=songDragged.attr('posSongX');
+						var pisteOriginal=songDragged.attr('piste');
+						
+						$("#"+pisteOriginal).append(songDragged);
+						songDragged.css('left',leftOriginal+"px");
+						console.log(songDragged.css('left'));
+						console.log(leftOriginal);
+						
+						songDragged.removeClass('inDrag');
+					}
+					songDragged.css('top',0);
+					songDragged.css('background-color',songDragged.attr('originalBgColor'));
 				}
 
 
@@ -218,73 +274,73 @@ define(function( require ) {
 
 		        if($('.piste .song.inDrag').length>0 ){
 		          
-		          event.preventDefault();
-		          var songDragged=$('.piste .song.inDrag');
+					event.preventDefault();
+					var songDragged=$('.piste .song.inDrag');
 
-		          var scrollLeft=$( "#timeline" ).scrollLeft();
+					var scrollLeft=$( "#timeline" ).scrollLeft();
 
-		          var positionX=event.clientX-$('#timeline').offset().left+scrollLeft;
-		          var positionY=event.clientY-$('#timeline').offset().top;
-		          
-		          positionX-=songDragged.attr('posSourisX');
-		          positionY-=songDragged.attr('posSourisY');
+					var positionX=event.clientX-$('#timeline').offset().left+scrollLeft;
+					var positionY=event.clientY-$('#timeline').offset().top;
 
-		          if(positionX<0){
-		            positionX=0;
-		          }
-		          if(positionX>$('.piste').width()-songDragged.width()){
-		            positionX=$('.piste').width()-songDragged.width();
-		          }
+					positionX-=songDragged.attr('posSourisX');
+					positionY-=songDragged.attr('posSourisY');
 
-		          if(positionY<0){
-		            positionY=0;
-		          }
+					if(positionX<0){
+						positionX=0;
+					}
+					if(positionX>$('.piste').width()-songDragged.width()){
+						positionX=$('.piste').width()-songDragged.width();
+					}
 
-		          var heightTimeline=$('.piste').outerHeight()*$('.piste').length;
+					if(positionY<0){
+						positionY=0;
+					}
 
-		          if(positionY + songDragged.height() > heightTimeline ){
-		          	positionY=heightTimeline - songDragged.height();
-		          }
-		          
-		          songDragged.css('left',positionX);
-		          songDragged.css('top',positionY);
+					var heightTimeline=$('.piste').outerHeight()*$('.piste').length;
+
+					if(positionY + songDragged.height() > heightTimeline ){
+						positionY=heightTimeline - songDragged.height();
+					}
+
+					songDragged.css('left',positionX);
+					songDragged.css('top',positionY);
 
 					var height = songDragged.height();
 					var centerY = songDragged.position().top + height / 2;
 
 
-				var pisteOverlayed=null;
-		          $('.piste').each(function(){
+					var pisteOverlayed=null;
+					$('.piste').each(function(){
 
-		          		// console.log(this.id);
-		          		var topPist=$(this).position().top;
-		          		var bottomPiste=$(this).position().top+$(this).height();
-		          		
-					  if( centerY >= topPist && centerY <= bottomPiste){
-					    pisteOverlayed=$(this);
-					  }
-				  });
+						var topPist=$(this).position().top;
+						var bottomPiste=$(this).position().top+$(this).height();
+							
+					  	if( centerY >= topPist && centerY <= bottomPiste){
+					    	pisteOverlayed=$(this);
+					  	}
 
-		        if(pisteOverlayed!=null){
-		          	// console.log("songs");
-		          	var overSong=false;
-		          	songDragged.css('background-color',songDragged.attr('originalBgColor'));
-		          	pisteOverlayed.find('.song').not(songDragged).each(function()
-		          	{
-		          		var leftOtherSong=$(this).position().left;
-		          		var rigthOtherSong=leftOtherSong+$(this).width();
-		          		
-		          		if(! (rigthOtherSong<positionX || leftOtherSong>positionX+songDragged.width() ) ){
-		          		
-		          			overSong=true;
-		          		}
-		          });
+					});
 
-		          	if(overSong){
-		          		songDragged.css('background-color',"red");	
-		          	}
-		          	songDragged.attr('overOtherSong',overSong);
-		      	}
+					if(pisteOverlayed!=null){
+
+						var overSong=false;
+						songDragged.css('background-color',songDragged.attr('originalBgColor'));
+						pisteOverlayed.find('.song').not(songDragged).each(function()
+						{
+							var leftOtherSong=$(this).position().left;
+							var rigthOtherSong=leftOtherSong+$(this).width();
+							
+							if(! (rigthOtherSong<positionX || leftOtherSong>positionX+songDragged.width() ) ){
+							
+								overSong=true;
+							}
+						});
+
+						if(overSong){
+							songDragged.css('background-color',"red");	
+						}
+						songDragged.attr('overOtherSong',overSong);
+		      		}
 		      
 		        }
 		    }
@@ -327,7 +383,6 @@ define(function( require ) {
 					songDragged.css('top',0);
 					songDragged.css('background-color',songDragged.attr('originalBgColor'));
 				}
-
 
 			}
 
