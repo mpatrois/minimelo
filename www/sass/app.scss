@@ -163,9 +163,9 @@ header{
 
     .piste {
     	border:1px solid black;
-    	height: 60px;
+    	height: 160px;
     	position: relative;
-    	z-index: 0;
+
     	.song{
     		border-left:1px solid black;
     		border-right:1px solid black;
@@ -176,8 +176,8 @@ header{
     		box-sizing:border-box;
 
     		&.active{
-				transform:scale(1.01);
-				border: 1px solid green;
+				transform:scale(1.03);
+				/*border: 1px solid green;*/
 			}
 			&.inDrag{
 				opacity: 0.7;

@@ -17,7 +17,7 @@ define(function(require) {
 		this.audioCtx    = new (window.AudioContext || window.webkitAudioContext)();
 
 		this.nbSongPlayed=0;
-		this.duration=10;
+		this.duration=5;
 
 		this.debutSong=0;
 		this.lineTimeOut=0;
@@ -48,40 +48,35 @@ define(function(require) {
 			var xSong=$(this).position().left;
 			var beginSong=self.pxToSecondsInTimeline(xSong);
 
-			var instrument=this;
+			var song=this;
 
-			var idSong=instrument.getAttribute('data-song-id');
-			var step=instrument.getAttribute('step');
+			var idSong=song.getAttribute('data-song-id');
+			var step=song.getAttribute('step');
 
 			var sourcePlaying=self.songs[idSong].playWithTime(beginSong, self.audioCtx);
+			sourcePlaying.songRef=song;
 
 			var idTimeOutActive;
 			var idTimeOutInactive;
 
-			idTimeOutActive = setTimeout(function(instrument){
+			idTimeOutActive = setTimeout(function(song){
 
-				instrument.classList.add('active');
+				song.classList.add('active');
 
-				idTimeOutInactive = setTimeout(function(){
-						
-						instrument.classList.remove('active');
+			}, beginSong*1000,song);
 
-				},100);
-
-			}, beginSong*1000,instrument);
-
-			var index=self.songsInPlay.length;
-
-			self.songsInPlay.push({ index           : index,
+			self.songsInPlay.push({
 								    source          : sourcePlaying,
 					 				timeOutActive   : idTimeOutActive,
-					 				timeOutInactive : idTimeOutInactive});
+					 				});
 
 			sourcePlaying.onended=function(){
 
 				self.nbSongPlayed++;
+				this.songRef.classList.remove('active');
 
-				if(self.nbSongPlayed==self.songsInPlay.length){
+				if(self.nbSongPlayed==self.songsInPlay.length)
+				{
 					$('#play_stop').removeClass('stop_btn');
 					$('#play_stop').addClass('play_btn');
 					clearInterval(self.lineTimeOut);
@@ -99,7 +94,6 @@ define(function(require) {
 		for (var i = 0; i < this.songsInPlay.length; i++) {
 			this.songsInPlay[i].source.stop();
 			clearTimeout(this.songsInPlay[i].timeOutActive);
-			clearTimeout(this.songsInPlay[i].timeOutInactive);
 		};
 		this.songsInPlay=[];
 		$("#line").css('left',0);

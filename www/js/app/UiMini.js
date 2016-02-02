@@ -9,7 +9,6 @@ define(function( require ) {
 		this.timeline=timeline;
 	}
 
-
   	UiMini.prototype.initButtonsSongs = function () {
 
 		var idSong = 0;
@@ -98,8 +97,7 @@ define(function( require ) {
 
 			$(this).parent().find('.button').removeClass('active');
 			$(this).addClass('active');
-			// $(this).parent()filter("[type='"+type+"']").addClass("active");
-			// $(this).removeClass("active");	
+
 		});
 
 		$(".validate_btn.button").click(function(){
