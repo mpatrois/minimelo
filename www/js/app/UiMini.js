@@ -44,7 +44,6 @@ define(function( require ) {
 			
 
 			var buttonsClone=$(this).clone();
-			console.log(buttonsClone);
 
 			$("#buttons-songs-modal").append(buttonsClone);
 
@@ -249,6 +248,43 @@ define(function( require ) {
 		          
 		          songDragged.css('left',positionX);
 		          songDragged.css('top',positionY);
+
+					var height = songDragged.height();
+					var centerY = songDragged.position().top + height / 2;
+
+
+				var pisteOverlayed=null;
+		          $('.piste').each(function(){
+
+		          		// console.log(this.id);
+		          		var topPist=$(this).position().top;
+		          		var bottomPiste=$(this).position().top+$(this).height();
+		          		
+					  if( centerY >= topPist && centerY <= bottomPiste){
+					    pisteOverlayed=$(this);
+					  }
+				  });
+
+		        if(pisteOverlayed!=null){
+		          	// console.log("songs");
+		          	var overSong=false;
+		          	songDragged.css('background-color',songDragged.attr('originalBgColor'));
+		          	pisteOverlayed.find('.song').not(songDragged).each(function()
+		          	{
+		          		var leftOtherSong=$(this).position().left;
+		          		var rigthOtherSong=leftOtherSong+$(this).width();
+		          		
+		          		if(! (rigthOtherSong<positionX || leftOtherSong>positionX+songDragged.width() ) ){
+		          		
+		          			overSong=true;
+		          		}
+		          });
+
+		          	if(overSong){
+		          		songDragged.css('background-color',"red");	
+		          	}
+		          	songDragged.attr('overOtherSong',overSong);
+		      	}
 		      
 		        }
 		    }
@@ -258,19 +294,38 @@ define(function( require ) {
 				if($('.piste .song.inDrag').length>0)
 				{
 
-					var song=$('.piste .song.inDrag');
-					var offset = song.offset();
-					var height = song.height();
-					var centerY = offset.top + height / 2;
+					var songDragged=$('.piste .song.inDrag');
+					
 
-					$('.piste').each(function(){
-					  if( centerY>$(this).offset().top && centerY < $(this).offset().top+$(this).height()){
-					    $(this).append(song);
-					  }
-					});
+					if(songDragged.attr('overOtherSong')=='false')
+					{
 
-					song.css('top',0);
-					song.removeClass('inDrag');
+						var offset = songDragged.offset();
+						var height = songDragged.height();
+						var centerY = offset.top + height / 2;
+
+						$('.piste').each(function(){
+						  if( centerY>$(this).offset().top && centerY < $(this).offset().top+$(this).height()){
+						    $(this).append(songDragged);
+						  }
+						});
+
+						
+						songDragged.removeClass('inDrag');
+					}
+					else{
+						var leftOriginal=songDragged.attr('posSongX');
+						var pisteOriginal=songDragged.attr('piste');
+						
+						$("#"+pisteOriginal).append(songDragged);
+						songDragged.css('left',leftOriginal+"px");
+						console.log(songDragged.css('left'));
+						console.log(leftOriginal);
+						
+						songDragged.removeClass('inDrag');
+					}
+					songDragged.css('top',0);
+					songDragged.css('background-color',songDragged.attr('originalBgColor'));
 				}
 
 
@@ -289,6 +344,8 @@ define(function( require ) {
 		$('.piste').off().mousedown('click', function(event){
 		    event.preventDefault();
 
+		  
+
 		    var xOnPiste=event.clientX-$(this).offset().left;
 
 		    var songToLoad=$("#buttons-songs .button.active")[0];
@@ -305,14 +362,18 @@ define(function( require ) {
 		    var widthSong=self.timeline.secondsToPxInTimeline(song.getDuration());
 		    divSong.width(widthSong);
 		    divSong.css('background-color',colorClass);
+		    divSong.attr('originalBgColor',colorClass);
 		    divSong.css('left',xOnPiste-widthSong/2);
 
-		    
-		    divSong.mousedown(function(event){
+
+		     divSong.mousedown(function(event){
 		      // alert('salut');
 		      event.stopPropagation();
 		      event.preventDefault();
 		      $(this).addClass('inDrag');
+
+		      $(this).attr('posSongX',$(this).position().left);
+		      $(this).attr('piste',$(this).parent().attr('id'));
 		      
 		      var top=$(this).parent().position().top;
 		      $(this).css('top',top);
@@ -323,6 +384,7 @@ define(function( require ) {
 		      var posSourisOnSongY=event.clientY-$('.piste .song.inDrag').offset().top;
 		      $(this).attr('posSourisX',posSourisOnSongX);
 		      $(this).attr('posSourisY',posSourisOnSongY);
+		      
 		      
 		    });
 
@@ -356,6 +418,14 @@ define(function( require ) {
 	          self.timeline.stop();
 	        }
 	        
+	    });
+
+	    $('#zoom').click(function(){
+	    	self.timeline.zoom();
+	    });
+
+	    $('#unzoom').click(function(){
+	    	self.timeline.unzoom();
 	    });
 
 	};
