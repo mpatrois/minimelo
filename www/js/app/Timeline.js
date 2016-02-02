@@ -6,49 +6,112 @@ define(['app/ResourcesHandler'], function(ResourcesHandler) {
 
 	function Timeline() {
 		this.songs       = ResourcesHandler.currentSongs();
+		this.songsInPlay = [];
+
 		this.tempo       = 90;
 		this.bars        = 20;
 		this.stepByBars  = 4;
+
+		this.audioCtx    = new (window.AudioContext || window.webkitAudioContext)();
+
+		this.nbSongPlayed=0;
+		this.duration=10;
+
+		this.debutSong=0;
+		this.lineTimeOut=0;
+
 	}
 
-  	Timeline.prototype.play = function () {
+	Timeline.prototype.play = function () {
 
 		var self = this;
 
-		$('#timeline .piste').each(function(){
+		self.nbSongPlayed=0;
+		self.songsInPlay=[];
 
-			var step = 0;
+		self.debutSong=self.audioCtx.currentTime;
+		// self.uploadLine();
 
-			$(this).find('.box').each(function(){
+		self.lineTimeOut = setInterval(function(){
+			var playingTime=self.audioCtx.currentTime-self.debutSong;
+			$("#line").css('left',self.secondsToPxInTimeline(playingTime));
+		},100)
 
-				var box    = $(this);
-				var idSong = $(this).find('.instrument').attr('data-song-id');
+		
+		$('.piste .song').each(function(){
+			
+			var xSong      = $(this).position().left;
+			var beginSong  = self.pxToSecondsInTimeline(xSong);
+			
+			var instrument = this;
 
-				if(idSong != null){
-					self.songs[idSong].playWithTime(step*self.getNoteTime());
-					setTimeout(function(){
-						box.find(".instrument").toggleClass("active");
+			var idSong=instrument.getAttribute('data-song-id');
+			var step=instrument.getAttribute('step');
 
-						setTimeout(function(){
-							box.find(".instrument").removeClass("active");
-						}, 100);
+			var sourcePlaying = self.songs[idSong].playWithTime(beginSong);
 
-					}, step*self.getNoteTime()*1000);
+			var idTimeOutActive;
+			var idTimeOutInactive;
+
+			idTimeOutActive = setTimeout(function(instrument){
+
+				instrument.classList.add('active');
+
+				idTimeOutInactive = setTimeout(function(){
+						
+						instrument.classList.remove('active');
+
+				},100);
+
+			}, beginSong*1000,instrument);
+
+			var index = self.songsInPlay.length;
+
+			self.songsInPlay.push({ index           : index,
+									source          : sourcePlaying,
+									timeOutActive   : idTimeOutActive,
+									timeOutInactive : idTimeOutInactive});
+
+			sourcePlaying.onended=function(){
+
+				self.nbSongPlayed++;
+
+				if(self.nbSongPlayed==self.songsInPlay.length){
+					$('#play_stop').removeClass('stop_btn');
+					$('#play_stop').addClass('play_btn');
+					clearInterval(self.lineTimeOut);
+					$("#line").css('left',0);
 				}
-				step++;
+			}
 
-			});
+		})
 
-		});
-  	};
+	};
+
+	Timeline.prototype.stop = function () {
+
+		clearInterval(this.lineTimeOut);
+		for (var i = 0; i < this.songsInPlay.length; i++) {
+			this.songsInPlay[i].source.stop();
+			clearTimeout(this.songsInPlay[i].timeOutActive);
+			clearTimeout(this.songsInPlay[i].timeOutInactive);
+		};
+		this.songsInPlay=[];
+		$("#line").css('left',0);
+	};
+
 
 	Timeline.prototype.getNbSteps = function () {
 		return this.bars * this.stepByBars;
 	};
 
-	Timeline.prototype.getNoteTime = function () {
-		return (60)/this.tempo/4;
-	};
+	Timeline.prototype.secondsToPxInTimeline = function ( second ) {
+		return second*$('#timeline').width()/this.duration;
+	}
 
-  	return Timeline;
+	Timeline.prototype.pxToSecondsInTimeline = function ( px ) {
+		return px*this.duration/$('#timeline').width();
+	}
+
+	return Timeline;
 });

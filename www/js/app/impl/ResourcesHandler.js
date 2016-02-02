@@ -54,11 +54,11 @@ define(function( require ){
 
 	ResourcesHandler.prototype.loadTestSongs = function() {
 
-		for ( var classe in ressources )
+		for ( var type in ressources )
 		{
-			for ( var song in ressources[classe] )
+			for ( var url in ressources[type].songs )
 			{
-				this.songs.push(new Song(classe, ressources[classe][song].url));
+				this.songs.push(new Song(type, ressources[type].songs[url]));
 			}
 		}
 	}
@@ -86,6 +86,10 @@ define(function( require ){
 		}
 
 		return currentSongs;
+	}
+
+	ResourcesHandler.prototype.getSongs = function() {
+		return this.songs;
 	}
 
 	ResourcesHandler.prototype.getInstance = function() {

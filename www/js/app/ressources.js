@@ -2,55 +2,64 @@ define(function( require ){
 
     var ressources={
 
-        "drum":[
-            {url:"audio/kicks/kick0.wav",type:"drum"},  
-            {url:"audio/kicks/kick4.wav",type:"drum"},  
-            {url:"audio/kicks/kick5.wav",type:"drum"}   
-        ]
-        ,
-        "cymbal":[
-            {url:"audio/hats/hat1.wav",type:"cymbal"},  
-            {url:"audio/snares/snare1.wav",type:"cymbal"}   
-        ],
+        "drum":{
+            songs:[
+                "audio/kicks/kick0.wav",
+                "audio/kicks/kick4.wav",
+                "audio/kicks/kick5.wav"
+            ],
+            color:'#eb3816'
+        },
+        "cymbal":{
+            songs:[
+                "audio/hats/hat1.wav"
+            ],
+            color:'#ff7800'
+        },
 
-        "flute":[
-            {url:"audio/snares/snare1.wav",type:"flute"}    
-        ],
+        "flute":{
+            songs:[
+                "audio/snares/snare1.wav"
+            ],
+            color:'#ffe400'
+        },
 
-        "piano":[
-            {url:"audio/pianos/piano1.wav",type:"piano"}    
-        ],
+        "piano":{
+            songs:[
+                "audio/pianos/piano1.wav"
+            ],
+            color:'#00a134'
+        },
 
-        "violin":[
-            {url:"audio/snares/snare2.wav",type:"violin"}   
-        ],
+        "violin":{
+            songs:[
+                "audio/snares/snare2.wav"
+            ],
+            color:'#0085ff'
+        },
 
-        "trumpet":[
-            {url:"audio/snares/snare3.wav",type:"trumpet"}  
-        ],
+        "trumpet":{
+            songs:[
+                "audio/snares/snare3.wav"
+            ],
+            color:'#84d6ff'
+        },
 
-        "guitar":[
-            {url:"audio/kicks/kick3.wav",type:"guitar"} 
-        ],
+        "guitar":{
+            songs:[
+                "audio/kicks/kick3.wav"
+            ],
+            color:'#9b0080'
 
-        "voice":[
-            {url:"audio/kicks/kick2.wav",type:"voice"}  
-        ],
+        },
 
+        "voice":{
+            songs:[
+                "audio/kicks/kick2.wav"
+            ],
+            color:'#000000'
+        },
     };
-
-    var colors=[
-        "red",
-        "yellow",
-        "orange",
-        "green",
-        "violet",
-        "pink",
-        "grey",
-        "blue"
-    ]
-
-    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     return ressources;
 });

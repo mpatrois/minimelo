@@ -1,89 +1,95 @@
 define(function( require ) {
-    
-    'use strict';
+	
+	'use strict';
 
-    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+	var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+	
+	var lastId   = 0;
 
-    var lastId = 0;
+	function Song( type, url ){
+		this.id        = lastId++;
+		this.url       = url;
+		this.type      = type;
+		this.buffer    = null;
+		this.startTime = 0;
+		this.stopTime  = 0;
+	}
 
-    function Song( classe, url ){
-        this.id        = lastId++;
-        this.url       = url;
-        this.classe    = classe;
+	Song.prototype.load = function ( ) {
+		var self = this;
 
-        this.buffer    = null;
-        this.source    = null;
-        this.startTime = 0;
-        this.stopTime  = 0;
-    }
+		$.ajax({
+			url: self.url,
+			xhrFields : {responseType : 'arraybuffer'},
+		}).done(function(arrayBuffer){
 
-    Song.prototype.load = function ( ) {
-        var self = this;
+			audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
+				self.buffer = buffer;
 
-        $.ajax({
-            url: self.url,
-            xhrFields : {responseType : 'arraybuffer'},
-        }).done(function(arrayBuffer){
+				$('[data-song-id=' + self.id + ']').mousedown(function(){
+					self.playOnce();
+					$('#buttons-songs .button').removeClass('active');
+					$(this).addClass('active');
+				});
 
-            audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
-                self.buffer = buffer;
+		  }, function(e) {"Error with decoding audio data" + e.err;} );  
+		});
 
-                $("[data-song-id=" + self.id + "]").mousedown(function(){
-                    self.play();
-                    $("#buttons-songs .button").removeClass("active");
-                    $(this).addClass("active");
-                });
+	}
 
-          }, function(e) {"Error with decoding audio data" + e.err;} );  
-        });
+	Song.prototype.playWithTime = function ( time ) {
+		if ( this.buffer == null ) {
+			throw "PlayWithTime error : buffer is not set, the sound has not been loaded.";
+		}
 
-    }
+		var source    = audioCtx.createBufferSource();
+		source.buffer = this.buffer;
+		source.connect(audioCtx.destination);
+		source.start(audioCtx.currentTime + time);
 
-    Song.prototype.playWithTime = function ( time ) {
-        if ( this.buffer == null ) {
-            throw "PlayWithTime error : buffer is not set, the sound has not been loaded.";
-        }
+		return source;
+	};
 
-        this.source        = audioCtx.createBufferSource();
-        this.source.buffer = this.buffer;
-        this.source.connect(audioCtx.destination);
-        this.source.start(audioCtx.currentTime + time);
-    };
+	Song.prototype.play = function ()
+	{
+		this.playWithTime(0);
+	};
 
-    Song.prototype.play = function ()
-    {
-        this.playWithTime(0);
-    };
+	Song.prototype.playOnce = function () 
+	{
+		var self = this;
 
-    Song.prototype.playOnce = function () 
-    {
-        var self = this;
+		if( self.buffer !== null )
+			this.play();
 
-        $.ajax({
-            url: self.url,
-            xhrFields : {responseType : 'arraybuffer'},
-        }).done(function(arrayBuffer){
+		$.ajax({
+			url: self.url,
+			xhrFields : {responseType : 'arraybuffer'},
+		}).done(function(arrayBuffer){
 
-            audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
+			audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
 
-                self.source        = audioCtx.createBufferSource();
-                self.source.buffer = buffer;
-                self.source.connect(audioCtx.destination);
-                self.source.start(audioCtx.currentTime);
+				var source    = audioCtx.createBufferSource();
+				
+				source.buffer = buffer;
+				source.connect(audioCtx.destination);
+				source.start(audioCtx.currentTime);
 
-          }, function(e) {"Error with decoding audio data" + e.err;} );  
-        });
-    };
+				return source;
 
-    Song.prototype.getDuration = function (){
-        return this.source.buffer.duration;
-    };
+		  }, function(e) {"Error with decoding audio data" + e.err;} );  
+		});
+	};
 
-    Song.prototype.loaded = function() {
-        return ( this.buffer != null )
-    }
+	Song.prototype.getDuration = function (){
+		return this.source.buffer.duration;
+	};
 
-    return Song;
+	Song.prototype.loaded = function() {
+		return ( this.buffer != null )
+	}
+
+	return Song;
 
 });
 
