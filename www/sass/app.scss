@@ -98,7 +98,7 @@ header{
 }
 
 #buttons-songs, 
-#buttons-songs-modal, #choose-song div{
+#buttons-songs-modal, #choose-song div, .box{
 
 	.button{
     	background-image:url("../img/buttons_sprite.png");
@@ -141,18 +141,41 @@ header{
 
 	div{margin-right:10px;}
 
+	div .button span{font-size:32px;
+				font-family:"Orange";
+				position:absolute;
+				top:2px;
+				text-align:center;
+				width:100%;
+				padding-left:5px;
+				}
+
 	.button{
 		width: 55px;
 		height: 55px;
     	background-image:url("../img/buttons_sprite.png");
 		background-size: cover;
 		display: inline-block;
+		position:relative;
 		&.active{
 			background-position:0 33%;
 		    transform:scale(1.2);
 		}
 	}
 
+}
+
+#buttons-songs-modal{
+
+	.button span{font-size:32px;
+				font-family:"Orange";
+				position:absolute;
+				top:2px;
+				text-align:center;
+				width:100%;
+				padding-left:5px;}
+
+	.button{position:relative;}
 }
 
 #timeline{
@@ -172,13 +195,8 @@ header{
 			border:1px solid;
 			text-align: center;
 
-			.instrument{
-				background-color: rgba(0,0,0,0.5);
-				width: 100%;
-				height: 100%;
-			}
 			.instrument.active{
-				transform:scale(1.3);
+				transform:scale(1.2);
 			}
 		}
 		.box:nth-child(4n+1) {
@@ -230,20 +248,19 @@ header{
 
     .round_btn{
 	    display: inline-block;
-	    width: 100px;
-	    height: 100px;
+	    width: 50px;
+	    height: 50px;
 	   	background-image: url("../img/buttons_sprite.png");
 	    background-size: cover;
 		background-position: 0 67%;
-		transform: scale(0.5);
 	    
-	    &:hover{
+	    /*&:hover{
 			background-position: 0 101%;
 			&:after{
 				top:6px;
 				left:-7px;
 			}
-	    }
+	    }*/
 
 	    &:after{
 			content:"";
@@ -251,8 +268,8 @@ header{
 			background-position:0 67%;
 			position: relative;
 			display: inline-block;
-			width:100px;
-			height: 100px;
+			width:50px;
+			height: 50px;
 			background-repeat: no-repeat;
 			background-size: 100%;
 			background-color: transparent;	
@@ -263,14 +280,14 @@ header{
 		&.scissors_btn:after{ background-position-y: -200px; }
 		&.unzoom_btn:after{   background-position-y: -300px; }
 		&.zoom_btn:after{     background-position-y: -400px; }
-		&.play_btn:after{     background-position-y: -500px; }
-		&.pause_btn:after{    background-position-y: -600px; }
-		&.stop_btn:after{     background-position-y: -700px; }
-		&.begin_btn:after{    background-position-y: -800px; }
-		&.end_btn:after{      background-position-y: -900px; }
+		&.play_btn:after{     background-position-y: -250px; }
+		&.pause_btn:after{    background-position-y: -300px; }
+		&.stop_btn:after{     background-position-y: -350px; }
+		&.begin_btn:after{    background-position-y: -400px; }
+		&.end_btn:after{      background-position-y: -450px; }
 		&.sound_btn:after{    background-position-y: -1000px; }
 		&.close_btn:after{    background-position-y: -1100px; }
-		&.plus_btn:after{     background-position-y: -1200px; }
+		&.plus_btn:after{     background-position-y: -600px; }
 
 	}
 }

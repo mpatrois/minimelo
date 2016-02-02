@@ -22,6 +22,7 @@ define(function( require ) {
 			buttonSong.attr('type',classe);
 			buttonSong.attr('data-song-id',idSong);
 			buttonSong.attr('data-song-url', tabInstru.url);
+			buttonSong.append("<span></span>");
 
 			$('#buttons-songs').append(buttonSong);
 
@@ -54,6 +55,8 @@ define(function( require ) {
 				var instruLine = $("#choose-song").append(line);
 				//console.log(instruLine);
 
+				var numberSong = 1;
+				
 				for (var i = 0; i < tabType.length; i++) {
 					var cloneWithUrl=buttonsClone.clone();
 					cloneWithUrl.attr('data-song-url',tabType[i].url);
@@ -62,16 +65,26 @@ define(function( require ) {
 					var typeClone = cloneWithUrl.attr("type");
 
 					if(typeClone == typeLine)
-					line.append(cloneWithUrl);
-						
+						cloneWithUrl.append("<span>"+numberSong+"</span>");
+						line.append(cloneWithUrl);
+						numberSong++;
 				};
 
+
+			});
 			// });
+			
+		
 
-		});
 
+				$("#choose-song div .button").click(function(){
 
-				$("#choose-song div .button").click(function(){ 
+					var numberId = $(this).find("span").text();
+					console.log(numberId);
+
+					var typeRight = $(this).attr("type");
+
+					$("#buttons-songs-modal .button[type='"+typeRight+"']").find("span").text(numberId);
 
 					var urlSong = $(this).attr('data-song-url');
 
@@ -91,6 +104,8 @@ define(function( require ) {
 			        });
 
 				});
+
+			
 
                 eventHandler.Active($("#buttons-songs-modal .button"));
 					
