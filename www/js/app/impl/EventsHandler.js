@@ -1,10 +1,10 @@
-define(function(require) {
+define(function( require ) {
 
 
-	function EventHandler(){
+	function EventsHandler(){
 	}
 
-	EventHandler.prototype.Active = function(selector){
+	EventsHandler.prototype.active = function(selector){
 
 		selector.click(function(){
 			$(selector).filter(".active").removeClass('active');
@@ -12,6 +12,6 @@ define(function(require) {
 		})
 	}
 
-	return EventHandler;
+	return EventsHandler;
 
 });

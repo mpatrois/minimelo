@@ -7,7 +7,7 @@ requirejs.config({
     }
 });
 
-// $(document).ready(function() {
+$(document).ready(function() {
 
     require(['app/ResourcesHandler', 'app/UiMini'], function(resources, UiMini) {
 
@@ -22,16 +22,16 @@ requirejs.config({
             },
 
             onDeviceReady : function () {
-                // resources.loadFiles();
+                resources.loadSongs();
                 uiMini.initUiMini();
             }
         };
 
 
-        application.init();
+        // application.init();
 
-        // application.onDeviceReady();
+        application.onDeviceReady();
     });
 
 
-// });
+});

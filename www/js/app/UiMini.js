@@ -2,14 +2,16 @@ define(function( require ) {
 
 	'use strict';
 
-	require('app/Song');
-	var Timeline   = require('app/Timeline');
-    var EventHandler  = require('app/EventHandler'); 
+	var ressources 		 = require('app/ressources');
+	var Timeline         = require('app/Timeline');
+	var EventsHandler    = require('app/EventsHandler'); 
+	var ResourcesHandler = require('app/ResourcesHandler');
 
 	function UiMini(){
 		this.timeline = new Timeline();
 	}
 
+	// should be removed any time soon
 	UiMini.prototype.initButtonsSongs = function () {
 
 		var idSong = 0;
@@ -26,23 +28,21 @@ define(function( require ) {
 
 			$('#buttons-songs').append(buttonSong);
 
-			this.timeline.loadSong(idSong, tabInstru.url, buttonSong);
+			ResourcesHandler.getSong(idSong).load();
 			idSong++;
-		}	
+		}
 
 	};
 
 
 	UiMini.prototype.initButtonsModal = function () {
 
-        var eventHandler = new EventHandler();
-
 		var self=this;
 
 		$("#buttons-songs .button").each(function(){
 			
 			var buttonsClone=$(this).clone();
-			console.log(buttonsClone);
+			// console.log(buttonsClone);
 
 			$("#buttons-songs-modal").append(buttonsClone);
 
@@ -69,7 +69,7 @@ define(function( require ) {
 
 			// });
 
-		});
+			});
 
 
 				$("#choose-song div .button").click(function(){ 
@@ -87,13 +87,13 @@ define(function( require ) {
         					source.connect(audioCtx.destination);
         					source.start();
 
-			          }, function(e) {"Error with decoding audio data" + e.err;} );  
+			          }, function(e) {"Error with decoding audio data" + e.err;} );
 
 			        });
 
 				});
 
-                eventHandler.Active($("#buttons-songs-modal .button"));
+                EventsHandler.active($("#buttons-songs-modal .button"));
 					
 					$("#choose-song div .button").click(function(){
 

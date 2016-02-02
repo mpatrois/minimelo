@@ -1,13 +1,16 @@
 define(function( require ) {
-
+    
     'use strict';
 
-    // var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
     var lastId = 0;
 
-    function Song( url ){
+    function Song( classe, url ){
         this.id        = lastId++;
         this.url       = url;
+        this.classe    = classe;
+
         this.buffer    = null;
         this.source    = null;
         this.startTime = 0;
@@ -37,6 +40,10 @@ define(function( require ) {
     }
 
     Song.prototype.playWithTime = function ( time ) {
+        if ( this.buffer == null ) {
+            throw "PlayWithTime error : buffer is not set, the sound has not been loaded.";
+        }
+
         this.source        = audioCtx.createBufferSource();
         this.source.buffer = this.buffer;
         this.source.connect(audioCtx.destination);
@@ -71,6 +78,10 @@ define(function( require ) {
     Song.prototype.getDuration = function (){
         return this.source.buffer.duration;
     };
+
+    Song.prototype.loaded = function() {
+        return ( this.buffer != null )
+    }
 
     return Song;
 

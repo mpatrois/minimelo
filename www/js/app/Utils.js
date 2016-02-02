@@ -16,3 +16,5 @@ var debug = function(txt) {
 		debug.children().first().remove();
 	}
 }
+
+function errorHandler() { console.log("An error occurred"); }
