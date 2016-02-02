@@ -2,18 +2,17 @@ define(function( require ) {
 
     'use strict';
 
-    // var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-    function Song( id, url ){
+    function Song( id, url,audioCtx ){
         this.id        = id
         this.buffer    = null;
         this.source    = null;
         this.startTime = 0;
         this.stopTime  = 0;
-        this.load( url );
+        this.load( url,audioCtx );
+        this.audioCtx=audioCtx;
     }
 
-    Song.prototype.load = function ( url ) {
+    Song.prototype.load = function ( url,audioCtx ) {
         var self = this;
 
         $.ajax({
@@ -21,7 +20,7 @@ define(function( require ) {
             xhrFields : {responseType : 'arraybuffer'},
         }).done(function(arrayBuffer){
 
-            audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
+            self.audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
                 self.buffer = buffer;
 
                 $("[data-song-id=" + self.id + "]").mousedown(function(){
@@ -36,10 +35,11 @@ define(function( require ) {
     }
 
     Song.prototype.playWithTime = function ( time ) {
-        this.source        = audioCtx.createBufferSource();
-        this.source.buffer = this.buffer;
-        this.source.connect(audioCtx.destination);
-        this.source.start(audioCtx.currentTime+time);
+      this.source        = this.audioCtx.createBufferSource();
+      this.source.buffer = this.buffer;
+      this.source.connect(this.audioCtx.destination);
+      this.source.start(this.audioCtx.currentTime+time);
+      return this.source;
     };
 
     Song.prototype.play = function ()

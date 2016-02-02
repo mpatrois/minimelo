@@ -1,51 +1,63 @@
 var ressources={
 
-    "drum":[
-    	{url:"audio/kicks/kick0.wav",type:"drum"},
-	    {url:"audio/kicks/kick4.wav",type:"drum"},
-	    {url:"audio/kicks/kick5.wav",type:"drum"}
-	    ]
-	,
-	"cymbal":[
-		{url:"audio/hats/hat1.wav",type:"cymbal"},
-        {url:"audio/snares/snare1.wav",type:"cymbal"}
-	],
+    "drum":{
+    	songs:[
+	    	{url:"audio/kicks/kick0.wav",type:"drum"},
+		    {url:"audio/kicks/kick4.wav",type:"drum"},
+		    {url:"audio/kicks/kick5.wav",type:"drum"}
+	    ],
+	    color:'#eb3816'
+	},
+	"cymbal":{
+		songs:[
+			{url:"audio/hats/hat1.wav",type:"cymbal"}
+		],
+		color:'#ff7800'
+	},
     
-    "flute":[
-    	{url:"audio/snares/snare1.wav",type:"flute"}
-    ],
+    "flute":{
+    	songs:[
+    		{url:"audio/snares/snare1.wav",type:"flute"}
+    	],
+    	color:'#ffe400'
+    },
     
-    "piano":[
-    	{url:"audio/pianos/piano1.wav",type:"piano"}
-    ],
+    "piano":{
+    	songs:[
+    		{url:"audio/pianos/piano1.wav",type:"piano"}
+    	],
+    	color:'#00a134'
+    },
    
-    "violin":[
-    	{url:"audio/snares/snare2.wav",type:"violin"}
-    ],
+    "violin":{
+    	songs:[
+    		{url:"audio/snares/snare2.wav",type:"violin"}
+    	],
+    	color:'#0085ff'
+    },
     
-    "trumpet":[
-    	{url:"audio/snares/snare3.wav",type:"trumpet"}
-    ],
+    "trumpet":{
+    	songs:[
+    		{url:"audio/snares/snare3.wav",type:"trumpet"}
+    	],
+    	color:'#84d6ff'
+    },
     
-    "guitar":[
-    	{url:"audio/kicks/kick3.wav",type:"guitar"}
-    ],
-    
-    "voice":[
-    	{url:"audio/kicks/kick2.wav",type:"voice"}
-    ],
+    "guitar":{
+    	songs:[
+    		{url:"audio/kicks/kick3.wav",type:"guitar"}
+    	],
+    	color:'#9b0080'
 
+    },
+    
+    "voice":{
+    	songs:[
+    		{url:"audio/kicks/kick2.wav",type:"voice"}
+    	],
+    	color:'#000000'
+    },
 };
 
-var colors=[
-	"red",
-	"yellow",
-	"orange",
-	"green",
-	"violet",
-	"pink",
-	"grey",
-	"blue"
-]
 
-var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+// var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
