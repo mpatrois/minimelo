@@ -77,12 +77,10 @@ define(function( require ) {
 
 		$("#choose-song div .button").click(function(){ 
 
-				var numberId = $(this).find("span").text();
-				console.log(numberId);
+			var numberId = $(this).find("span").text();
+			var typeRight = $(this).attr("type");
 
-				var typeRight = $(this).attr("type");
-
-				$("#buttons-songs-modal .button[type='"+typeRight+"']").find("span").text(numberId);
+			$("#buttons-songs-modal .button[type='"+typeRight+"']").find("span").text(numberId);
 
 			var urlSong = $(this).attr('data-song-url');
 
@@ -316,7 +314,8 @@ define(function( require ) {
 
 		    var widthSong=self.timeline.secondsToPxInTimeline(song.getDuration());
 		    divSong.width(widthSong);
-		    divSong.css('background-color',colorClass);
+		    //divSong.css('background-color',colorClass);
+		    divSong.css('border', '5px solid ' +colorClass);
 		    divSong.css('left',xOnPiste-widthSong/2);
 
 		    

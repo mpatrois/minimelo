@@ -1,4 +1,13 @@
-$red : #eb3816;
+$red : rgba(235, 56, 22, 0.8);
+$orange : rgba(255, 120, 0, 0.8);
+$yellow : rgba(255, 228, 0, 0.8);
+$clear_green : rgba(170, 244, 0, 0.8);
+$dark_green : rgba(0, 161, 52, 0.8);
+$dark_blue : rgba(0, 133, 255, 0.8);
+$clear_blue : rgba(132, 214, 255, 0.8);
+$purple : rgba(155, 0, 128, 0.8);
+
+/*$red : #eb3816;
 $orange : #ff7800;
 $yellow : #ffe400;
 $clear_green : #aaf400;
@@ -7,7 +16,7 @@ $dark_blue : #0085ff;
 $clear_blue : #84d6ff;
 $purple : #9b0080;
 $black : #000000;
-
+*/
 
 .modal-dialog {
 
@@ -156,9 +165,11 @@ header{
 		background-size: cover;
 		display: inline-block;
 		position:relative;
+		opacity:0.8;
 		&.active{
 			background-position:0 33%;
 		    transform:scale(1.2);
+		    opacity:1;
 		}
 	}
 
@@ -189,13 +200,16 @@ header{
     	position: relative;
 
     	.song{
-    		border-left:1px solid black;
-    		border-right:1px solid black;
+    		/*border-left:1px solid black;
+    		border-right:1px solid black;*/
     		position: absolute;
     		height:100%;
     		display: inline-block;
     		z-index: 1;
     		box-sizing:border-box;
+			background-image: url("../img/texture_crayon-1.png");
+			background-repeat-x: repeat;
+			border-radius:3px;
 
     		&.active{
 				transform:scale(1.03);
@@ -204,6 +218,16 @@ header{
 			&.inDrag{
 				opacity: 0.7;
 			}
+
+
+			&[type="drum"]{ background-color: $red; }/* RED */
+			&[type="cymbal"]{ background-color: $orange; }/* ORANGE */
+			&[type="flute"]{ background-color: $yellow; }/* YELLOW */
+			&[type="piano"]{ background-color: $clear_green; }/* CLEAR GREEN */
+			&[type="violin"]{ background-color: $dark_green; }/* DARK  GREEN */
+			&[type="trumpet"]{ background-color: $dark_blue; }/* DARK  BLUE */
+			&[type="guitar"]{ background-color: $clear_blue; }/* CLEAR BLUE */
+			&[type="voice"]{ background-color: $purple; }/* PURPLE */
     	}
 		.box{
 			height:60px;
@@ -233,8 +257,9 @@ header{
 	#line{
 		top: 0px;
 		width: 1px;
-		background: green;
 		height: 100%;
+		background-color: #000;
+		background-repeat-y: repeat;
 		position: absolute;
 		left: 0px;
 		display: inline-block;
@@ -370,7 +395,7 @@ header{
 	    display:inline-block;
 	    overflow:visible;
 	    font-family:"Orange";
-	    margin:0;
+	    margin-top:10px;
 	}
 }
 
