@@ -89,46 +89,41 @@ define(function( require ) {
   };
 
   UiMini.prototype.initDragAndDrop = function () {
-    $('.app').mousemove(function(event)
-    {
-
-      if($('.piste .song.inDrag').length>0){
-
-        var scrollLeft=$( "#timeline" ).scrollLeft();
-
-        var positionX=event.clientX-$('#timeline').offset().left+scrollLeft;
-        var positionY=event.clientY-$('#timeline').offset().top;
-        // console.log(positionY);
-        
-        positionX-=$('.piste .song.inDrag').attr('posSourisX');
-        positionY-=$('.piste .song.inDrag').attr('posSourisY');
-        // positionY-=$('.piste .song.inDrag').parent().position().top;
-        // console.log($('.piste .song.inDrag').parent().offset().top);
-        // console.log($('.piste .song.inDrag').parent().position().top);
-        // console.log($('.piste .song.inDrag').parent().offset().top);
-        // console.log($('.piste .song.inDrag').parent().position().top);
-
-
-
-        if(positionX<0){
-          positionX=0;
-        }
-        if(positionX>$('.piste').width()-$('.piste .song.inDrag').width()){
-          positionX=$('.piste').width()-$('.piste .song.inDrag').width();
-        }
-
-        if(positionY<0){
-          positionY=0;
-        }
-        
-        $('.piste .song.inDrag').css('left',positionX);
-        $('.piste .song.inDrag').css('top',positionY);
       
+    document.ontouchmove = function(e){
+      if(e.touches.length == 1){ // Only deal with one finger
+
+        if($('.piste .song.inDrag').length>0){
+          
+          event.preventDefault();
+          var scrollLeft=$( "#timeline" ).scrollLeft();
+
+          var positionX=event.touches[0].clientX-$('#timeline').offset().left+scrollLeft;
+          var positionY=event.touches[0].clientY-$('#timeline').offset().top;
+          
+          positionX-=$('.piste .song.inDrag').attr('posSourisX');
+          positionY-=$('.piste .song.inDrag').attr('posSourisY');
+
+          if(positionX<0){
+            positionX=0;
+          }
+          if(positionX>$('.piste').width()-$('.piste .song.inDrag').width()){
+            positionX=$('.piste').width()-$('.piste .song.inDrag').width();
+          }
+
+          if(positionY<0){
+            positionY=0;
+          }
+          
+          $('.piste .song.inDrag').css('left',positionX);
+          $('.piste .song.inDrag').css('top',positionY);
+      
+        }
+
       }
+    }
 
-    });
-
-    $('.app').mouseup(function(event){
+    document.ontouchend=function(event){
 
       if($('.piste .song.inDrag').length>0)
       {
@@ -149,7 +144,7 @@ define(function( require ) {
       }
 
 
-    });
+    }
   }
   UiMini.prototype.initPistes = function () {
 	
@@ -179,6 +174,7 @@ define(function( require ) {
 
         
         divSong.mousedown(function(event){
+          // alert('salut');
           event.stopPropagation();
           event.preventDefault();
           $(this).addClass('inDrag');
@@ -187,6 +183,9 @@ define(function( require ) {
           $(this).css('top',top);
           $('.piste:first-of-type').append($(this));
           
+          // console.log(event.clientX);
+          // console.log(event.clientY);
+
           var posSourisOnSongX=event.clientX-$('.piste .song.inDrag').offset().left;
           var posSourisOnSongY=event.clientY-$('.piste .song.inDrag').offset().top;
           $(this).attr('posSourisX',posSourisOnSongX);
@@ -201,32 +200,6 @@ define(function( require ) {
 
       
     });
-
-    // $('.app').mousemove(function(event){
-
-    //   if($('.piste .song.inDrag').length>0){
-
-    //     var position=event.clientX-$('#timeline').offset().left;
-        
-    //     position-=$('.piste .song.inDrag').attr('posSouris');
-    //     if(position<0){
-    //       position=0;
-    //     }
-    //     if(position>$('.piste').width()-$('.piste .song.inDrag').width()){
-    //       position=$('.piste').width()-$('.piste .song.inDrag').width();
-    //     }
-        
-    //     $('.piste .song.inDrag').css('left',position);
-      
-    //   }
-
-    // });
-
-    // $('.app').mouseup(function(event){
-
-    //   $('.piste .song.inDrag').removeClass('inDrag');
-
-    // });
 
   };
 

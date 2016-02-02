@@ -16,7 +16,7 @@ define(function(require) {
 		this.audioCtx    = new (window.AudioContext || window.webkitAudioContext)();
 
 		this.nbSongPlayed=0;
-		this.duration=20;
+		this.duration=10;
 
 		this.debutSong=0;
 		this.lineTimeOut=0;
