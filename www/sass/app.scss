@@ -78,8 +78,7 @@ ul{
 header{
 	width:100%;
 	height:auto;
-	text-align: center;
-	margin: 50px 0;
+
 	img
 	{
 		max-width:100%;
@@ -141,18 +140,41 @@ header{
 
 	div{margin-right:10px;}
 
+	div .button span{font-size:32px;
+				font-family:"Orange";
+				position:absolute;
+				top:4px;
+				text-align:center;
+				width:100%;
+				padding-left:5px;
+				}
+
 	.button{
 		width: 55px;
 		height: 55px;
     	background-image:url("../img/buttons_sprite.png");
 		background-size: cover;
 		display: inline-block;
+		position:relative;
 		&.active{
 			background-position:0 33%;
 		    transform:scale(1.2);
 		}
 	}
 
+}
+
+#buttons-songs-modal{
+
+	.button span{font-size:32px;
+				font-family:"Orange";
+				position:absolute;
+				top:4px;
+				text-align:center;
+				width:100%;
+				padding-left:5px;}
+
+	.button{position:relative;}
 }
 
 #timeline{
@@ -163,7 +185,7 @@ header{
 
     .piste {
     	border:1px solid black;
-    	height: 60px;
+    	height: 80px;
     	position: relative;
     	z-index: 0;
     	.song{
@@ -259,18 +281,17 @@ header{
 
     .round_btn{
 	    display: inline-block;
-	    width: 100px;
-	    height: 100px;
+	    width: 50px;
+	    height: 50px;
 	   	background-image: url("../img/buttons_sprite.png");
 	    background-size: cover;
 		background-position: 0 67%;
-		transform: scale(0.5);
 	    
 	    &:hover{
 			background-position: 0 101%;
 			&:after{
-				top:6px;
-				left:-7px;
+				top:3px;
+				left:-3px;
 			}
 	    }
 
@@ -280,26 +301,26 @@ header{
 			background-position:0 67%;
 			position: relative;
 			display: inline-block;
-			width:100px;
-			height: 100px;
+			width:50px;
+			height: 50px;
 			background-repeat: no-repeat;
 			background-size: 100%;
 			background-color: transparent;	
 		}
 
 	    &.trash_btn:after{    background-position-y: 0; }
-		&.validate_btn:after{ background-position-y: -100px; }
-		&.scissors_btn:after{ background-position-y: -200px; }
-		&.unzoom_btn:after{   background-position-y: -300px; }
-		&.zoom_btn:after{     background-position-y: -400px; }
-		&.play_btn:after{     background-position-y: -500px; }
-		&.pause_btn:after{    background-position-y: -600px; }
-		&.stop_btn:after{     background-position-y: -700px; }
-		&.begin_btn:after{    background-position-y: -800px; }
-		&.end_btn:after{      background-position-y: -900px; }
-		&.sound_btn:after{    background-position-y: -1000px; }
-		&.close_btn:after{    background-position-y: -1100px; }
-		&.plus_btn:after{     background-position-y: -1200px; }
+		&.validate_btn:after{ background-position-y: -50px; }
+		&.scissors_btn:after{ background-position-y: -100px; }
+		&.unzoom_btn:after{   background-position-y: -150px; }
+		&.zoom_btn:after{     background-position-y: -200px; }
+		&.play_btn:after{     background-position-y: -250px; }
+		&.pause_btn:after{    background-position-y: -300px; }
+		&.stop_btn:after{     background-position-y: -350px; }
+		&.begin_btn:after{    background-position-y: -400px; }
+		&.end_btn:after{      background-position-y: -450px; }
+		&.sound_btn:after{    background-position-y: -500px; }
+		&.close_btn:after{    background-position-y: -550px; }
+		&.plus_btn:after{     background-position-y: -600px; }
 
 	}
 }

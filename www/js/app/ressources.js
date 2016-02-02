@@ -26,28 +26,28 @@ var ressources={
     	songs:[
     		{url:"audio/pianos/piano1.wav",type:"piano"}
     	],
-    	color:'#00a134'
+    	color:'#aaf400'
     },
    
     "violin":{
     	songs:[
     		{url:"audio/snares/snare2.wav",type:"violin"}
     	],
-    	color:'#0085ff'
+    	color:'#00a134'
     },
     
     "trumpet":{
     	songs:[
     		{url:"audio/snares/snare3.wav",type:"trumpet"}
     	],
-    	color:'#84d6ff'
+    	color:'#0085ff'
     },
     
     "guitar":{
     	songs:[
     		{url:"audio/kicks/kick3.wav",type:"guitar"}
     	],
-    	color:'#9b0080'
+    	color:'#84d6ff'
 
     },
     
@@ -55,7 +55,7 @@ var ressources={
     	songs:[
     		{url:"audio/kicks/kick2.wav",type:"voice"}
     	],
-    	color:'#000000'
+    	color:'#9b0080'
     },
 };
 

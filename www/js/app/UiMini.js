@@ -26,6 +26,7 @@ define(function( require ) {
 	      buttonSong.attr('data-song-id',idSong);
 	      buttonSong.css('background-color',colorClass);
 	      buttonSong.attr('data-song-url', urlSong);
+	      buttonSong.append("<span></span>");
 
 	      $('#buttons-songs').append(buttonSong);
 
@@ -56,6 +57,8 @@ define(function( require ) {
 				var line=$("<div class='col-xs-12' type="+typeLine+"></div>");
 				var instruLine = $("#choose-song").append(line);
 
+				var numberSong = 1;
+
 				for (var i = 0; i < tabType.songs.length; i++) {
 					var cloneWithUrl=buttonsClone.clone();
 					cloneWithUrl.attr('data-song-url',tabType.songs[i].url);
@@ -64,7 +67,9 @@ define(function( require ) {
 					var typeClone = cloneWithUrl.attr("type");
 
 					if(typeClone == typeLine)
-					line.append(cloneWithUrl);
+						cloneWithUrl.append("<span>"+numberSong+"</span>");
+						line.append(cloneWithUrl);
+						numberSong++;
 						
 				};
 
@@ -72,6 +77,13 @@ define(function( require ) {
 
 
 		$("#choose-song div .button").click(function(){ 
+
+				var numberId = $(this).find("span").text();
+				console.log(numberId);
+
+				var typeRight = $(this).attr("type");
+
+				$("#buttons-songs-modal .button[type='"+typeRight+"']").find("span").text(numberId);
 
 			var urlSong = $(this).attr('data-song-url');
 

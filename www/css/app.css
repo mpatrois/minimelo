@@ -60,9 +60,7 @@ ul {
 
 header {
   width: 100%;
-  height: auto;
-  text-align: center;
-  margin: 50px 0; }
+  height: auto; }
   header img {
     max-width: 100%; }
 
@@ -130,15 +128,36 @@ header {
   margin-left: 30px; }
   #choose-song div {
     margin-right: 10px; }
+  #choose-song div .button span {
+    font-size: 32px;
+    font-family: "Orange";
+    position: absolute;
+    top: 4px;
+    text-align: center;
+    width: 100%;
+    padding-left: 5px; }
   #choose-song .button {
     width: 55px;
     height: 55px;
     background-image: url("../img/buttons_sprite.png");
     background-size: cover;
-    display: inline-block; }
+    display: inline-block;
+    position: relative; }
     #choose-song .button.active {
       background-position: 0 33%;
       transform: scale(1.2); }
+
+#buttons-songs-modal .button span {
+  font-size: 32px;
+  font-family: "Orange";
+  position: absolute;
+  top: 4px;
+  text-align: center;
+  width: 100%;
+  padding-left: 5px; }
+
+#buttons-songs-modal .button {
+  position: relative; }
 
 #timeline {
   width: 100%;
@@ -146,7 +165,7 @@ header {
   position: relative; }
   #timeline .piste {
     border: 1px solid black;
-    height: 60px;
+    height: 80px;
     position: relative;
     z-index: 0; }
     #timeline .piste .song {
@@ -214,54 +233,53 @@ header {
     height: 40px; }
   #deck-buttons .round_btn {
     display: inline-block;
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     background-image: url("../img/buttons_sprite.png");
     background-size: cover;
-    background-position: 0 67%;
-    transform: scale(0.5); }
+    background-position: 0 67%; }
     #deck-buttons .round_btn:hover {
       background-position: 0 101%; }
       #deck-buttons .round_btn:hover:after {
-        top: 6px;
-        left: -7px; }
+        top: 3px;
+        left: -3px; }
     #deck-buttons .round_btn:after {
       content: "";
       background-image: url("../img/circle_icon_sprite.png");
       background-position: 0 67%;
       position: relative;
       display: inline-block;
-      width: 100px;
-      height: 100px;
+      width: 50px;
+      height: 50px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-color: transparent; }
     #deck-buttons .round_btn.trash_btn:after {
       background-position-y: 0; }
     #deck-buttons .round_btn.validate_btn:after {
-      background-position-y: -100px; }
+      background-position-y: -50px; }
     #deck-buttons .round_btn.scissors_btn:after {
-      background-position-y: -200px; }
+      background-position-y: -100px; }
     #deck-buttons .round_btn.unzoom_btn:after {
-      background-position-y: -300px; }
+      background-position-y: -150px; }
     #deck-buttons .round_btn.zoom_btn:after {
-      background-position-y: -400px; }
+      background-position-y: -200px; }
     #deck-buttons .round_btn.play_btn:after {
-      background-position-y: -500px; }
+      background-position-y: -250px; }
     #deck-buttons .round_btn.pause_btn:after {
-      background-position-y: -600px; }
+      background-position-y: -300px; }
     #deck-buttons .round_btn.stop_btn:after {
-      background-position-y: -700px; }
+      background-position-y: -350px; }
     #deck-buttons .round_btn.begin_btn:after {
-      background-position-y: -800px; }
+      background-position-y: -400px; }
     #deck-buttons .round_btn.end_btn:after {
-      background-position-y: -900px; }
+      background-position-y: -450px; }
     #deck-buttons .round_btn.sound_btn:after {
-      background-position-y: -1000px; }
+      background-position-y: -500px; }
     #deck-buttons .round_btn.close_btn:after {
-      background-position-y: -1100px; }
+      background-position-y: -550px; }
     #deck-buttons .round_btn.plus_btn:after {
-      background-position-y: -1200px; }
+      background-position-y: -600px; }
 
 /*
 	    &.validate_btn{ 
