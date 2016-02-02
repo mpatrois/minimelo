@@ -1,3 +1,8 @@
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 100%;
+    margin: 0; } }
+
 body {
   -webkit-touch-callout: none;
   /* prevent callout to copy image, etc when tap to hold */
@@ -62,15 +67,15 @@ header {
     max-width: 100%; }
 
 /* Landscape layout (with min-width) */
+#buttons-songs .button {
+  margin-top: 10px; }
+
 #buttons-songs .button,
-#buttons-songs-modal .button {
+#buttons-songs-modal .button, #choose-song div .button {
   background-image: url("../img/buttons_sprite.png");
   background-size: cover;
   width: 55px;
   height: 55px;
-  margin: 0 auto;
-  display: block;
-  margin-top: 10px;
   /* RED */
   /* ORANGE */
   /* YELLOW */
@@ -80,38 +85,41 @@ header {
   /* CLEAR BLUE */
   /* PURPLE */ }
   #buttons-songs .button:hover,
-  #buttons-songs-modal .button:hover {
+  #buttons-songs-modal .button:hover, #choose-song div .button:hover {
     background-position: 0 33%; }
-  #buttons-songs .button:nth-child(1),
-  #buttons-songs-modal .button:nth-child(1) {
+  #buttons-songs .button[type="drum"],
+  #buttons-songs-modal .button[type="drum"], #choose-song div .button[type="drum"] {
     background-color: #eb3816; }
-  #buttons-songs .button:nth-child(2),
-  #buttons-songs-modal .button:nth-child(2) {
+  #buttons-songs .button[type="cymbal"],
+  #buttons-songs-modal .button[type="cymbal"], #choose-song div .button[type="cymbal"] {
     background-color: #ff7800; }
-  #buttons-songs .button:nth-child(3),
-  #buttons-songs-modal .button:nth-child(3) {
+  #buttons-songs .button[type="flute"],
+  #buttons-songs-modal .button[type="flute"], #choose-song div .button[type="flute"] {
     background-color: #ffe400; }
-  #buttons-songs .button:nth-child(4),
-  #buttons-songs-modal .button:nth-child(4) {
+  #buttons-songs .button[type="piano"],
+  #buttons-songs-modal .button[type="piano"], #choose-song div .button[type="piano"] {
     background-color: #aaf400; }
-  #buttons-songs .button:nth-child(5),
-  #buttons-songs-modal .button:nth-child(5) {
+  #buttons-songs .button[type="violin"],
+  #buttons-songs-modal .button[type="violin"], #choose-song div .button[type="violin"] {
     background-color: #00a134; }
-  #buttons-songs .button:nth-child(6),
-  #buttons-songs-modal .button:nth-child(6) {
+  #buttons-songs .button[type="trumpet"],
+  #buttons-songs-modal .button[type="trumpet"], #choose-song div .button[type="trumpet"] {
     background-color: #0085ff; }
-  #buttons-songs .button:nth-child(7),
-  #buttons-songs-modal .button:nth-child(7) {
+  #buttons-songs .button[type="guitar"],
+  #buttons-songs-modal .button[type="guitar"], #choose-song div .button[type="guitar"] {
     background-color: #84d6ff; }
-  #buttons-songs .button:nth-child(8),
-  #buttons-songs-modal .button:nth-child(8) {
+  #buttons-songs .button[type="voice"],
+  #buttons-songs-modal .button[type="voice"], #choose-song div .button[type="voice"] {
     background-color: #9b0080; }
 
 #buttons-songs .button.active,
-#buttons-songs-modal .button.active {
-  transform: scale(1.2); }
+#buttons-songs-modal .button.active, #choose-song div .button.active {
+  transform: scale(1.1); }
 
 /*#buttons-songs-modal{
+
+	border-right:1px solid #000;
+	padding-right:10px;
 
 	.button.active{
 	    transform:scale(1.2);
@@ -126,10 +134,11 @@ header {
     width: 55px;
     height: 55px;
     background-image: url("../img/buttons_sprite.png");
-    background-size: cover; }
+    background-size: cover;
+    display: inline-block; }
     #choose-song .button.active {
       background-position: 0 33%;
-      /*transform:scale(1.2);*/ }
+      transform: scale(1.2); }
 
 #timeline {
   width: 100%;
@@ -163,7 +172,8 @@ header {
   width: 50px;
   height: 50px; }
   #myModal .round_btn.validate_btn {
-    background-position-y: -300px; }
+    background-position-y: -300px;
+    text-align: center; }
     #myModal .round_btn.validate_btn:active {
       background-position-y: -850px; }
 

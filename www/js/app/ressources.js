@@ -7,7 +7,8 @@ var ressources={
 	    ]
 	,
 	"cymbal":[
-		{url:"audio/hats/hat1.wav",type:"cymbal"}
+		{url:"audio/hats/hat1.wav",type:"cymbal"},
+        {url:"audio/snares/snare1.wav",type:"cymbal"}
 	],
     
     "flute":[
