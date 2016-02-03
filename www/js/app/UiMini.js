@@ -13,24 +13,35 @@ define(function( require ) {
 
 	// should be removed any time soon
 	UiMini.prototype.initButtonsSongs = function () {
-
-		var idSong = 0;
+		
+		var songs  = ResourcesHandler.getSongs();  
 
 		for(var type in ressources)
 		{
 
-			var urlSong = ressources[type].songs[0].url;
 			var colorClass = ressources[type].color;
+			var buttonSong =$('<div class="button instrument"></div>');
 
-			var buttonSong=$('<div class="button instrument"></div>');
 			buttonSong.attr('type',type);
-			buttonSong.attr('data-song-id',idSong);
 			// buttonSong.css('background-color',colorClass);
 
-			$('#buttons-songs').append(buttonSong);
 			
-			ResourcesHandler.getSong(idSong).load();
-			idSong++;
+			var found = false;
+			var id 	  = 0;
+
+			while ( found == false )
+			{
+				if ( songs[id].type == type)
+				{
+					found = true;
+					songs[id].load();
+					buttonSong.attr('data-song-id', id);
+				} 
+				id++;
+				
+			}
+
+			$('#buttons-songs').append(buttonSong);
 		} 	
 
 	};
@@ -67,14 +78,19 @@ define(function( require ) {
 
 		}
 
+		
+
 		$("#choose-song div .button").click(function(){
 
 			var idSong = $(this).attr('data-song-id');
-			// ResourcesHandler.getSong(idSong).playOnce();
+			ResourcesHandler.getSong(idSong).playOnce();
 			$(this).parent().find('.button').removeClass('active');
 			$(this).addClass('active');
 
 		});
+
+		$('#choose-song div .button').unbind();
+
 		
 		EventsHandler.active($("#buttons-songs-modal .button"));
 
@@ -104,6 +120,7 @@ define(function( require ) {
 
 	UiMini.prototype.initUiMini = function (){
 		this.initButtonsSongs();
+		this.initSongClick();
 		this.initButtonsModal();
 		this.initDeckButtons();
 		this.initPistes();
@@ -256,11 +273,12 @@ define(function( require ) {
 			var xOnPiste=event.clientX-$(this).offset().left;
 
 			var songToLoad=$("#buttons-songs .button.active")[0];
+
 			var colorClass=$(songToLoad).css('background-color');
 
 			var divSong=$("<div class='song'></div>");
 			var idSong=$(songToLoad).attr('data-song-id');
-			var song=self.timeline.songs[idSong];
+			var song=ResourcesHandler.getSong(idSong); // ici
 
 			divSong.attr('type',$(songToLoad).attr('type'));
 			divSong.attr('data-song-id',idSong);
@@ -291,10 +309,18 @@ define(function( require ) {
 
 			$(this).append(divSong);
 
-			self.timeline.songs[idSong].play(self.timeline.audioCtx);
+			song.play(self.timeline.audioCtx);
 
 
 		});
+	}
+
+	UiMini.prototype.initSongClick = function () {
+		$("*[data-song-id]").mousedown(function(){
+            ResourcesHandler.getSong($(this).attr('data-song-id')).play();
+            $("#buttons-songs .button").removeClass("active");
+            $(this).addClass("active");
+        });
 	}
 
 	UiMini.prototype.initDeckButtons = function () {

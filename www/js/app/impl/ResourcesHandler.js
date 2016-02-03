@@ -4,10 +4,14 @@ define(function( require ){
 	var Utils      = require('app/Utils');
 	var ressources = require('app/ressources');
 
+	var audioCtx   = new (window.AudioContext || window.webkitAudioContext)();
+
 	'use strict';
 
 	function ResourcesHandler() {
-		this.songs    = [];
+		this.songs      = [];
+		this.loadedOnes = 0;
+		this.loadable   = 0;
 	}
 
 	ResourcesHandler.prototype.loadSongs = function() {
@@ -50,15 +54,26 @@ define(function( require ){
 		}
 
 
-	};
+	}
 
 	ResourcesHandler.prototype.loadTestSongs = function() {
 
+		var self = this;
 		for ( var type in ressources )
 		{
-			for ( var url in ressources[type].songs )
+			for ( var urlValue in ressources[type].songs )
 			{
-				this.songs.push(new Song(type, ressources[type].songs[url]));
+				self.songs.push(new Song(type, ressources[type].songs[urlValue]));
+				/*$.ajax({
+					url: ressources[type].songs[urlValue],
+					xhrFields : {responseType : 'arraybuffer'},
+					context : { url : ressources[type].songs[urlValue] }
+				}).done(function(arrayBuffer){
+					var url = this.url;
+					audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
+						console.log("hi");
+				  	}, function(e) {  } );  
+				});*/
 			}
 		}
 	}
@@ -94,7 +109,7 @@ define(function( require ){
 
 	ResourcesHandler.prototype.getInstance = function() {
 		return this;
-	};
+	}
 
 	return ResourcesHandler;
 });

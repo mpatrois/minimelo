@@ -22,8 +22,10 @@ $(document).ready(function() {
             },
 
             onDeviceReady : function () {
+
                 resources.loadSongs();
                 uiMini.initUiMini();
+                
             }
         };
 
