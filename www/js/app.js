@@ -10,12 +10,13 @@ requirejs.config({
 
 // $(document).ready(function() {
 
-    require(['app/Timeline', 'app/Utils','app/UiMini'], function(Timeline, Utils, UiMini) {
+    require(['app/Timeline', 'app/Utils','app/UiMini','app/EventsMini'], function(Timeline, Utils, UiMini,EventsMini) {
 
         'use strict';
 
         var timeline = new Timeline();
         var uiMini   = new UiMini(timeline);
+        var eventsMini   = new EventsMini(timeline,uiMini);
 
         var application = {
 
@@ -23,6 +24,7 @@ requirejs.config({
                 document.addEventListener("deviceready", this.onDeviceReady, false);
 
                 uiMini.initUiMini();
+                eventsMini.initEventsMini();
             },
 
             onDeviceReady : function () {

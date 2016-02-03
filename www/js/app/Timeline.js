@@ -18,12 +18,15 @@ define(function(require) {
 
 		this.nbSongPlayed=0;
 
-		this.ratioSecondPixel=100;
+		this.ratioSecondPixel=200;
 
 		this.debutSong=0;
 		this.lineTimeOut=0;
+		this.duration=180;
 
 	}
+
+
 
   	Timeline.prototype.play = function () {
 
@@ -129,7 +132,7 @@ define(function(require) {
 
 	Timeline.prototype.unzoom=function(){
 		var lastRatio=this.ratioSecondPixel;
-		if(this.ratioSecondPixel>=20)
+		if(this.ratioSecondPixel>=150)
 		{
 			this.ratioSecondPixel-=10;
 			this.redrawSongs(lastRatio);
@@ -145,6 +148,10 @@ define(function(require) {
 			$(this).css('width',self.ratioSecondPixel*song.getDuration());
 			$(this).css('left',self.ratioSecondPixel*$(this).position().left/lastRatio);
 		});
+	}
+
+	Timeline.prototype.getDurationInPx=function(){
+		return this.duration*this.ratioSecondPixel;
 	}
 
   	return Timeline;
