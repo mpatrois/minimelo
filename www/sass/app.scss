@@ -162,16 +162,17 @@ header{
     position: relative;
     max-height: 100%;
     height: 500px;
+    background: #f4f6fe;
 
     .piste {
-    	border:1px solid black;
+    	border-bottom:1px solid white;
     	height: 25%;
     	position: relative;
 
 
     	.song{
-    		border-left:1px solid black;
-    		border-right:1px solid black;
+    		/*border-left:1px solid black;
+    		border-right:1px solid black;*/
     		position: absolute;
     		height:100%;
     		display: inline-block;
@@ -179,8 +180,8 @@ header{
     		box-sizing:border-box;
 
     		&.active{
-				transform:scale(1.03);
-				/*border: 1px solid green;*/
+				border: 1px solid white;
+    			opacity: 0.6;
 			}
 			&.inDrag{
 				opacity: 0.7;
@@ -214,12 +215,14 @@ header{
 
 	#line{
 		top: 0px;
-		width: 1px;
-		background: green;
+		width: 0px;
+		background: rgba(72,197,72,0.51);
 		height: 100%;
 		position: absolute;
 		left: 0px;
 		display: inline-block;
+		border-right: 1px solid rgba(97,102,127,0.2);;
+	    background: rgb(238, 240, 250);
 	}
 }
 

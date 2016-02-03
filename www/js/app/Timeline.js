@@ -36,7 +36,7 @@ define(function(require) {
 
       	self.lineTimeOut = setInterval(function(){
       		var playingTime=self.audioCtx.currentTime-self.debutSong;
-			$("#line").css('left',self.secondsToPxInTimeline(playingTime));
+			$("#line").css('width',self.secondsToPxInTimeline(playingTime));
       	},100)
 
 		$('.piste .song').each(function(){
@@ -76,7 +76,7 @@ define(function(require) {
 					$('#play_stop').removeClass('stop_btn');
 					$('#play_stop').addClass('play_btn');
 					clearInterval(self.lineTimeOut);
-					$("#line").css('left',0);
+					$("#line").css('width',0);
 				}
 			}
 
@@ -92,7 +92,7 @@ define(function(require) {
 			clearTimeout(this.songsInPlay[i].timeOutActive);
 		};
 		this.songsInPlay=[];
-		$("#line").css('left',0);
+		$("#line").css('width',0);
   	};
 
 	Timeline.prototype.loadSong = function (idSong, urlSong) {
@@ -120,14 +120,20 @@ define(function(require) {
 
 	Timeline.prototype.zoom=function(){
 		var lastRatio=this.ratioSecondPixel;
-		this.ratioSecondPixel+=10;
-		this.redrawSongs(lastRatio);
+		if(this.ratioSecondPixel<=300)
+		{
+			this.ratioSecondPixel+=10;
+			this.redrawSongs(lastRatio);
+		}
 	}
 
 	Timeline.prototype.unzoom=function(){
 		var lastRatio=this.ratioSecondPixel;
-		this.ratioSecondPixel-=10;
-		this.redrawSongs(lastRatio);	
+		if(this.ratioSecondPixel>=20)
+		{
+			this.ratioSecondPixel-=10;
+			this.redrawSongs(lastRatio);
+		}	
 	}
 
 	Timeline.prototype.redrawSongs=function(lastRatio){
