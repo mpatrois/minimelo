@@ -9,12 +9,6 @@ define(function( require ) {
 		this.timeline=timeline;
 	}
 
-	var heightHeader = $("h1").outerHeight();
-	var heightFooter = $(".footer").outerHeight();
-	var heightApp = $(".content-songs").outerHeight();
-
-	$("#timeline").css("height", heightApp - (heightHeader + heightFooter));
-
   	UiMini.prototype.initButtonsSongs = function () {
 
 		var idSong = 0;
@@ -40,6 +34,14 @@ define(function( require ) {
 	    } 	
 
 	};
+
+	UiMini.prototype.initTimelineHeight = function() {
+		var heightHeader = $("h1").outerHeight();
+		var heightFooter = $(".footer").outerHeight();
+		var heightApp = $(".content-songs").outerHeight();
+		
+		$("#timeline").css("height", heightApp - (heightHeader + heightFooter));
+	}
 
 	UiMini.prototype.initButtonsModal = function () {
 
@@ -156,6 +158,7 @@ define(function( require ) {
 	};
 
 	UiMini.prototype.initUiMini = function (){
+		this.initTimelineHeight();
 		this.initButtonsSongs();
 		this.initButtonsModal();
 		this.initDeckButtons();
@@ -238,7 +241,7 @@ define(function( require ) {
 						var leftOtherSong=$(this).position().left;
 						var rigthOtherSong=leftOtherSong+$(this).outerWidth();
 						
-						if(! (rigthOtherSong<positionX || leftOtherSong>positionX+songDragged.outerWidth() ) ){
+						if(! (rigthOtherSong<=positionX || leftOtherSong>=positionX+songDragged.outerWidth() ) ){
 						
 							overSong=true;
 						}
