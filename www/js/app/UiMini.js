@@ -223,6 +223,7 @@ define(function( require ) {
 			}
 
 	    }
+	    
 	    else{
 
 		    document.onmousemove = function(event){
