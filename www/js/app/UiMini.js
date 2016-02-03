@@ -90,7 +90,10 @@ define(function( require ) {
 
 		});
 
-        eventHandler.Active($("#buttons-songs-modal .button"));
+       $("#buttons-songs-modal .button").click(function(){
+			$(selector).filter(".active").removeClass('active');
+			$(this).addClass("active");
+		})
 			
 		$("#choose-song div .button").click(function(){
 
@@ -146,147 +149,141 @@ define(function( require ) {
 
   	UiMini.prototype.initDragAndDrop = function () {
 
-  		// document.ontouchstart=function(event){
-  		// 	// console.log("touchstart");
-  		// 	// alert('touchstart')
-  		// }
-
   		document.ontouchmove=document.onmousemove=function (event){
-      			var clientX;
-      			var clientY;
+  			var clientX;
+  			var clientY;
 
-      			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      				clientX=event.touches[0].clientX;
-      				clientY=event.touches[0].clientY;
-      			}
-      			else
-      			{
-      				clientX=event.clientX;
-      				clientY=event.clientY;
-      			}
+  			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+  				clientX=event.touches[0].clientX;
+  				clientY=event.touches[0].clientY;
+  			}
+  			else
+  			{
+  				clientX=event.clientX;
+  				clientY=event.clientY;
+  			}
 
-      			var songDragged=$('.piste .song.inDrag');
-      			if(songDragged.length>0){
-      				event.preventDefault();
-      				var scrollLeft=$( "#timeline" ).scrollLeft();
-      				
-      				var positionX=clientX-$('#timeline').offset().left+scrollLeft;
-			     	var positionY=clientY-$('#timeline').offset().top;
+  			var songDragged=$('.piste .song.inDrag');
+  			if(songDragged.length>0)
+  			{
+  				event.preventDefault();
+  				var scrollLeft=$( "#timeline" ).scrollLeft();
+  				
+  				var positionX=clientX-$('#timeline').offset().left+scrollLeft;
+		     	var positionY=clientY-$('#timeline').offset().top;
 
-			     	positionX-=songDragged.attr('posSourisX');
-			      	positionY-=songDragged.attr('posSourisY');
+		     	positionX-=songDragged.attr('posSourisX');
+		      	positionY-=songDragged.attr('posSourisY');
 
-					if(positionX<0){
-						positionX=0;
-					}
-					if(positionX>$('.piste').width()-songDragged.width()){
-						positionX=$('.piste').width()-songDragged.width();
-					}
+				if(positionX<0){
+					positionX=0;
+				}
+				if(positionX>$('.piste').width()-songDragged.width()){
+					positionX=$('.piste').width()-songDragged.width();
+				}
 
-					if(positionY<0){
-						positionY=0;
-					}
+				if(positionY<0){
+					positionY=0;
+				}
 
-					var heightTimeline=$('.piste').outerHeight()*$('.piste').length;
+				var heightTimeline=$('.piste').outerHeight()*$('.piste').length;
 
-					if(positionY + songDragged.height() > heightTimeline ){
-						positionY=heightTimeline - songDragged.height();
-					}
-
-
-
-					songDragged.css('left',positionX);
-					songDragged.css('top',positionY);
-
-					var centerY = songDragged.position().top + songDragged.height() / 2;
-
-					var pisteOverlayed=null;
-
-					$('.piste').each(function(){
-
-						var topPist=$(this).position().top;
-						var bottomPiste=$(this).position().top+$(this).height();
-							
-						if( centerY >= topPist && centerY <= bottomPiste){
-					    	pisteOverlayed=$(this);
-					  	}
-
-					});
-
-					if(pisteOverlayed!=null)
-					{
-
-						var overSong=false;
-						songDragged.css('background-color',songDragged.attr('originalBgColor'));
-						pisteOverlayed.find('.song').not(songDragged).each(function()
-						{
-							var leftOtherSong=$(this).position().left;
-							var rigthOtherSong=leftOtherSong+$(this).width();
-							
-							if(! (rigthOtherSong<positionX || leftOtherSong>positionX+songDragged.width() ) ){
-							
-								overSong=true;
-							}
-						});
-
-						if(overSong){
-							songDragged.css('background-color',"red");	
-						}
-						songDragged.attr('overOtherSong',overSong);
-		      		}
-
-      			}
-
-      		}
-
-      		document.onmouseup=document.ontouchend=function(event){
-
-				if($('.piste .song.inDrag').length>0)
-				{
-
-					var songDragged=$('.piste .song.inDrag');
-					
-
-					if(songDragged.attr('overOtherSong')=='false')
-					{
-
-						var offset = songDragged.offset();
-						var height = songDragged.height();
-						var centerY = offset.top + height / 2;
-
-						$('.piste').each(function(){
-						  if( centerY>$(this).offset().top && centerY < $(this).offset().top+$(this).height()){
-						    $(this).append(songDragged);
-						  }
-						});
-
-						
-						songDragged.removeClass('inDrag');
-					}
-					else{
-						var leftOriginal=songDragged.attr('posSongX');
-						var pisteOriginal=songDragged.attr('piste');
-						
-						$("#"+pisteOriginal).append(songDragged);
-						songDragged.css('left',leftOriginal+"px");
-						// console.log(songDragged.css('left'));
-						// console.log(leftOriginal);
-						
-						songDragged.removeClass('inDrag');
-					}
-					songDragged.css('top',0);
-					songDragged.css('background-color',songDragged.attr('originalBgColor'));
+				if(positionY + songDragged.height() > heightTimeline ){
+					positionY=heightTimeline - songDragged.height();
 				}
 
 
-			}
 
-			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      				document.onmousedown=null;
-      				document.onmouseup=null;
-      		}
+				songDragged.css('left',positionX);
+				songDragged.css('top',positionY);
+
+				var centerY = songDragged.position().top + songDragged.height() / 2;
+
+				var pisteOverlayed=null;
+
+				$('.piste').each(function(){
+
+					var topPist=$(this).position().top;
+					var bottomPiste=$(this).position().top+$(this).height();
+						
+					if( centerY >= topPist && centerY <= bottomPiste){
+				    	pisteOverlayed=$(this);
+				  	}
+
+				});
+
+				if(pisteOverlayed!=null)
+				{
+
+					var overSong=false;
+					songDragged.css('background-color',songDragged.attr('originalBgColor'));
+					pisteOverlayed.find('.song').not(songDragged).each(function()
+					{
+						var leftOtherSong=$(this).position().left;
+						var rigthOtherSong=leftOtherSong+$(this).width();
+						
+						if(! (rigthOtherSong<positionX || leftOtherSong>positionX+songDragged.width() ) ){
+						
+							overSong=true;
+						}
+					});
+
+					if(overSong){
+						songDragged.css('background-color',"red");	
+					}
+					songDragged.attr('overOtherSong',overSong);
+	      		}
+
+  			}
 
       	}
+
+  		document.onmouseup=document.ontouchend=function(event){
+
+			if($('.piste .song.inDrag').length>0)
+			{
+
+				var songDragged=$('.piste .song.inDrag');
+				
+
+				if(songDragged.attr('overOtherSong')=='false')
+				{
+
+					var offset = songDragged.offset();
+					var height = songDragged.height();
+					var centerY = offset.top + height / 2;
+
+					$('.piste').each(function(){
+					  if( centerY>$(this).offset().top && centerY < $(this).offset().top+$(this).height()){
+					    $(this).append(songDragged);
+					  }
+					});
+
+					
+					songDragged.removeClass('inDrag');
+				}
+				else{
+					var leftOriginal=songDragged.attr('posSongX');
+					var pisteOriginal=songDragged.attr('piste');
+					
+					$("#"+pisteOriginal).append(songDragged);
+					songDragged.css('left',leftOriginal+"px");
+					
+					songDragged.removeClass('inDrag');
+				}
+				songDragged.css('top',0);
+				songDragged.css('background-color',songDragged.attr('originalBgColor'));
+			}
+
+
+		}
+
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+  				document.onmousedown=null;
+  				document.onmouseup=null;
+  		}
+
+    }
 
 	UiMini.prototype.initPistes = function () {
 
@@ -357,40 +354,13 @@ define(function( require ) {
 					$(this).attr('posSourisX',posSourisOnSongX);
 					$(this).attr('posSourisY',posSourisOnSongY);
 			    }
+
 			    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
       				divSong[0].onmousedown=null;
       			}
+			
 			}
 
-		     // divSong.mousedown(function(event){
-
-
-		      // event.stopPropagation();
-		      // event.preventDefault();
-		      // $(this).addClass('inDrag');
-
-		      // $(this).attr('posSongX',$(this).position().left);
-		      // $(this).attr('piste',$(this).parent().attr('id'));
-		      
-		      // var top=$(this).parent().position().top;
-		      // $(this).css('top',top);
-		      // $('.piste:first-of-type').append($(this));
-		      
-
-		      // var posSourisOnSongX=event.clientX-$('.piste .song.inDrag').offset().left;
-		      // var posSourisOnSongY=event.clientY-$('.piste .song.inDrag').offset().top;
-		      // $(this).attr('posSourisX',posSourisOnSongX);
-		      // $(this).attr('posSourisY',posSourisOnSongY);
-		      
-		      
-		    // });
-
-
-		    
-		    
-		   
-
-	  
 		});
 	};
 
