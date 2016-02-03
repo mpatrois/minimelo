@@ -9,6 +9,12 @@ define(function( require ) {
 		this.timeline=timeline;
 	}
 
+	var heightHeader = $("h1").outerHeight();
+	var heightFooter = $(".footer").outerHeight();
+	var heightApp = $(".content-songs").outerHeight();
+
+	$("#timeline").css("height", heightApp - (heightHeader + heightFooter));
+
   	UiMini.prototype.initButtonsSongs = function () {
 
 		var idSong = 0;

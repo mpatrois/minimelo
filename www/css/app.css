@@ -13,6 +13,9 @@ $black : #000000;
     width: 100%;
     margin: 0; } }
 
+html {
+  height: 100%; }
+
 body {
   -webkit-touch-callout: none;
   /* prevent callout to copy image, etc when tap to hold */
@@ -67,12 +70,23 @@ ul {
   height: 100%; }
   .app .row {
     margin: 0; }
+  .app > .row {
+    height: 100%; }
 
 header {
   width: 100%;
   height: auto; }
   header img {
     max-width: 100%; }
+
+.buttons_left, .content-songs {
+  height: 100%; }
+
+.footer {
+  position: absolute;
+  width: 98%;
+  bottom: 0;
+  padding: 10px; }
 
 /* Landscape layout (with min-width) */
 #buttons-songs .button {
@@ -363,12 +377,13 @@ header {
 			&:active{ background-position:0 -950px; }
 		}
 */
-.app h1 {
+.app h1#application-name {
   font-size: 48px;
   display: inline-block;
   overflow: visible;
   font-family: "Orange";
-  margin-top: 10px; }
+  margin: 0;
+  padding: 10px; }
 
 #debug {
   background-color: black;
