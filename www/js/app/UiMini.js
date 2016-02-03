@@ -11,20 +11,17 @@ define(function( require ) {
 		this.timeline = new Timeline();
 	}
 
-	// should be removed any time soon
-	UiMini.prototype.initButtonsSongs = function () {
-		
-		var songs  = ResourcesHandler.getSongs();  
+  	UiMini.prototype.initButtonsSongs = function () {
 
-		for(var type in ressources)
-		{
+		var idSong = 0;
+		var songs  = ResourcesHandler.getSongs();
 
-			var colorClass = ressources[type].color;
+	    for(var type in ressources)
+	    {
+
 			var buttonSong =$('<div class="button instrument"></div>');
 
 			buttonSong.attr('type',type);
-			// buttonSong.css('background-color',colorClass);
-
 			
 			var found = false;
 			var id 	  = 0;
@@ -73,6 +70,13 @@ define(function( require ) {
 
 			if( song.loaded )
 				buttonSong.addClass('active');
+/*
+			var numberId = $(this).find("span").text();
+			var typeRight = $(this).attr("type");
+
+			$("#buttons-songs-modal .button[type='"+typeRight+"']").find("span").text(numberId);*/
+
+			var urlSong = $(this).attr('data-song-url');
 
 			$("#choose-song").find('.col-xs-12[type=' + song.type + ']').append(buttonSong);
 
@@ -89,9 +93,6 @@ define(function( require ) {
 
 		});
 
-		$('#choose-song div .button').unbind();
-
-		
 		EventsHandler.active($("#buttons-songs-modal .button"));
 
 		$(".validate_btn.button").click(function(){
@@ -310,7 +311,6 @@ define(function( require ) {
 			$(this).append(divSong);
 
 			song.play(self.timeline.audioCtx);
-
 
 		});
 	}

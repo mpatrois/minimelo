@@ -14,5 +14,14 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "in.developer.cordova.plugin.directoryList": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/007-surajit/Directory-List-PhoneGap-Plugin.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
