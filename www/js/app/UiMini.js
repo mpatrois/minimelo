@@ -25,6 +25,7 @@ define(function( require ) {
 	      buttonSong.attr('data-song-id',idSong);
 	      buttonSong.css('background-color',colorClass);
 	      buttonSong.attr('data-song-url', urlSong);
+	      buttonSong.append("<span></span>");
 
 	      $('#buttons-songs').append(buttonSong);
 
@@ -54,6 +55,8 @@ define(function( require ) {
 				var line=$("<div class='col-xs-12' type="+typeLine+"></div>");
 				var instruLine = $("#choose-song").append(line);
 
+				var numberSong = 1;
+
 				for (var i = 0; i < tabType.songs.length; i++) {
 					var cloneWithUrl=buttonsClone.clone();
 					cloneWithUrl.attr('data-song-url',tabType.songs[i].url);
@@ -62,7 +65,9 @@ define(function( require ) {
 					var typeClone = cloneWithUrl.attr("type");
 
 					if(typeClone == typeLine)
-					line.append(cloneWithUrl);
+						cloneWithUrl.append("<span>"+numberSong+"</span>");
+						line.append(cloneWithUrl);
+						numberSong++;
 						
 				};
 
@@ -70,6 +75,11 @@ define(function( require ) {
 
 
 		$("#choose-song div .button").click(function(){ 
+
+			var numberId = $(this).find("span").text();
+			var typeRight = $(this).attr("type");
+
+			$("#buttons-songs-modal .button[type='"+typeRight+"']").find("span").text(numberId);
 
 			var urlSong = $(this).attr('data-song-url');
 
@@ -91,7 +101,7 @@ define(function( require ) {
 		});
 
        $("#buttons-songs-modal .button").click(function(){
-			$(selector).filter(".active").removeClass('active');
+			$(this).filter(".active").removeClass('active');
 			$(this).addClass("active");
 		})
 			
@@ -220,16 +230,16 @@ define(function( require ) {
 					pisteOverlayed.find('.song').not(songDragged).each(function()
 					{
 						var leftOtherSong=$(this).position().left;
-						var rigthOtherSong=leftOtherSong+$(this).width();
+						var rigthOtherSong=leftOtherSong+$(this).outerWidth();
 						
-						if(! (rigthOtherSong<positionX || leftOtherSong>positionX+songDragged.width() ) ){
+						if(! (rigthOtherSong<positionX || leftOtherSong>positionX+songDragged.outerWidth() ) ){
 						
 							overSong=true;
 						}
 					});
 
 					if(overSong){
-						songDragged.css('background-color',"red");	
+						songDragged.css('background-color',"#eee");
 					}
 					songDragged.attr('overOtherSong',overSong);
 	      		}
@@ -291,9 +301,7 @@ define(function( require ) {
 		$('.piste').css('width',3000);
 
 		$('.piste').off().mousedown('click', function(event){
-		    //event.preventDefault();
 
-		  
 		    if($('.piste .song.inDrag').length<1)
 		    {
 			    var xOnPiste=event.clientX-$(this).offset().left;
@@ -311,9 +319,9 @@ define(function( require ) {
 
 			    var widthSong=self.timeline.secondsToPxInTimeline(song.getDuration());
 			    divSong.width(widthSong);
-			    divSong.css('background-color',colorClass);
 			    divSong.attr('originalBgColor',colorClass);
 			    divSong.css('left',xOnPiste-widthSong/2);
+			    divSong.css('border','5px solid '+colorClass);
 
 			    $(this).append(divSong);
 			     self.timeline.songs[idSong].play(self.timeline.audioCtx);
