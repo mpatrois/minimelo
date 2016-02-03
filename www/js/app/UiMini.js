@@ -239,7 +239,7 @@ define(function( require ) {
 					});
 
 					if(overSong){
-						songDragged.css('background-color',"#eee");
+						songDragged.css('background-color',"red");
 					}
 					songDragged.attr('overOtherSong',overSong);
 	      		}
