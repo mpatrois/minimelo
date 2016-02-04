@@ -61,9 +61,11 @@ define(function( require ){
 		var self = this;
 		for ( var type in ressources )
 		{
-			for ( var urlValue in ressources[type].songs )
+			var songsOfType=ressources[type];
+			for ( var i in songsOfType )
 			{
-				self.songs.push(new Song(type, ressources[type].songs[urlValue]));
+				var urlSong=songsOfType[i];
+				self.songs.push(new Song(type,urlSong));
 				/*$.ajax({
 					url: ressources[type].songs[urlValue],
 					xhrFields : {responseType : 'arraybuffer'},
@@ -90,21 +92,59 @@ define(function( require ){
 		return null;
 	}
 
-	ResourcesHandler.prototype.currentSongs = function() {
-		var currentSongs = [];
+	// ResourcesHandler.prototype.currentSongs = function() {
+	// 	var currentSongs = [];
 
-		for ( var song in this.songs )
-		{
-			if (song.loaded == true) {
-				currentSongs.push( song );
-			}
-		}
-
-		return currentSongs;
-	}
+	// 	for ( var song in this.songs )
+	// 	{
+	// 		console.log(this.songs[song].loaded());
+	// 		if (this.songs[song].loaded() == true) {
+	// 			currentSongs.push( song );
+	// 		}
+	// 	}
+	// 	console.log('currentSongs',this);
+	// 	console.log('currentSongs',this);
+	// 	return currentSongs;
+	// }
 
 	ResourcesHandler.prototype.getSongs = function() {
 		return this.songs;
+	}
+
+	ResourcesHandler.prototype.getIdFirstSongType = function(type) {
+		var found = false;
+		var id 	  = 0;
+
+		while ( found == false && id < this.songs.length)
+		{
+			if ( this.songs[id].type == type)
+			{
+				found = true;
+			}
+			id++;
+		}
+		if(found)
+			return id-1;
+		else
+			return -1;
+	}
+
+	ResourcesHandler.prototype.getIdFirstSongUrl = function(url) {
+		var found = false;
+		var id 	  = 0;
+
+		while ( found == false && id < this.songs.length)
+		{
+			if ( this.songs[id].url == url)
+			{
+				found = true;
+			}
+			id++;
+		}
+		if(found)
+			return id-1;
+		else
+			return -1;
 	}
 
 	ResourcesHandler.prototype.getInstance = function() {

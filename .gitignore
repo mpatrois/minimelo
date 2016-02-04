@@ -4,6 +4,7 @@ platforms/browser
 
 plugins/
 
+node_modules
 www/node_modules
 www/*.log
 

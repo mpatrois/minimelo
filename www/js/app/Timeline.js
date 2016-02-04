@@ -5,7 +5,8 @@ define(['app/ResourcesHandler'], function(ResourcesHandler) {
 	var ressources       = require('app/ressources');
 
 	function Timeline() {
-		this.songs       = ResourcesHandler.currentSongs();
+		this.songs       = ResourcesHandler.getSongs();
+		console.log('songsTimeline',this.songs);
 		this.songsInPlay = [];
 
 		this.tempo       = 90;
@@ -15,14 +16,16 @@ define(['app/ResourcesHandler'], function(ResourcesHandler) {
 		this.audioCtx    = new (window.AudioContext || window.webkitAudioContext)();
 
 		this.nbSongPlayed=0;
-		this.duration=5;
+
+		this.ratioSecondPixel=200;
 
 		this.debutSong=0;
 		this.lineTimeOut=0;
+		this.duration=180;
 
 	}
 
-	Timeline.prototype.play = function () {
+  	Timeline.prototype.play = function () {
 
 		var self = this;
 
@@ -30,14 +33,12 @@ define(['app/ResourcesHandler'], function(ResourcesHandler) {
 		self.songsInPlay=[];
 
 		self.debutSong=self.audioCtx.currentTime;
-		// self.uploadLine();
 
 		self.lineTimeOut = setInterval(function(){
 			var playingTime=self.audioCtx.currentTime-self.debutSong;
-			$("#line").css('left',self.secondsToPxInTimeline(playingTime));
+			$("#line").css('width',self.secondsToPxInTimeline(playingTime));
 		},100)
 
-		
 		$('.piste .song').each(function(){
 			
 			var xSong=$(this).position().left;
@@ -78,7 +79,7 @@ define(['app/ResourcesHandler'], function(ResourcesHandler) {
 					$('#play_stop').removeClass('stop_btn');
 					$('#play_stop').addClass('play_btn');
 					clearInterval(self.lineTimeOut);
-					$("#line").css('left',0);
+					$("#line").css('width',0);
 				}
 			}
 
@@ -94,20 +95,52 @@ define(['app/ResourcesHandler'], function(ResourcesHandler) {
 			clearTimeout(this.songsInPlay[i].timeOutActive);
 		};
 		this.songsInPlay=[];
-		$("#line").css('left',0);
-	};
-
+		$("#line").css('width',0);
+  	};
 
 	Timeline.prototype.getNbSteps = function () {
 		return this.bars * this.stepByBars;
 	};
 
-	Timeline.prototype.secondsToPxInTimeline = function ( second ) {
-		return second*$('#timeline').width()/this.duration;
+	Timeline.prototype.secondsToPxInTimeline =function (second){
+		return second*this.ratioSecondPixel;
 	}
 
-	Timeline.prototype.pxToSecondsInTimeline = function ( px ) {
-		return px*this.duration/$('#timeline').width();
+	Timeline.prototype.pxToSecondsInTimeline =function (px){
+		return px/this.ratioSecondPixel;
+	}
+
+	Timeline.prototype.zoom=function(){
+		var lastRatio=this.ratioSecondPixel;
+		if(this.ratioSecondPixel<=300)
+		{
+			this.ratioSecondPixel+=10;
+			this.redrawSongs(lastRatio);
+		}
+	}
+
+	Timeline.prototype.unzoom=function(){
+		var lastRatio=this.ratioSecondPixel;
+		if(this.ratioSecondPixel>=150)
+		{
+			this.ratioSecondPixel-=10;
+			this.redrawSongs(lastRatio);
+		}	
+	}
+
+	Timeline.prototype.redrawSongs=function(lastRatio){
+		var self=this;
+		$('.piste .song').each(function()
+		{	
+			var idSong=$(this).attr('data-song-id');
+			var song=self.songs[idSong];
+			$(this).css('width',self.ratioSecondPixel*song.getDuration());
+			$(this).css('left',self.ratioSecondPixel*$(this).position().left/lastRatio);
+		});
+	}
+
+	Timeline.prototype.getDurationInPx=function(){
+		return this.duration*this.ratioSecondPixel;
 	}
 
 	return Timeline;

@@ -9,11 +9,12 @@ requirejs.config({
 
 $(document).ready(function() {
 
-    require(['app/ResourcesHandler', 'app/UiMini'], function(resources, UiMini) {
+    require(['app/Timeline', 'app/Utils','app/UiMini','app/EventsMini','app/ResourcesHandler'], function(Timeline, Utils, UiMini,EventsMini,ressources) {
 
         'use strict';
 
-        var uiMini      = new UiMini();
+       
+
 
         var application = {
 
@@ -23,8 +24,11 @@ $(document).ready(function() {
 
             onDeviceReady : function () {
 
-                resources.loadSongs();
+                ressources.loadSongs();
+                var uiMini   = new UiMini();
+                var eventsMini   = new EventsMini(uiMini);
                 uiMini.initUiMini();
+                eventsMini.initEventsMini();
                 
             }
         };

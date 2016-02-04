@@ -9,9 +9,6 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.phonegap.minimelo"
-        },
-        "in.developer.cordova.plugin.directoryList": {
-            "PACKAGE_NAME": "com.phonegap.minimelo"
         }
     },
     "dependent_plugins": {}

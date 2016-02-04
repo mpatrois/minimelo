@@ -2,64 +2,47 @@ define(function( require ){
 
     var ressources={
 
-        "drum":{
-            songs:[
-                "audio/kicks/kick0.wav",
+        "drum":[
+    	    	"audio/kicks/kick0.wav",
+                "audio/kicks/kick2.wav",
+                "audio/kicks/kick3.wav"
+    	    ],
+    	"cymbal":[
+    			"audio/hats/hat1.wav",
+                "audio/hats/hat2.wav",
+                "audio/hats/hat3.wav"
+    		],
+        
+        "flute":[
                 "audio/kicks/kick4.wav",
                 "audio/kicks/kick5.wav"
-            ],
-            color:'#eb3816'
-        },
-        "cymbal":{
-            songs:[
-                "audio/hats/hat1.wav"
-            ],
-            color:'#ff7800'
-        },
+        	],
+        
+        "piano":[
+        		"audio/pianos/piano1.wav"
+        	],
 
-        "flute":{
-            songs:[
-                "audio/snares/snare1.wav"
-            ],
-            color:'#ffe400'
-        },
+        "violin":[
+                "audio/pianos/piano2.wav",
+        		"audio/pianos/piano3.wav"
+        	],
 
-        "piano":{
-            songs:[
-                "audio/pianos/piano1.wav"
-            ],
-            color:'#00a134'
-        },
-
-        "violin":{
-            songs:[
-                "audio/snares/snare2.wav"
-            ],
-            color:'#0085ff'
-        },
-
-        "trumpet":{
-            songs:[
-                "audio/snares/snare3.wav"
-            ],
-            color:'#84d6ff'
-        },
-
-        "guitar":{
-            songs:[
-                "audio/kicks/kick3.wav"
-            ],
-            color:'#9b0080'
-
-        },
-
-        "voice":{
-            songs:[
-                "audio/kicks/kick2.wav"
-            ],
-            color:'#000000'
-        },
+        
+        "trumpet":[
+                "audio/snares/snare1.wav",
+                "audio/snares/snare2.wav",
+        		"audio/snares/snare3.wav"
+        	],
+        
+        "guitar":[
+                "audio/other/daunt.wav",
+        		"audio/other/djnoise1.wav",
+        	],
+        "voice":[
+        		"audio/other/oh.wav",
+                "audio/other/sfx1.wav"
+        	]
     };
 
-    return ressources;
+  return ressources;
 });

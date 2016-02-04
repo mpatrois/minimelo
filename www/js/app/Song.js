@@ -15,7 +15,7 @@ define(function( require ) {
 		this.stopTime  = 0;
 	}
 
-	Song.prototype.load = function ( ) {
+	Song.prototype.load = function () {
 		var self = this;
 
 		$.ajax({
@@ -25,6 +25,23 @@ define(function( require ) {
 
 			audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
 				self.buffer = buffer;
+				
+		  }, function(e) {"Error with decoding audio data" + e.err;} );  
+		});
+
+	}
+
+	Song.prototype.loadAndPlayOnce = function ( ) {
+		var self = this;
+
+		$.ajax({
+			url: self.url,
+			xhrFields : {responseType : 'arraybuffer'},
+		}).done(function(arrayBuffer){
+
+			audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
+				self.buffer = buffer;
+				self.play();
 				
 		  }, function(e) {"Error with decoding audio data" + e.err;} );  
 		});
@@ -59,23 +76,7 @@ define(function( require ) {
 		}
 		else
 		{
-			$.ajax({
-				url: self.url,
-				xhrFields : {responseType : 'arraybuffer'},
-			}).done(function(arrayBuffer){
-
-				audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
-
-					var source    = audioCtx.createBufferSource();
-					
-					source.buffer = buffer;
-					source.connect(audioCtx.destination);
-					source.start(audioCtx.currentTime);
-
-					return source;
-
-			  }, function(e) {"Error with decoding audio data" + e.err;} );  
-			});
+			this.loadAndPlayOnce();
 		}
 	};
 
