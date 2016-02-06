@@ -270,10 +270,8 @@ header{
 	}
 }
 
-/*CSS MODAL*/
-#myModal{
-	
-	.modal-dialog {
+
+.modal-dialog {
 	    width: 100%;
 	    height: 100%;
 	    margin: 0;
@@ -285,9 +283,90 @@ header{
 	    	}
 	    }
 	}
+#modal-record-sound{
 
+	.round_btn[action="stop"]{
+		background-color: red;
+	}
+	#recordScreen{
+		position: relative;
+		/*width: 100%;*/
+		height: 200px;
 
+		#selector{
+			background: blue;
+			height: 100%;
+			width: 1px;
+			display: inline-block;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+		#lineRecord{
+			height: 100%;
+			width: 1px;
+			display: inline-block;
+			position: absolute;
+			background: green;
+			top:0px;
+			left: 0px;
+		}
+		canvas{
+			position: relative;
+			left: 0px;
+			top: 0px;
+		    background: rgba(2,34,3,0.2);
+		}
+	}
+}
 
+.round_btn{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+   	background-image: url("../img/buttons_sprite.png");
+    background-size: cover;
+	background-position: 0 67%;
+    
+    &:hover{
+		background-position: 0 101%;
+		&:after{
+			top:3px;
+			left:-3px;
+		}
+    }
+
+    &:after{
+		content:"";
+	    background-image: url("../img/circle_icon_sprite.png");
+		background-position:0 67%;
+		position: relative;
+		display: inline-block;
+		width:50px;
+		height: 50px;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		background-color: transparent;
+		background-position: 0px -648px;
+	}
+
+    &.trash_btn:after{    background-position-y: 0; }
+	&.validate_btn:after{ background-position-y: -50px; }
+	&.scissors_btn:after{ background-position-y: -100px; }
+	&.unzoom_btn:after{   background-position-y: -150px; }
+	&.zoom_btn:after{     background-position-y: -200px; }
+	&.play_btn:after{     background-position-y: -250px; }
+	&.pause_btn:after{    background-position-y: -300px; }
+	&.stop_btn:after{     background-position-y: -350px; }
+	&.begin_btn:after{    background-position-y: -400px; }
+	&.end_btn:after{      background-position-y: -450px; }
+	&.sound_btn:after{    background-position-y: -500px; }
+	&.close_btn:after{    background-position-y: -550px; }
+	&.plus_btn:after{     background-position-y: -600px; }
+
+}
+
+#modal-select-sound{
 	#choose-song{
 	    display: inline-block;
 	    text-align: left;
@@ -351,27 +430,10 @@ header{
 				}
 
 			}
-
-
 		}
-
-
-
 	}
 
-	.round_btn{
-	    display: inline-block;
-	    background: url('../img/round_button_sprite.png') no-repeat;
-	    background-size: cover;
-	    width: 50px;
-	    height: 50px;
-
-	&.validate_btn{ 
-	    background-position-y: -300px;
-	    text-align:center;
-	    &:active{ background-position-y: -850px; }
-	    }
-	}
+	
 
 	
 
@@ -407,7 +469,7 @@ header{
 		background-position: 0 67%;
 	    
 	    &:hover{
-			background-position: 0 101%;
+			background-position: 0 100%;
 			&:after{
 				top:3px;
 				left:-3px;

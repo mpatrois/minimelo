@@ -9,12 +9,13 @@ requirejs.config({
 
 $(document).ready(function() {
 
-    require(['app/Timeline', 'app/Utils','app/UiMini','app/EventsMini','app/ResourcesHandler'], function(Timeline, Utils, UiMini,EventsMini,ressources) {
+    require(['app/Timeline', 'app/Utils','app/UiMini','app/EventsMini','app/ResourcesHandler','app/Record'], function(Timeline, Utils, UiMini,EventsMini,ressources,Record) {
 
         'use strict';
 
-       
-
+        navigator.getUserMedia = navigator.getUserMedia ||
+                             navigator.webkitGetUserMedia ||
+                             navigator.mozGetUserMedia;
 
         var application = {
 
@@ -25,8 +26,9 @@ $(document).ready(function() {
             onDeviceReady : function () {
 
                 ressources.loadSongs();
+                var record= new Record();
                 var uiMini   = new UiMini();
-                var eventsMini   = new EventsMini(uiMini);
+                var eventsMini   = new EventsMini(uiMini,record);
                 uiMini.initUiMini();
                 eventsMini.initEventsMini();
                 

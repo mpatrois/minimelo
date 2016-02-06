@@ -93,6 +93,7 @@ UiMini.prototype.initButtonsModal = function () {
 		this.initButtonsModal();
 		this.initDeckButtons();
 		this.initPistes();
+		this.initRecorder();
 	}
 
 	UiMini.prototype.initPistes = function () {
@@ -118,9 +119,9 @@ UiMini.prototype.initButtonsModal = function () {
 
 		var self=this;
 
-		  $(".round_btn.trash_btn").click(function(){
-			   $('.piste').empty();
-		  });
+		$(".round_btn.trash_btn").click(function(){
+		   $('.piste').empty();
+		});
 
 	    $('#play_stop').click(function() {
 	        if($(this).hasClass('play_btn'))
@@ -147,6 +148,17 @@ UiMini.prototype.initButtonsModal = function () {
 	    });
 
 	};
+
+	UiMini.prototype.initRecorder=function(){
+		// console.log(recordScreen.clientWidth);
+		$('#modal-record-sound').modal('show');
+		
+		$('#canvasRecord').attr('width',recordScreen.clientWidth);
+		$('#canvasRecord').attr('height',recordScreen.clientHeight);
+
+
+		$('#modal-record-sound').modal('hide');
+	}
 
 	UiMini.prototype.addSongToPiste = function(songButton,piste,xOnPiste)
 	{

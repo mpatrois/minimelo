@@ -2,8 +2,9 @@ define(function(require) {
 
 	var ResourcesHandler = require('app/ResourcesHandler');
 
-	function EventsMini(uiMini){
+	function EventsMini(uiMini,record){
 		this.uiMini=uiMini;
+		this.record=record;
 	}
 
 	EventsMini.prototype.initEventsMini = function (){
@@ -11,6 +12,7 @@ define(function(require) {
 		this.initDragAndDrop();
 		this.initModalEvents();
 		this.initSongClick();
+		this.initRecorderEvents();
 	}
 
 	EventsMini.prototype.initPisteClick = function(){
@@ -22,17 +24,10 @@ define(function(require) {
 		    {
 			    var xOnPiste=event.clientX-$(this).offset().left;
 			    var songToLoad=$("#buttons-songs .button.active")[0];
-			    // var idSong=$(songToLoad).attr('data-song-id');
 
-			    // var song=self.timeline.songs[idSong];
-			    
 			    var newSongDiv=self.uiMini.addSongToPiste(songToLoad,$(this),xOnPiste);
 
-			    // song.play(self.timeline.audioCtx);
-
 			    self.setDragOnSong(newSongDiv);
-
-			    //console.log('test');
 
 			}
 
@@ -85,7 +80,7 @@ define(function(require) {
 
 	EventsMini.prototype.initDragAndDrop = function () {
 
-  		document.ontouchmove=document.onmousemove=function (event){
+  		timeline.ontouchmove=timeline.onmousemove=function (event){
   			var clientX;
   			var clientY;
 
@@ -261,6 +256,81 @@ define(function(require) {
 	        }
 	        $(this).addClass("active");
     	});
+    }
+
+    EventsMini.prototype.initRecorderEvents=function(){
+    	var self=this;
+    	playRecord.onmousedown=function(){
+			self.record.playRecord();
+		}
+
+		recordButton.onclick=function(event){
+			if($(this).attr("action")=="record"){
+				self.record.startRecord();
+				$(this).attr("action","stop");
+			}else{
+				self.record.stopRecord();
+				$(this).attr("action","record");
+			}
+		}
+
+		recordScreen.onmousedown=recordScreen.ontouchstart=function(event){
+			var clientX;
+  			var clientY;
+
+  			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+  				clientX=event.touches[0].clientX;
+  				clientY=event.touches[0].clientY;
+  			}
+  			else
+  			{
+  				clientX=event.clientX;
+  				clientY=event.clientY;
+  			}
+
+			var x=clientX-this.offsetLeft;
+			self.record.startSong=x;
+		}
+
+		recordScreen.onmousemove=recordScreen.ontouchmove=function(event){
+			var clientX;
+  			var clientY;
+  			// console.log(event);
+  			var down=(event.buttons==1);
+  			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+  				clientX=event.touches[0].clientX;
+  				clientY=event.touches[0].clientY;
+  				down=true;
+  			}
+  			else
+  			{
+  				clientX=event.clientX;
+  				clientY=event.clientY;
+  			}
+  			if(down){
+				var x=clientX-this.offsetLeft;
+				self.record.stopSong=x;
+				self.record.drawSelector();
+			}
+			
+
+		}
+
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+  				recordScreen.onmousedown=null;
+  				recordScreen.onmousemove=null;
+  		}
+
+		cutRecord.onclick=function(){
+			self.record.cutRecord();
+			self.record.drawRecord();
+			selector.style.left='0px';
+			selector.style.width='0px';
+		}
+
+		saveRecord.onclick=function(){
+			self.record.saveRecord();
+		}
     }
 
 	return EventsMini;

@@ -1,13 +1,3 @@
-/*$red : #eb3816;
-$orange : #ff7800;
-$yellow : #ffe400;
-$clear_green : #aaf400;
-$dark_green : #00a134;
-$dark_blue : #0085ff;
-$clear_blue : #84d6ff;
-$purple : #9b0080;
-$black : #000000;
-*/
 html {
   height: 100%; }
 
@@ -240,22 +230,101 @@ header {
     border-right: 1px solid rgba(97, 102, 127, 0.2);
     background: #eef0fa; }
 
-/*CSS MODAL*/
-#myModal .modal-dialog {
+.modal-dialog {
   width: 100%;
   height: 100%;
   margin: 0; }
-  #myModal .modal-dialog .modal-content {
+  .modal-dialog .modal-content {
     height: 100%; }
-    #myModal .modal-dialog .modal-content .modal-body {
+    .modal-dialog .modal-content .modal-body {
       text-align: center; }
 
-#myModal #choose-song {
+#modal-record-sound .round_btn[action="stop"] {
+  background-color: red; }
+
+#modal-record-sound #recordScreen {
+  position: relative;
+  /*width: 100%;*/
+  height: 200px; }
+  #modal-record-sound #recordScreen #selector {
+    background: blue;
+    height: 100%;
+    width: 1px;
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 0px; }
+  #modal-record-sound #recordScreen #lineRecord {
+    height: 100%;
+    width: 1px;
+    display: inline-block;
+    position: absolute;
+    background: green;
+    top: 0px;
+    left: 0px; }
+  #modal-record-sound #recordScreen canvas {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    background: rgba(2, 34, 3, 0.2); }
+
+.round_btn {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-image: url("../img/buttons_sprite.png");
+  background-size: cover;
+  background-position: 0 67%; }
+  .round_btn:hover {
+    background-position: 0 101%; }
+    .round_btn:hover:after {
+      top: 3px;
+      left: -3px; }
+  .round_btn:after {
+    content: "";
+    background-image: url("../img/circle_icon_sprite.png");
+    background-position: 0 67%;
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-color: transparent;
+    background-position: 0px -648px; }
+  .round_btn.trash_btn:after {
+    background-position-y: 0; }
+  .round_btn.validate_btn:after {
+    background-position-y: -50px; }
+  .round_btn.scissors_btn:after {
+    background-position-y: -100px; }
+  .round_btn.unzoom_btn:after {
+    background-position-y: -150px; }
+  .round_btn.zoom_btn:after {
+    background-position-y: -200px; }
+  .round_btn.play_btn:after {
+    background-position-y: -250px; }
+  .round_btn.pause_btn:after {
+    background-position-y: -300px; }
+  .round_btn.stop_btn:after {
+    background-position-y: -350px; }
+  .round_btn.begin_btn:after {
+    background-position-y: -400px; }
+  .round_btn.end_btn:after {
+    background-position-y: -450px; }
+  .round_btn.sound_btn:after {
+    background-position-y: -500px; }
+  .round_btn.close_btn:after {
+    background-position-y: -550px; }
+  .round_btn.plus_btn:after {
+    background-position-y: -600px; }
+
+#modal-select-sound #choose-song {
   display: inline-block;
   text-align: left; }
-  #myModal #choose-song div {
+  #modal-select-sound #choose-song div {
     margin-right: 10px; }
-  #myModal #choose-song div .button span {
+  #modal-select-sound #choose-song div .button span {
     font-size: 32px;
     font-family: "Orange";
     position: absolute;
@@ -263,7 +332,7 @@ header {
     text-align: center;
     width: 100%;
     padding-left: 5px; }
-  #myModal #choose-song .button {
+  #modal-select-sound #choose-song .button {
     width: 55px;
     height: 55px;
     background-image: url("../img/buttons_sprite.png");
@@ -271,7 +340,7 @@ header {
     display: inline-block;
     position: relative;
     opacity: 0.8; }
-    #myModal #choose-song .button.active {
+    #modal-select-sound #choose-song .button.active {
       background-position: 0 33%;
       opacity: 1;
       /* ORANGE */
@@ -281,34 +350,22 @@ header {
       /* DARK  BLUE */
       /* CLEAR BLUE */
       /* PURPLE */ }
-      #myModal #choose-song .button.active[type="drum"] {
+      #modal-select-sound #choose-song .button.active[type="drum"] {
         background-color: rgba(235, 56, 22, 0.8); }
-      #myModal #choose-song .button.active[type="cymbal"] {
+      #modal-select-sound #choose-song .button.active[type="cymbal"] {
         background-color: rgba(255, 120, 0, 0.8); }
-      #myModal #choose-song .button.active[type="flute"] {
+      #modal-select-sound #choose-song .button.active[type="flute"] {
         background-color: rgba(255, 228, 0, 0.8); }
-      #myModal #choose-song .button.active[type="piano"] {
+      #modal-select-sound #choose-song .button.active[type="piano"] {
         background-color: rgba(170, 244, 0, 0.8); }
-      #myModal #choose-song .button.active[type="violin"] {
+      #modal-select-sound #choose-song .button.active[type="violin"] {
         background-color: rgba(0, 161, 52, 0.8); }
-      #myModal #choose-song .button.active[type="trumpet"] {
+      #modal-select-sound #choose-song .button.active[type="trumpet"] {
         background-color: rgba(0, 133, 255, 0.8); }
-      #myModal #choose-song .button.active[type="guitar"] {
+      #modal-select-sound #choose-song .button.active[type="guitar"] {
         background-color: rgba(132, 214, 255, 0.8); }
-      #myModal #choose-song .button.active[type="voice"] {
+      #modal-select-sound #choose-song .button.active[type="voice"] {
         background-color: rgba(155, 0, 128, 0.8); }
-
-#myModal .round_btn {
-  display: inline-block;
-  background: url("../img/round_button_sprite.png") no-repeat;
-  background-size: cover;
-  width: 50px;
-  height: 50px; }
-  #myModal .round_btn.validate_btn {
-    background-position-y: -300px;
-    text-align: center; }
-    #myModal .round_btn.validate_btn:active {
-      background-position-y: -850px; }
 
 /*---------*/
 #deck-buttons {
@@ -330,7 +387,7 @@ header {
     background-size: cover;
     background-position: 0 67%; }
     #deck-buttons .round_btn:hover {
-      background-position: 0 101%; }
+      background-position: 0 100%; }
       #deck-buttons .round_btn:hover:after {
         top: 3px;
         left: -3px; }

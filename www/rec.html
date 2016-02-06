@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+	body{
+		margin: 0px;
+		padding: 0px;
+	}
+	#wave{
+		position: relative;
+		width: 100%;
+		/*overflow-x:scroll;*/
+		height: 200px;
+	}
+	#selector{
+		background: blue;
+		height: 100%;
+		width: 1px;
+		display: inline-block;
+		position: absolute;
+	}
+	#line{
+		height: 100%;
+		width: 1px;
+		display: inline-block;
+		position: absolute;
+		background: green;
+	}
+	canvas{
+		position: relative;
+		left: 0px;
+		top: 0px;
+	    background: rgba(2,34,3,0.2);
+		/*background: yellow;*/
+	}
+</style>
+<body>
+	<!-- <button id="recordButton">Record</button>
+	<button id="playRecord">Play</button>
+	<button id="cutRecord">Cut</button -->>
+	<div id="wave">
+		<div id='selector'></div>
+		<div id="line"></div>
+		<canvas id="canvas" width='1000' height='200'></canvas>
+	</div>
+	<script type="text/javascript">
+		window.AudioContext = window.AudioContext ||
+                      window.webkitAudioContext;
+
+    navigator.getUserMedia = navigator.getUserMedia ||
+                         navigator.webkitGetUserMedia ||
+                         navigator.mozGetUserMedia;
+
+	var audioCtx = new AudioContext();
+	var ctx=canvas.getContext("2d");
+
+	canvas.setAttribute('width',wave.clientWidth);
+	canvas.setAttribute('height',wave.clientHeight);
+
+	function Record(){
+		this.scriptNode;
+		this.streamRecord=null;
+        this.microphone;
+        this.recordBuffer;
+        this.idPlayInterval;
+        this.arrayData=new Float32Array(0);
+        this.startSong=0;
+        this.stopSong=0;
+        this.playStart=0;
+        this.recorToPlay;
+        this.playing=false;
+	}
+
+	var record=new Record();
+
+
+	Record.prototype.startRecord=function()
+	{	
+		var self=this;
+
+		if(self.streamRecord!=null){
+			self.stopRecord();
+		}
+		navigator.getUserMedia({audio: true},
+			function(stream){
+				self.streamRecord=stream.getAudioTracks()[0];
+		    	self.microphone = audioCtx.createMediaStreamSource(stream);
+				self.scriptNode = audioCtx.createScriptProcessor(4096, 1, 1);
+				self.microphone.connect(self.scriptNode);
+				self.scriptNode.connect(audioCtx.destination);
+				self.arrayData=new Float32Array();
+				
+				self.scriptNode.onaudioprocess=function(e){
+
+					var data=e.inputBuffer.getChannelData(0);
+
+					var length=self.arrayData.length;
+					var newLength=length+data.length;
+					var newArray=new Float32Array(newLength);
+
+					newArray.set(self.arrayData,0);
+					newArray.set(data,length);
+					self.arrayData=newArray;
+
+				}
+			},
+			function(error){
+				console.log(error);
+			}
+		);
+		
+	}
+	Record.prototype.stopRecord=function(){
+		this.streamRecord.stop();
+		this.microphone.disconnect();
+		this.scriptNode.disconnect();
+
+		this.recordBuffer = audioCtx.createBuffer(1, this.arrayData.length, audioCtx.sampleRate);
+	    output = this.recordBuffer.getChannelData(0);
+		for (var i = 0; i < this.arrayData.length; i++) {
+		    output[i] = this.arrayData[i];
+		}
+
+		this.drawRecord(this.recordBuffer);
+	}
+
+	Record.prototype.drawRecord=function(){
+		var binSize = ( this.recordBuffer.duration * this.recordBuffer.sampleRate ) / canvas.width;
+	    ctx.clearRect(0,0,canvas.width,canvas.height);
+	    ctx.beginPath();
+	    
+	    var linePosition=10;
+	    ctx.moveTo(0,canvas.height-linePosition);
+
+	    var data=this.recordBuffer.getChannelData(0);
+	    var xOnCanvas=0;
+
+	    for (var i=0,len=data.length; i<len; i+=binSize)
+	    {
+	      //avec la moyenne
+	      // var tempdata=data.subarray(i,i+binSize);
+	      // ctx.lineTo(xOnCanvas,canvas.height-Math.abs(Math.max.apply(Math, tempdata) * canvas.height/1.3)-linePosition);
+	       
+	       //sans la moyenne
+	      var tempdata=data.subarray(i,i+binSize)[0];
+	      ctx.lineTo(xOnCanvas,canvas.height-Math.abs(tempdata * canvas.height/1.1)-linePosition);
+
+	      xOnCanvas++;
+	    }
+	    ctx.lineTo(canvas.width,canvas.height-linePosition);
+	    ctx.closePath();
+	    ctx.fill();
+	    ctx.beginPath();
+	    ctx.moveTo(0,canvas.height-linePosition);
+	    ctx.lineTo(canvas.width,canvas.height-linePosition);
+	    ctx.closePath();
+	    ctx.stroke();
+	}
+
+	Record.prototype.playRecord=function(){
+		var self=this;
+		if(this.playing==true){
+			this.recorToPlay.stop();
+			clearInterval(this.idPlayInterval);
+		}
+		else{
+			this.recorToPlay = audioCtx.createBufferSource();
+			this.recorToPlay.buffer = this.recordBuffer;
+			this.recorToPlay.start(0);
+			this.playStart=audioCtx.currentTime;
+			this.playing=true;
+			
+			this.idPlayInterval=setInterval(function() {
+				var timeInPx = self.getXOnSong(audioCtx.currentTime-self.playStart);
+				line.style.left=timeInPx+"px";
+			},1);
+
+
+			this.recorToPlay.onended=function () {
+				clearInterval(self.idPlayInterval);
+				self.playing=false;	
+			}
+			this.recorToPlay.connect(audioCtx.destination);
+		}
+	}
+
+	Record.prototype.drawSelector=function(){
+		var left=Math.min(this.startSong,this.stopSong);
+		var width=Math.abs(this.startSong-this.stopSong);
+		selector.style.left=left+"px";
+		selector.style.width=width+"px";
+	}
+
+	Record.prototype.getPositionOnSong=function(x){
+		var pxInSecond=this.recordBuffer.duration/canvas.width;
+		return x*pxInSecond;
+	}
+
+	Record.prototype.getXOnSong=function(sec){
+		var pxInSecond=this.recordBuffer.duration/canvas.width;
+		return sec/pxInSecond;
+	}
+
+	Record.prototype.getStartSample=function(){
+		return this.getPositionOnSong(Math.min(this.startSong,this.stopSong));
+	}
+	Record.prototype.getStopSample=function(){
+		return this.getPositionOnSong(Math.max(this.startSong,this.stopSong));
+	}
+
+	Record.prototype.getDurationSample=function(){
+		return this.getStopSample()-this.getStartSample();
+	}
+
+	Record.prototype.cutRecord=function(){
+
+		var startPos=this.getStartSample();
+		var stopPos=this.getStopSample();
+		var duration=this.getDurationSample();
+
+		var channels = this.recordBuffer.numberOfChannels;
+		var frameCount = this.recordBuffer.sampleRate * duration;
+		var frameStart = this.recordBuffer.sampleRate * startPos;
+		var frameEnd = this.recordBuffer.sampleRate * stopPos;
+
+		console.log(frameCount);
+		console.log(this.recordBuffer.sampleRate);
+
+		var myArrayBuffer = audioCtx.createBuffer(channels, frameCount, this.recordBuffer.sampleRate);
+
+		for (var channel = 0; channel < channels; channel++) {
+		  var nowBuffering = myArrayBuffer.getChannelData(channel);
+		  var pos=0;
+		  for (var i = Math.round(frameStart); i < Math.round(frameEnd); i++) {
+		    nowBuffering[pos] = this.recordBuffer.getChannelData(channel)[i];
+		    pos++;
+		  }
+		}
+		this.recordBuffer=myArrayBuffer;	
+	}
+
+	playRecord.onmousedown=function(){
+		record.playRecord();
+	}
+
+	recordButton.onclick=function(event){
+		if(this.innerHTML=="Record"){
+			record.startRecord();
+			this.innerHTML="Stop";
+		}else{
+			record.stopRecord();
+			this.innerHTML="Record";
+		}
+	}
+
+	wave.onmousedown=function(event){
+		var x=event.clientX-this.offsetLeft;
+		record.startSong=x;
+	}
+
+	wave.onmousemove=function(event){
+		if(event.buttons==1){
+			var x=event.clientX-this.offsetLeft;
+			record.stopSong=x;
+			record.drawSelector();
+		}
+
+	}
+
+	cut.onclick=function(){
+		record.cutRecord();
+		record.drawRecord();
+	}
+
+
+		
+	</script>
+</body>
+</html>
