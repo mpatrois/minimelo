@@ -18,6 +18,8 @@ define(function( require ) {
         this.playStart=0;
         this.recorToPlay=null;
         this.playing=false;
+
+        this.objectTosave=null;
 	}
 
 	Record.prototype.startRecord=function()
@@ -223,6 +225,7 @@ define(function( require ) {
 	// }
 
 	Record.prototype.saveRecord=function(){
+		var self=this;
 		var worker = new Worker('js/app/recorderWorker.js');
 	    worker.postMessage({
 	      command: 'init',
@@ -231,11 +234,48 @@ define(function( require ) {
 
 	    // callback for `exportWAV`
 	    worker.onmessage = function( e ) {
-	    var url = (window.URL || window.webkitURL).createObjectURL(e.data);
-	    var link = window.document.createElement('a');
-	    link.href = url;
-	    link.download = 'record.wav';
-	    link.click();
+		    var url = (window.URL || window.webkitURL).createObjectURL(e.data);
+		    var link = window.document.createElement('a');
+		    link.href = url;
+		    link.download = 'record.wav';
+		    link.click();
+		    console.log(url);
+		    // self.objectTosave=e.data;
+
+		    // window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+	      																			
+						// 											//gotFileEntry
+	     //  	fileSystem.root.getFile("readme.wav", {create: true, exclusive: false}, function(fileEntry){
+	     //  							//gotFileWriter
+	     //  		fileEntry.createWriter(function(writer){
+	     //  			writer.onwriteend=function(evt){
+	     //  				console.log("audio enregistre");
+	     //  			}
+	     //  			writer.write(e.data);
+	     //  		}, fail);
+	      	
+	     //  	}, fail);
+	     //  }, fail);
+
+			window.resolveLocalFileSystemURL("file:///sdcard/Music/minimelo/undefini", function (fileSystem) {
+				console.log(fileSystem);
+				fileSystem.getFile("output.wav", {create: true, exclusive: false}, function(fileEntry){
+				
+				console.log(fileEntry);
+								
+				fileEntry.createWriter(function(writer){
+					writer.onwriteend=function(evt){
+						console.log("audio enregistre");
+					}
+					writer.write(e.data);
+				}, fail);
+
+			}, fail);
+
+			}, function(error){
+				console.log(error);
+			});
+
 	    };
 
 	    // send the channel data from our buffer to the worker
@@ -250,7 +290,59 @@ define(function( require ) {
 	      command: 'exportWAV',
 	      type: 'audio/wav'
 	    });
+
+	      //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+
+	      															//GotFS
+
+
 	}
+
+	function gotFS(fileSystem) {
+        fileSystem.root.getFile("readme.txt", {create: true, exclusive: false}, gotFileEntry, fail);
+    }
+
+    function gotFileEntry(fileEntry) {
+        fileEntry.createWriter(gotFileWriter, fail);
+    }
+
+    function gotFileWriter(writer) {
+        writer.onwriteend = function(evt) {
+            console.log("contents of file now 'some sample text'");
+            writer.truncate(11);
+            writer.onwriteend = function(evt) {
+                console.log("contents of file now 'some sample'");
+                writer.seek(4);
+                writer.write(" different text");
+                writer.onwriteend = function(evt){
+                    console.log("contents of file now 'some different text'");
+                }
+            };
+        };
+        writer.write("some sample text");
+    }
+
+    function fail(error) {
+        console.log(error.code);
+    }
+
+	// window.requestFileSystem(
+ //      LocalFileSystem.PERSISTENT, 0,
+ //      function onFileSystemSuccess(fileSystem) {
+ //          fileSystem.root.getFile(filename, { create: true }, function (fileEntry) {
+ //              fileEntry.remove(
+ //                  fileEntry.createWriter(function (fileWriter) {
+ //                  fileWriter.onwriteend = function (e) {
+ //                      cloud.functions.performSaveSuccess();
+ //                  };
+ //                  fileWriter.onerror = function (e) {
+ //                      cloud.functions.performSaveError(e);
+ //                  };
+ //                  fileWriter.write(data);
+ //              }, errorCallback));
+ //              ;
+ //          }, errorCallback);
+ //      });
 
 
 	return Record;

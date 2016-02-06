@@ -68,6 +68,9 @@
     <gap:splash gap:platform="winphone" src="www/res/screen/windows-phone/screen-portrait.jpg" />
     <access origin="*" />
     <plugin name="cordova-plugin-whitelist" version="1" />
+    <plugin name="File" value="org.apache.cordova.FileUtils" />
+    <plugin name="FileTransfer" value="org.apache.cordova.FileTransfer" />
+    <allow-navigation href="file:*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
