@@ -36,37 +36,19 @@ $(document).ready(function() {
                 document.addEventListener("deviceready", this.onDeviceReady, false);
             },
 
-            onDeviceReady : function () {
-
-                ressources.loadSongs();
-                var record= new Record();
+            runApp:function(){
+                 var record= new Record();
                 var uiMini   = new UiMini();
                 var eventsMini   = new EventsMini(uiMini,record);
                 uiMini.initUiMini();
                 eventsMini.initEventsMini();
+                console.log(ressources.typeDirectories.length,"application runned");
+                console.log(ressources.songs,"songs");
+            },
 
-               window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-                   fileSystem.root.getDirectory("/", {
-                           create: true
-                       }, function(directory) {
-
-                        var directoryReader = directory.createReader();
-                        directoryReader.readEntries(function(entries) {
-                            var i;
-                            for (i=0; i<entries.length; i++) {
-                                console.log(entries[i].name);
-                            }
-                        }, function (error) {
-                            alert(error.code);
-                        });
-
-                       } );
-                }, function(error) {
-                   alert("can't even get the file system: " + error.code);
-                });
-
-
-                
+            onDeviceReady : function () {
+                ressources.initApplication=this.runApp;
+                ressources.loadSongs();                
             }
         };
 

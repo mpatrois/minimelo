@@ -12,43 +12,91 @@ define(function( require ){
 		this.songs      = [];
 		this.loadedOnes = 0;
 		this.loadable   = 0;
+		this.typeDirectories = [];
+		this.songsDirectories = {};
+		this.numberDirectories=0;
+		this.numberDirectoriesReaded=0;
+		this.initApplication=null;
+	}
+
+	function callback(name){
+		console.log(name)
+	}
+	ResourcesHandler.prototype.callbackDirectories=function(numberDirectories){
+		this.numberDirectories=numberDirectories;
+	}
+	ResourcesHandler.prototype.callbackDirectoryReaded=function(directory){
+		this.songsDirectories[directory.name] = directory;
+		var nbDirReaded=Object.keys(this.songsDirectories).length;
+		if(this.numberDirectories==nbDirReaded){
+			for(var type in this.songsDirectories){
+				var directory=this.songsDirectories[type];
+				var filesOfDirectory=directory.filesList;
+				for (var i = 0; i < filesOfDirectory.length; i++) {
+					var file=filesOfDirectory[i];
+					var song=new Song(type,file.nativeURL);
+					song.fileEntry=file;
+					this.songs.push(song);
+				};
+			}
+			
+			this.initApplication();
+		}
 	}
 
 	ResourcesHandler.prototype.loadSongs = function() {
 
+		var self=this;
+		if (true)
+		{
+			window.resolveLocalFileSystemURL("file:///sdcard/Music/minimelo", function (fileSystem) {
+	
+		    var directoryReader = fileSystem.createReader();
+			    directoryReader.readEntries(function(directories) {
+			        var i;
+			        for (i=0; i<directories.length; i++) {
+			            if(directories[i].isDirectory===true){
+			            	var directory=directories[i];
+			            	var reader = directory.createReader();
 
-		if (false)
-		{} // si on récupère pas la liste du prof
-		/*window.resolveLocalFileSystemURL(cordova.file.dataDirectory, gotFS, fail);
+			            	directory.filesList=[];
+			            	reader.readEntries(function(files) {
+			            		for (var j = 0; j < files.length; j++) {
+			            			this.filesList.push(files[j]);           			      			
+			            		};
+			            		self.callbackDirectoryReaded(this);
+			            	}.bind(directory));
 
-		function gotFS(fileSystem) {
-			console.log(fileSystem); // what is this shit please ?
-			fileSystem.root.getFile("readme.txt", {create: true, exclusive: false}, gotFileEntry, fail);
-		}
+			            	self.typeDirectories.push(directory);
+			            	console.log(self.typeDirectories);
+			            	//callback(directory.name);
+			            }
+			        }
+			        self.callbackDirectories(directories.length);
 
-		function gotFileEntry(fileEntry) {
-			fileEntry.createWriter(gotFileWriter, fail);
-		}
+			    }, function (error) {
+			        alert(error.code);
+			    });
 
-		function gotFileWriter(writer) {
-			writer.onwriteend = function(evt) {
-				console.log("contents of file now 'some sample text'");
-				writer.truncate(11);
-				writer.onwriteend = function(evt) {
-					console.log("contents of file now 'some sample'");
-					writer.seek(4);
-					writer.write(" different text");
-					writer.onwriteend = function(evt){
-						console.log("contents of file now 'some different text'");
-					}
+			}, function(error){
+				console.log(error);
+			});
+
+			console.log(self.typeDirectories);
+			console.log(self.typeDirectories.length);
+
+
+			for (var i = 0; i < self.typeDirectories.length; i++) {
+				console.log(self.typeDirectories[i]);
+				var songsFiles=self.typeDirectories[i].filesList;
+
+				console.log(self.typeDirectories[i].name);
+				for (var j = 0; j < songsFiles.length; j++) {
+					console.log(songsFiles[j]);
 				};
 			};
-			writer.write("some sample text");
-		}
 
-		function fail(error) {
-			console.log(error.code);
-		}*/
+		}
 		else {
 			this.loadTestSongs();
 		}

@@ -194,6 +194,7 @@ window.resolveLocalFileSystemURL("file:///sdcard/Music/minimelo", function (file
 	            	reader.readEntries(function(files) {
 	            		for (var j = 0; j < files.length; j++) {
 	            			console.log(files[j]);
+	            			console.log(reader);
 	            		};
 	            	});
 	            }
@@ -247,3 +248,44 @@ window.resolveLocalFileSystemURL("file:///sdcard/Music/minimelo", function (file
 	console.log(error);
 });
 
+
+// function displayDirectoryFile(i) {
+//     return function() { console.log("My value: " + i); };
+// }
+
+function displayDirectoryFile(i) {
+    return function(files) {
+	            		for (var j = 0; j < files.length; j++) {
+	            			console.log(files[j]);
+	            			console.log(reader);
+	            		};
+	}
+}
+
+window.resolveLocalFileSystemURL("file:///sdcard/Music/minimelo", function (fileSystem) {
+	
+    var directoryReader = fileSystem.createReader();
+	    directoryReader.readEntries(function(directories) {
+	        var i;
+	        for (i=0; i<directories.length; i++) {
+	            if(directories[i].isDirectory===true){
+	            	var directory=directories[i];
+	            	var reader = directory.createReader();
+
+	            	directory.filesList=[];
+	            	reader.readEntries(function(files) {
+	            		for (var j = 0; j < files.length; j++) {
+	            			console.log(files[j]);
+	            			this.filesList.push(files[j]);           			
+	            			console.log(this);          			
+	            		};
+	            	}.bind(directory));
+	            }
+	        }
+	    }, function (error) {
+	        alert(error.code);
+	    });
+
+}, function(error){
+	console.log(error);
+});

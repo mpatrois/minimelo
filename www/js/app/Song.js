@@ -13,9 +13,26 @@ define(function( require ) {
 		this.buffer    = null;
 		this.startTime = 0;
 		this.stopTime  = 0;
+		this.fileEntry =null;
 	}
 
 	Song.prototype.load = function () {
+		var self = this;
+
+		$.ajax({
+			url: self.url,
+			xhrFields : {responseType : 'arraybuffer'},
+		}).done(function(arrayBuffer){
+
+			audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
+				self.buffer = buffer;
+				
+		  }, function(e) {"Error with decoding audio data" + e.err;} );  
+		});
+
+	}
+
+	Song.prototype.loadByFile = function () {
 		var self = this;
 
 		$.ajax({
