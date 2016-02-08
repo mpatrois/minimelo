@@ -114,9 +114,20 @@ ul{
 }
 
 .app{
-
+	overflow: hidden;
 	width:100%;
     height: 100%;
+    .panel{
+    	width: 100%;
+		height: 100%;
+    	transform:translateY(0%);
+    	transition:transform 800ms;
+    }
+    &[panel="0"]{
+    	.panel{
+    		transform:translateY(-100%);
+    	}
+    }
     .row{
     	margin:0;
     }
@@ -268,10 +279,6 @@ header{
 		border-right: 1px solid rgba(97,102,127,0.2);;
 	    background: rgb(238, 240, 250);
 	}
-}
-.panel{
-	width: 100%;
-	height: 100%;
 }
 /*CSS MODAL*/
 #panel-choose{

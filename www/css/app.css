@@ -118,8 +118,16 @@ ul {
     background-position-y: -600px; }
 
 .app {
+  overflow: hidden;
   width: 100%;
   height: 100%; }
+  .app .panel {
+    width: 100%;
+    height: 100%;
+    transform: translateY(0%);
+    transition: transform 800ms; }
+  .app[panel="0"] .panel {
+    transform: translateY(-100%); }
   .app .row {
     margin: 0; }
   .app h1 {
@@ -235,10 +243,6 @@ header {
     display: inline-block;
     border-right: 1px solid rgba(97, 102, 127, 0.2);
     background: #eef0fa; }
-
-.panel {
-  width: 100%;
-  height: 100%; }
 
 /*CSS MODAL*/
 #panel-choose {
