@@ -42,7 +42,24 @@ $(document).ready(function() {
                 var eventsMini   = new EventsMini(uiMini,record);
 
                 ressources.loadSongs().then(function(data){
-                   
+                    uiMini.initButtonsModal();
+                   // console.log(ressources);
+                   // // for (var i = 0; i < ressources.songsDirectories.length; i++) {
+                   // //      var songDirectory=ressources.songsDirectories[i];
+                   // //      console.log(songDirectory);
+                   // // };
+                   // for(var type in ressources.songsDirectories){
+                   //      if(type!=null)
+                   //      {
+                   //          var songDirectory=ressources.songsDirectories[type];
+                   //          var song=songDirectory[0];
+
+                   //          var buttonSong=$('<div class="button instrument"></div>');
+                   //          buttonSong.attr('data-song-id', song.id);
+                   //          buttonSong.attr('type',type);
+                   //          $('#buttons-songs').append(buttonSong);
+                   //      }
+                   // }
                 });
                 uiMini.initUiMini();
                 eventsMini.initEventsMini();     

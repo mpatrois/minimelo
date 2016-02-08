@@ -49,6 +49,7 @@ define(function( require ) {
 					newArray.set(self.arrayData,0);
 					newArray.set(data,length);
 					self.arrayData=newArray;
+					console.log(data);
 
 				}
 			},

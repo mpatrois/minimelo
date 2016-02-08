@@ -17,12 +17,7 @@ define(function( require ) {
 
 	   	for (var i = 1; i < 9; i++) {
 	   		var type="type-"+i;
-	   		//var idSong = ResourcesHandler.getIdFirstSongType(type);
 	        var buttonSong=$('<div class="button instrument"></div>');
-	        // if(idSong!=-1){
-	          // buttonSong.attr('data-song-id', idSong);
-	        // }
-
 	        buttonSong.attr('type',type);
 
 	        $('#buttons-songs').append(buttonSong);
@@ -33,39 +28,61 @@ UiMini.prototype.initButtonsModal = function () {
 
     var self=this;
 
-    $("#buttons-songs .button").each(function(){
+    var songsByType = ResourcesHandler.songsDirectories;
+
+	for ( var type in songsByType )
+	{
+		var line=$("<div type="+type+"></div>");
+		$("#choose-song").append(line);
+		
+		var songs=songsByType[type];
+		for (var i = 0; i < songs.length; i++){
+
+			var song=songs[i];
+
+			var buttonSong=$('<div class="button instrument"></div>');
+			buttonSong.attr('type',type);
+			buttonSong.attr('data-song-id', song.id);
+
+			buttonSong.append("<span>" +i+ "</span>");
+
+			line.append(buttonSong);
+		}
+	}
+
+    // $("#buttons-songs .button").each(function(){
       
-      var button=$(this);
+    //   var button=$(this);
 
-      var type=$(this).attr('type');
-      var songsOfType=ressources[type];
+    //   var type=$(this).attr('type');
+    //   var songsOfType=ressources[type];
 
 
-      var typeLine = button.attr("type");
-      var line=$("<div type="+typeLine+"></div>");
-      var instruLine = $("#choose-song").append(line);
+    //   var typeLine = button.attr("type");
+    //   var line=$("<div type="+typeLine+"></div>");
+    //   var instruLine = $("#choose-song").append(line);
 
-      var numberSong = 1;
+    //   var numberSong = 1;
 
-      for (var i = 0; i < songsOfType.length; i++) {
-        var urlSong=songsOfType[i];
-        var idSong=ResourcesHandler.getIdFirstSongUrl(urlSong);
-        var newButtonModal=$("<div class='button'>");
-        if(idSong!=-1){
-        // cloneWithUrl.attr('data-song-url',song.url);
-        newButtonModal.attr('data-song-id',idSong);
-        newButtonModal.attr('type',type);
+    //   for (var i = 0; i < songsOfType.length; i++) {
+    //     var urlSong=songsOfType[i];
+    //     var idSong=ResourcesHandler.getIdFirstSongUrl(urlSong);
+    //     var newButtonModal=$("<div class='button'>");
+    //     if(idSong!=-1){
+    //     // cloneWithUrl.attr('data-song-url',song.url);
+    //     newButtonModal.attr('data-song-id',idSong);
+    //     newButtonModal.attr('type',type);
         
-        if($("#buttons-songs .button[data-song-id="+idSong+"]").length>0){
-          newButtonModal.addClass('active');
-        }
-          newButtonModal.append("<span>"+numberSong+"</span>");
-          line.append(newButtonModal);
-          numberSong++;
-        }
-      };
+    //     if($("#buttons-songs .button[data-song-id="+idSong+"]").length>0){
+    //       newButtonModal.addClass('active');
+    //     }
+    //       newButtonModal.append("<span>"+numberSong+"</span>");
+    //       line.append(newButtonModal);
+    //       numberSong++;
+    //     }
+    //   };
 
-    });
+    // });
 
   };
 

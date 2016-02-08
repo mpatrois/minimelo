@@ -30,8 +30,8 @@ run-as com.phonegap.minimelo
 
 
 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-                   fileSystem.root.getDirectory("/Music", {
-                           create: true
+                   fileSystem.root.getDirectory("", {
+                           create: false
                        }, function(directory) {
 
                         var directoryReader = directory.createReader();
@@ -262,7 +262,7 @@ function displayDirectoryFile(i) {
 	}
 }
 
-window.resolveLocalFileSystemURL("file:///sdcard/Music/minimelo", function (fileSystem) {
+window.resolveLocalFileSystemURL("file:////sdcard/Android/data/com.phonegap.minimelo/files", function (fileSystem) {
 	
     var directoryReader = fileSystem.createReader();
 	    directoryReader.readEntries(function(directories) {
@@ -289,3 +289,27 @@ window.resolveLocalFileSystemURL("file:///sdcard/Music/minimelo", function (file
 }, function(error){
 	console.log(error);
 });
+
+
+ <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+
+     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    var audioCtx=new AudioContext();
+    audioCtx.decodeAudioData([1],function(){});
+
+    var ResourcesHandler = require('app/ResourcesHandler');
+    console.log(ResourcesHandler);

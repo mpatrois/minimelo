@@ -35,34 +35,53 @@ define(function( require ) {
 	Song.prototype.loadByFile = function () {
 		var self = this;
 
-		$.ajax({
-			url: self.url,
-			xhrFields : {responseType : 'arraybuffer'},
-		}).done(function(arrayBuffer){
+		return new Promise(function (resolve, reject) {
+			
+			window.resolveLocalFileSystemURL(self.url,resolve,reject);
+			
+		}).then(function(fileEntry){
 
-			audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
-				self.buffer = buffer;
+			return new Promise(function(resolve,reject){
+				fileEntry.file(resolve,reject);
+			});
+
+		}).then(function(file){
+			
+			return new Promise(function(resolve,reject){
+				var reader = new FileReader();
+
+                reader.onloadend = resolve;
+
+                reader.readAsArrayBuffer(file);
 				
-		  }, function(e) {"Error with decoding audio data" + e.err;} );  
-		});
+			});
+
+		}).then(function(e){
+			var arrayBuffer=e.target.result;
+			return new Promise(function(resolve,reject){
+				audioCtx.decodeAudioData(arrayBuffer,resolve,reject);  
+			});
+		}).then(
+
+			function(audioBuffer){
+				// console.log(audioBuffer);
+				self.buffer=audioBuffer;
+			},
+			function(){
+				console.log("Impossible de lire "+self.url);
+			}
+		);
 
 	}
 
-	Song.prototype.loadAndPlayOnce = function ( ) {
+	Song.prototype.playForPreview = function ( ) {
 		var self = this;
 
-		$.ajax({
-			url: self.url,
-			xhrFields : {responseType : 'arraybuffer'},
-		}).done(function(arrayBuffer){
-
-			audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
-				self.buffer = buffer;
-				self.play();
-				
-		  }, function(e) {"Error with decoding audio data" + e.err;} );  
+		return self.loadByFile().then(function(){
+			var source=self.play();
+			self.buffer=null;
+			return Promise.resolve(source);
 		});
-
 	}
 
 	Song.prototype.playWithTime = function ( time ) {

@@ -249,8 +249,10 @@ define(function(require) {
 
     EventsMini.prototype.initSongClick=function (){
     	$( document ).on( "mousedown", ".button[data-song-id]", function() {
-      		ResourcesHandler.getSong($(this).attr('data-song-id')).playOnce();
-	        
+
+	        var idSong=$(this).attr('data-song-id');
+	        ResourcesHandler.playPreview(idSong);
+
 	        if($(this).parent().attr('id')=="buttons-songs"){
 	        	$("#buttons-songs .button").removeClass("active");
 	        }

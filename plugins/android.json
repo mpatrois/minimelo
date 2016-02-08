@@ -7,13 +7,10 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.phonegap.minimelo"
-        },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "com.phonegap.minimelo"
         },
-        "cordova-plugin-file-transfer": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.phonegap.minimelo"
         }
     },
