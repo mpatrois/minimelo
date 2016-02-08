@@ -269,23 +269,13 @@ header{
 	    background: rgb(238, 240, 250);
 	}
 }
-
+.panel{
+	width: 100%;
+	height: 100%;
+}
 /*CSS MODAL*/
-#myModal{
-	
-	.modal-dialog {
-	    width: 100%;
-	    height: 100%;
-	    margin: 0;
-	    .modal-content{
-	    	height: 100%;
-
-	    	.modal-body{
-	    		text-align: center;
-	    	}
-	    }
-	}
-
+#panel-choose{
+	text-align: center;
 	#choose-song{
 	    display: inline-block;
 	    text-align: left;

@@ -5,7 +5,7 @@ define(['app/ResourcesHandler'], function(ResourcesHandler) {
 	var ressources       = require('app/ressources');
 
 	function Timeline() {
-		this.songs       = ResourcesHandler.getSongs();
+		this.songs       = ResourcesHandler.songs;
 		this.songsInPlay = [];
 
 		this.tempo       = 90;

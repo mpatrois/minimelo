@@ -83,7 +83,7 @@ define(function(require) {
 
 	EventsMini.prototype.initDragAndDrop = function () {
 
-  		document.ontouchmove=function (event){
+  		document.getElementById('timeline').ontouchmove=function (event){
   			var clientX;
   			var clientY;
 

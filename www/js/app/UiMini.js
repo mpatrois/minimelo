@@ -23,7 +23,7 @@ define(function( require ) {
 	        $('#buttons-songs').append(buttonSong);
 	   	};
 
-		$('#myModal').modal('show');
+		//$('#myModal').modal('show');
 	}
 
 	UiMini.prototype.initButtonsModal = function () {
