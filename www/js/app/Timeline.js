@@ -6,7 +6,6 @@ define(['app/ResourcesHandler'], function(ResourcesHandler) {
 
 	function Timeline() {
 		this.songs       = ResourcesHandler.getSongs();
-		console.log('songsTimeline',this.songs);
 		this.songsInPlay = [];
 
 		this.tempo       = 90;

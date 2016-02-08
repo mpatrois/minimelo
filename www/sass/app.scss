@@ -100,10 +100,7 @@ header{
 	.button{margin-top:10px;}
 }
 
-#buttons-songs, 
-#buttons-songs-modal{
-
-	.button{
+.button{
     	background-image:url("../img/buttons_sprite.png");
 		background-size: cover;
 		width: 55px;
@@ -113,15 +110,20 @@ header{
 			background-position:0 33%;
 		}
 
-		&[type="drum"]{ background-color: $red; }/* RED */
-		&[type="cymbal"]{ background-color: $orange; }/* ORANGE */
-		&[type="flute"]{ background-color: $yellow; }/* YELLOW */
-		&[type="piano"]{ background-color: $clear_green; }/* CLEAR GREEN */
-		&[type="violin"]{ background-color: $dark_green; }/* DARK  GREEN */
-		&[type="trumpet"]{ background-color: $dark_blue; }/* DARK  BLUE */
-		&[type="guitar"]{ background-color: $clear_blue; }/* CLEAR BLUE */
-		&[type="voice"]{ background-color: $purple; }/* PURPLE */
+		&[type="type-1"]{ background-color: $red; }/* RED */
+		&[type="type-2"]{ background-color: $orange; }/* ORANGE */
+		&[type="type-3"]{ background-color: $yellow; }/* YELLOW */
+		&[type="type-4"]{ background-color: $clear_green; }/* CLEAR GREEN */
+		&[type="type-5"]{ background-color: $dark_green; }/* DARK  GREEN */
+		&[type="type-6"]{ background-color: $dark_blue; }/* DARK  BLUE */
+		&[type="type-7"]{ background-color: $clear_blue; }/* CLEAR BLUE */
+		&[type="type-8"]{ background-color: $purple; }/* PURPLE */
 	}
+
+#buttons-songs, 
+#buttons-songs-modal{
+
+	
 
 	/*.button.active{
 	    transform:scale(1.1);

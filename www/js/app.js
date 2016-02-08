@@ -35,20 +35,17 @@ $(document).ready(function() {
             init : function () {
                 document.addEventListener("deviceready", this.onDeviceReady, false);
             },
-
-            runApp:function(){
-                 var record= new Record();
+            onDeviceReady : function () {
+                var self=this;
+                var record= new Record();
                 var uiMini   = new UiMini();
                 var eventsMini   = new EventsMini(uiMini,record);
-                uiMini.initUiMini();
-                eventsMini.initEventsMini();
-                console.log(ressources.typeDirectories.length,"application runned");
-                console.log(ressources.songs,"songs");
-            },
 
-            onDeviceReady : function () {
-                ressources.initApplication=this.runApp;
-                ressources.loadSongs();                
+                ressources.loadSongs().then(function(data){
+                   
+                });
+                uiMini.initUiMini();
+                eventsMini.initEventsMini();     
             }
         };
 

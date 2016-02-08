@@ -12,25 +12,21 @@ define(function( require ) {
 	}
 
   	UiMini.prototype.initButtonsSongs = function () {
+  		
+	   	var types=ResourcesHandler.getTypes();
 
-	    for(var type in ressources)
-	    {
-			
-  			var idSong = ResourcesHandler.getIdFirstSongType(type);
-        var buttonSong=$('<div class="button instrument"></div>');
+	   	for (var i = 1; i < 9; i++) {
+	   		var type="type-"+i;
+	   		//var idSong = ResourcesHandler.getIdFirstSongType(type);
+	        var buttonSong=$('<div class="button instrument"></div>');
+	        // if(idSong!=-1){
+	          // buttonSong.attr('data-song-id', idSong);
+	        // }
 
-        if(idSong!=-1){
-          buttonSong.attr('data-song-id', idSong);
-          var song=ResourcesHandler.getSong(idSong).load();
-        }
+	        buttonSong.attr('type',type);
 
-        buttonSong.attr('type',type);
-        buttonSong.attr('data-song-id',idSong);
-
-        $('#buttons-songs').append(buttonSong);
-
-		  }
-
+	        $('#buttons-songs').append(buttonSong);
+	   	};
 	};
 
 UiMini.prototype.initButtonsModal = function () {
@@ -77,11 +73,6 @@ UiMini.prototype.initButtonsModal = function () {
 		var heightHeader = $("h1").outerHeight();
 		var heightFooter = $("#deck-buttons").outerHeight();
 		var heightApp = $(".app").outerHeight();
-
-		console.log(heightHeader);
-		console.log(heightFooter);
-		console.log(heightApp);
-
 		
 		$("#timeline").css("height", heightApp - (heightHeader + heightFooter));
 	}
@@ -89,8 +80,7 @@ UiMini.prototype.initButtonsModal = function () {
 	UiMini.prototype.initUiMini = function (){
 		this.initTimelineHeight();
 		this.initButtonsSongs();
-		this.initSongClick();
-		this.initButtonsModal();
+		// this.initButtonsModal();
 		this.initDeckButtons();
 		this.initPistes();
 		this.initRecorder();
