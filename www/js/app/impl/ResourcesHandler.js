@@ -24,15 +24,15 @@ define(function( require ){
 
 
 	ResourcesHandler.prototype.playPreview=function(idSong){
+		var self=this;
+
 		this.songs[idSong].playForPreview().then(function(source){
-			if(this.sourceInPreview!=null){
-				this.sourceInPreview.stop();
+			
+			if(self.sourceInPreview!=null){
+				self.sourceInPreview.stop();
 			}
-			this.sourceInPreview=source;
-			var self=this;
-			this.sourceInPreview.onended=function(){
-				self.sourceInPreview=null;
-			};
+			self.sourceInPreview=source;
+			
 		});
 	}
 

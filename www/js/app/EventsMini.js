@@ -217,18 +217,16 @@ define(function(require) {
     }
 
     EventsMini.prototype.initModalEvents=function(){
-    	var self=this;
+    	// var self=this;
     	$("#choose-song div .button").click(function(){ 
 
-			var numberId = $(this).find("span").text();
-			var typeRight = $(this).attr("type");
+			// var numberId = $(this).find("span").text();
+			// var typeRight = $(this).attr("type");
 
-			$("#buttons-songs-modal .button[type='"+typeRight+"']").find("span").text(numberId);
-
-			var urlSong = $(this).attr('data-song-url');
-
-			$(this).parent().find('.button').removeClass('active');
-			$(this).addClass('active');
+			// var urlSong = $(this).attr('data-song-url');
+			// console.log(this,"song clicked");
+			// $(this).parent().find('.button').removeClass('active');
+			// $(this).addClass('active');
 
 		});
 
@@ -255,6 +253,9 @@ define(function(require) {
 
 	        if($(this).parent().attr('id')=="buttons-songs"){
 	        	$("#buttons-songs .button").removeClass("active");
+	        }
+	        else if($(this).parent().parent().attr('id')=="choose-song"){
+	        	$(this).parent().find('.button').removeClass("active");
 	        }
 	        $(this).addClass("active");
     	});

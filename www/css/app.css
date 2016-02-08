@@ -330,7 +330,7 @@ header {
     background-size: cover;
     display: inline-block;
     position: relative;
-    opacity: 0.8; }
+    opacity: 0.2; }
     #modal-select-sound #choose-song .button.active {
       background-position: 0 33%;
       opacity: 1;
