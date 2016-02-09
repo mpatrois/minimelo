@@ -14,9 +14,14 @@
   </head>
   <body>
 
-    <div class="app" panel="0">
+    <div class="app" panel="2">
 
-      <div class="row panel" id="panel-compose">
+      <div class="row panel" id="panel-choose">
+        <div id="choose-song"></div>
+        <div class="round_btn validate_btn button" data-dismiss="modal"></div>
+      </div>
+
+       <div class="row panel" id="panel-compose">
         
         <div class="col-xs-1 buttons_left" id="buttons-songs">
         </div>
@@ -54,9 +59,20 @@
         </div>
       </div>
 
-      <div class="row panel" id="panel-choose">
-        <div id="choose-song"></div>
-        <div class="round_btn validate_btn button" data-dismiss="modal"></div>
+      <div class="row panel" id="panel-record">
+        <div id="recordScreen">
+          <div id='selector'></div>
+          <div id="lineRecord"></div>
+          <canvas id="canvasRecord"></canvas>
+        </div>
+        <div id="controls-record">
+          <div class="round_btn" id="recordButton" action="record"></div>
+          <div class="round_btn play_btn" id="playRecord"></div>
+          <div class="round_btn scissors_btn" id="cutRecord"></div>
+          <div class="round_btn validate_btn button" data-dismiss="modal"></div>
+          <div class="round_btn validate_btn button" id="saveRecord"></div>
+        </div>
+
       </div>
 
     </div>

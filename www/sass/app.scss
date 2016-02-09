@@ -125,7 +125,17 @@ ul{
     }
     &[panel="0"]{
     	.panel{
+    		transform:translateY(0%);
+    	}
+    }
+    &[panel="1"]{
+    	.panel{
     		transform:translateY(-100%);
+    	}
+    }
+    &[panel="2"]{
+    	.panel{
+    		transform:translateY(-200%);
     	}
     }
     .row{
@@ -315,6 +325,47 @@ header{
 		}
 
 	}
+}
+
+#panel-record{
+
+	.round_btn[action="stop"]{
+		background-color: red;
+	}
+	#recordScreen{
+		position: relative;
+		/*width: 100%;*/
+		height: 200px;
+
+		#selector{
+			background: blue;
+			height: 100%;
+			width: 1px;
+			display: inline-block;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+		#lineRecord{
+			height: 100%;
+			width: 1px;
+			display: inline-block;
+			position: absolute;
+			background: green;
+			top:0px;
+			left: 0px;
+		}
+		canvas{
+			position: relative;
+			left: 0px;
+			top: 0px;
+		    background: rgba(2,34,3,0.2);
+		}
+	}
+	#controls-record{
+		text-align: center;
+	}
+
 }
 /*---------*/
 

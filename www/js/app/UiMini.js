@@ -11,6 +11,14 @@ define(function( require ) {
 		this.timeline = new Timeline();
 	}
 
+	UiMini.prototype.initUiMini = function (){
+		this.initTimelineHeight();
+		this.initButtonsSongs();
+		this.initDeckButtons();
+		this.initPistes();
+		this.initRecorder();
+	}
+
 	UiMini.prototype.initButtonsSongs = function () {
 
 		var types=ResourcesHandler.getTypes();
@@ -62,13 +70,14 @@ define(function( require ) {
 		$("#timeline").css("height", heightApp - (heightHeader + heightFooter));
 	}
 
-	UiMini.prototype.initUiMini = function (){
-		this.initTimelineHeight();
-		this.initButtonsSongs();
-		this.initDeckButtons();
-		this.initButtonsModal();
-		this.initPistes();
+	UiMini.prototype.initRecorder=function(){
+		
+		$('#canvasRecord').attr('width',$('#recordScreen').width());
+		$('#canvasRecord').attr('height',$('#recordScreen').height());
+
 	}
+
+
 
 	UiMini.prototype.initPistes = function () {
 		$('.piste').css('width', this.timeline.getDurationInPx());
